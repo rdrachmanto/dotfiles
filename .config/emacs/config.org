@@ -1,0 +1,379 @@
+#+TITLE: Emacs IDE Config
+#+AUTHOR: Rakandhiya Daanii
+
+* Default Variables
+Configure default variables. Emacs variables things such as startup infos, file behaviors (auto-saves, backup, lockfiles), and a couple others. I'd change it to reflect what I'm familiar/content with from other code editors I've tried.
+
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-message t
+      ring-bell-function 'ignore
+      column-number-mode t
+      scroll-margin 6
+      vc-follow-symlinks t
+      frame-resize-pixelwise t
+      enable-recursive-minibuffers t
+      make-backup-files nil
+      auto-save-default nil
+      create-lockfiles nil
+      tab-always-indent 'complete
+      eldoc-echo-area-use-multiline-p nil)
+
+(setq-default fill-column 80)
+(add-to-list 'default-frame-alist '(font . "Jetbrains Mono Nerd Font-10.5"))
+#+END_SRC
+
+* Default Modes
+Other than variables, we can also change the major/minor modes to be active/non-active. We can do it globally, or locally, with hooks for example. I'm changing the UI, and a couple behaviors such as removing tool bars, scroll bars, enabling relative numbering vertical lines.
+
+#+BEGIN_SRC emacs-lisp
+(global-auto-revert-mode)
+(savehist-mode)
+(menu-bar-mode -1)
+(display-battery-mode)
+(tool-bar-mode -1)
+(electric-pair-mode 1)
+(scroll-bar-mode -1)
+(recentf-mode)
+
+(defun set-prog-modes ()
+  (hl-line-mode)
+  (display-fill-column-indicator-mode)
+  (display-line-numbers-mode)
+  (setq display-line-numbers-type 'relative))
+
+(defun set-text-modes ()
+  (display-line-numbers-mode)
+  (setq display-line-numbers-type 'relative))
+
+(add-hook 'prog-mode-hook
+          (lambda () (set-prog-modes)))
+(add-hook 'text-mode-hook
+          (lambda () (set-text-modes)))
+
+(add-hook 'dired-after-readin-hook 'hl-line-mode)
+(add-hook 'org-mode-hook 'visual-line-mode)
+#+END_SRC
+
+* Default Org Settings
+Org-mode is a major part of emacs, it can be used to write regular text files, notes, schedules and all that. Org-mode itself has a lot of extensions but we can also configure its defaults.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-support-shift-select t
+      org-fontify-whole-heading-line t
+      org-pretty-entities t
+      org-hide-emphasis-markers t
+      org-startup-indented t
+      org-src-tab-acts-natively t
+      org-edit-src-content-indentation 0)
+
+(add-hook 'org-mode-hook (lambda ()
+         (setq-local electric-pair-inhibit-predicate
+                 `(lambda (c)
+                (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
+#+END_SRC
+
+* Set exec-path to mimic $PATH
+Other text editors recognize path variables easily, but not emacs. Instead emacs relies on internal variable called =exec-path=. This can be a pain because we have to set =exec-path= again and again every time we add someting to path that we might need in emacs. By setting the =exec-path= to mimic =$PATH=, we wont need to manually modify set =exec-path= again if we installed a new thing.
+
+#+BEGIN_SRC emacs-lisp
+(use-package exec-path-from-shell)
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+#+END_SRC
+
+* Icons & Themes
+Our first two packages would be icons and themes. we will use =nerd-icons= and =doom-themes= as they are a pack of a lot of themes
+
+#+BEGIN_SRC emacs-lisp
+(use-package nerd-icons)
+
+(use-package nerd-icons-completion
+  :after marginalia
+  :config
+  (nerd-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+
+(use-package nerd-icons-dired
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
+(use-package doom-themes
+    :init (load-theme 'doom-material-dark t))
+#+END_SRC
+
+* UI Components
+** Doom Modeline
+Make that little bar on the bottom prettier with =doom-modeline=
+
+#+BEGIN_SRC emacs-lisp
+(use-package doom-modeline 
+  :init (doom-modeline-mode 1))
+#+END_SRC
+
+* Minor Utilities 
+** Rainbow Delimiters
+Make delimiters, especially parentheses colorful. This helps to identify delimiter pairings, especially in codes that has a lot of parentheses like elisp. 
+
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-delimiters
+  :hook
+  ('prog-mode . 'rainbow-delimiters-mode))
+#+END_SRC
+
+** Diff HL
+See git status highlighting within emacs, such as edited, new or deleted code. Located on the left border of the screen. 
+
+#+BEGIN_SRC emacs-lisp
+(use-package diff-hl
+  :config
+  (global-diff-hl-mode)
+  :hook
+  ('magit-pre-refresh . 'diff-hl-magit-pre-refresh)
+  ('magit-post-refresh . 'diff-hl-magit-post-refresh))
+#+END_SRC
+
+* Completions
+Emacs can be supported with completion, be it in the minibuffer, or buffer itself, we can configure the completion to follow the LSP, or add meaningful features/info about something if accessing the minibuffer.
+
+** Corfu
+=completion-at-point= is the default completion in Emacs, but it's not ideal. =Corfu= is a code autocomplete tool, and =eglot= integrates nicely with this one! For simplicity we'll enable =corfu= globally. We will also get completion when we're in emacs lisp file, and even in normal text files.
+
+#+BEGIN_SRC emacs-lisp
+(use-package corfu
+  :init (global-corfu-mode)
+  :config
+  (setq corfu-auto t
+        corfu-cycle t
+        corfu-preselect 'prompt
+        corfu-auto-delay 0
+        corfu-auto-prefix 1)
+  :bind
+  (:map corfu-map
+        ("TAB" . corfu-next)
+        ([tab] . corfu-next)
+        ("S-TAB" . corfu-previous)
+        ([backtab] . corfu-previous)))
+#+END_SRC
+
+** Vertico, Consult & Marginalia
+=Vertico= provides completions for minibuffers, while being a bit more minimalistic than =Ivy=. By default =vertico= does not have command/variable description like =Ivy=, but with =marginalia= we can replicate that. Consult has a ton of little helper commands available to us from the minibuffer.
+
+#+BEGIN_SRC emacs-lisp
+(use-package vertico
+  :init (vertico-mode)
+  :config
+  (setq vertico-cycle t
+        read-file-name-completion-ignore-case t
+        read-buffer-completion-ignore-case t
+        completion-ignore-case t))
+
+(use-package consult
+  :config
+  (add-to-list 'consult-buffer-filter '"^\\*")) ;; hides star buffers
+
+(use-package marginalia
+  :init (marginalia-mode)
+  :config
+  (setq marginalia-align 'right))
+#+END_SRC
+
+** Orderless
+Supercharge the autocomplete, on minibuffer and buffer. With orderless, we can get completion, regardless of typing order and spacing.
+
+#+BEGIN_SRC emacs-lisp
+(use-package orderless
+  :custom
+  (completion-styles '(orderless flex))
+  (completion-category-defaults nil)
+  (completion-category-overrides
+   '((file (styles partial-completion))
+     (eglot (styles orderless flex)))))
+#+END_SRC
+
+* Programming
+Programming related stuff, such as LSP, syntax highlighting, and major modes.
+
+** Eglot
+Eglot is a built-in LSP client available in Emacs 29 onwards. LSPs for the languages still needs to be installed by the user. Connecting the client (eglot) to the LSP of choice for a programming language can be done by setting the =eglot-server-programs= with an array of =(mode . (LSP))=. Then to make eglot always activate its LSP capabilities in every programming languages, we hook the =eglot-ensure= function to =prog-mode-hook=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package eglot
+  :ensure nil ;; eglot is integrated in emacs, no need to redownload the package
+  :hook
+  ('prog-mode . 'eglot-ensure))
+#+END_SRC
+
+** Treesit Auto
+Treesitter is a library for syntax highlighting. It can recognize symbols in the code (keywords, variables) among other things and then assigning it different colors. Treesitter tends to be more accurate in doing those tasks compared to regex-based highlighting. In Emacs, we still need to install the treesitter grammars manually and then set the major mode to use the treesitter grammar, like switching from =python-mode= to =python-ts-mode=. This package makes it easier to install the grammars and will automatically switch the major mode to use the grammar if we have it. 
+
+#+BEGIN_SRC emacs-lisp
+(use-package treesit-auto
+  :config
+  (global-treesit-auto-mode)
+  (setq treesit-auto-install t))
+#+END_SRC
+
+** Eldoc Box
+Eglot uses eldoc to display the documentation, these documentation popups are at the bottom, this can be very distracting. Eldoc box itself has a capability similar to =lsp-ui= package in displaying the documentation on hover.
+
+#+BEGIN_SRC emacs-lisp
+(use-package eldoc-box
+  :config
+  (setq eldoc-box-max-pixel-width 450
+        eldoc-box-max-pixel-height 350))
+#+END_SRC
+
+** Programming Modes
+Major mode for programming languages. Python and markdown-mode is installed as example.
+
+#+BEGIN_SRC emacs-lisp
+(use-package markdown-mode)
+(use-package python-mode)
+#+END_SRC
+
+** Conda
+Conda environment integration.
+
+#+BEGIN_SRC emacs-lisp
+(use-package conda)
+#+END_SRC
+
+* Project Management
+Project management tools such as git dashboard, and project related actions.
+
+** Magit
+Git interface for Emacs, a pretty powerful tool to have.
+
+#+BEGIN_SRC emacs-lisp
+(use-package magit)
+#+END_SRC
+
+** Projectile
+This package helps emacs to treat folders as projects. This package detects git repo, or some files that denote that they are a programming project, like a =package.json= file for JS, or =cargo.toml= in Rust, or a git directory. if those did not exists, we can manually make projectile recognize a folder as a project by adding a =.projectile= file in the directory that we want to treat as root directory for that project.
+
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :config
+  (projectile-mode +1))
+#+END_SRC
+
+* Terminal Emulator
+** VTerm
+A full fledged terminal emulator for Emacs. It uses C instead of elisp, so we need external tools such as CMake and libvterm to be available in the device.
+
+#+BEGIN_SRC emacs-lisp
+(use-package vterm)
+#+END_SRC
+
+* Org
+Org related packages
+
+** Org Tempo
+Enable shortcuts of various org components
+
+#+BEGIN_SRC emacs-lisp
+(require 'org-tempo)
+#+END_SRC
+
+** Org Bullets
+We can have prettier org bullets instead of asterisks
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-bullets
+  :hook ('org-mode . (lambda () (org-bullets-mode 1))))
+#+END_SRC
+
+* Bindings
+All binding related stuff, from VIM emulation, keyboard shortcut setter, and shortcut viewer, to keybinds itself.
+
+** Evil
+Next, we're going to enable vim-like modal editing with the installation of =evil=. Out of the box, =evil= and =org= has a conflict in the =<TAB>= action. setting the =C-i-jump= to nil solve this. Last thing, is to also enable evil in the minibuffer, as evil by default is not active in there.
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil
+  :init
+  (setq evil-want-C-i-jump nil
+        evil-want-keybinding nil
+        evil-want-minibuffer t)
+  :config
+  (evil-mode 1)
+  (evil-set-undo-system 'undo-redo))
+#+END_SRC
+
+** Evil Collection
+Additional key binds for things that evil does not cover. We'll use this package as the =evil-want-minibuffer= variable is only about enabling the modes, but the keybinds are not set. =Evil-collection= will handle the keybinds for us. And if we want, this package also has bindings for a couple more things.
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-collection
+  :after evil
+  :custom (evil-collection-setup-minibuffer t)
+  :init (evil-collection-init))
+#+END_SRC
+  
+** Which Key
+A helper to remember what key combinations are for what actions.
+
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :init (which-key-mode))
+#+END_SRC
+
+** General
+Simplify making keybinds with general. With this we dont have to type =evil-define-key= multiple times.
+
+#+BEGIN_SRC emacs-lisp
+(use-package general)
+#+END_SRC
+
+** Keybinds
+Custom keybinds to use with the external packages or internal functions, we will try to approach this mnemonically. As in b for buffers, f for file tree, and others
+
+#+BEGIN_SRC emacs-lisp
+(general-create-definer rd/leader-key
+  :states '(normal insert visual emacs)
+  :keymaps 'override
+  :prefix ";"
+  :global-prefix "M-;")
+
+(rd/leader-key
+  :keymaps 'prog-mode-map
+  ";" '(:ignore t :wk "Code")
+  "; ;" '(eldoc-box-help-at-point :wk "Documentation on cursor")
+  "; a" '(eglot-code-actions :wk "Code actions")
+  "; f" '(eglot-format-buffer :wk "Format buffer")
+  "; r" '(eglot-rename :wk "Rename symbol"))
+
+(rd/leader-key
+  "b" '(:ignore t :wk "Bookmarks/Buffers")
+  "b b" '(consult-buffer :wk "Switch to buffer")
+  "b k" '(kill-this-buffer :wk "Kill this buffer")
+  "b p" '(consult-project-buffer :wk "Switch to project buffer")
+  "b r" '(revert-buffer :wk "Revert buffer")
+  "b R" '(rename-visited-file :wk "Rename buffer"))
+
+(rd/leader-key
+  "c" '(:ignore t :wk "Config")
+  "c r" '((lambda () (interactive)
+	    (load-file "~/.config/emacs/init.el"))
+	  :wk "Reload config"))
+
+(rd/leader-key
+  "f" '(:ignore t :wk "Files")
+  "f r" '(consult-recent-file :wk "Find recent files"))
+
+(rd/leader-key
+  "o c" '((lambda () (interactive)
+	    (find-file "~/.config/emacs/config.org"))
+	  :wk "Open config")
+  "o n" '((lambda () (interactive)
+	    (dired "~/Documents/Notes"))
+	  :wk "Open notes folder in dired"))
+
+(rd/leader-key
+  "p" '(projectile-command-map :wk "Projectile"))
+
+(rd/leader-key
+  "t" '(:ignore t :wk "Toggles")
+  "t f" 'consult-flymake)
+#+END_SRC
+
