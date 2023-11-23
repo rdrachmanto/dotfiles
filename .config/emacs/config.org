@@ -257,6 +257,17 @@ This package helps emacs to treat folders as projects. This package detects git 
   (projectile-mode +1))
 #+END_SRC
 
+** Perspective
+Provides a workspace-like separation in emacs, a good choice if we are opening a few directories/projects at the same time. Each perspective will have its own window layout and buffer list. Perspectives can also be saved into a file, to recover the last session. 
+
+#+begin_src emacs-lisp
+(use-package perspective
+  :custom
+  (persp-mode-prefix-key (kbd "C-c M-p"))
+  :init
+  (persp-mode))
+#+end_src
+
 * Terminal Emulator
 ** VTerm
 A full fledged terminal emulator for Emacs. It uses C instead of elisp, so we need external tools such as CMake and libvterm to be available in the device.
