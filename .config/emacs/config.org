@@ -102,12 +102,12 @@ Our first two packages would be icons and themes. we will use =nerd-icons= and =
 #+END_SRC
 
 * UI Components
-** Doom Modeline
-Make that little bar on the bottom prettier with =doom-modeline=
+** Doom Modeline 
+Make that little bar on the bottom prettier.
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline 
-  :init (doom-modeline-mode 1))
+  :init (doom-modeline-mode))
 #+END_SRC
 
 * Minor Utilities 
@@ -239,22 +239,13 @@ Conda environment integration.
 #+END_SRC
 
 * Project Management
-Project management tools such as git dashboard, and project related actions.
+Project management tools such as git dashboard, and project/workspace related actions.
 
 ** Magit
 Git interface for Emacs, a pretty powerful tool to have.
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit)
-#+END_SRC
-
-** Projectile
-This package helps emacs to treat folders as projects. This package detects git repo, or some files that denote that they are a programming project, like a =package.json= file for JS, or =cargo.toml= in Rust, or a git directory. if those did not exists, we can manually make projectile recognize a folder as a project by adding a =.projectile= file in the directory that we want to treat as root directory for that project.
-
-#+BEGIN_SRC emacs-lisp
-(use-package projectile
-  :config
-  (projectile-mode +1))
 #+END_SRC
 
 ** Perspective
@@ -379,9 +370,6 @@ Custom keybinds to use with the external packages or internal functions, we will
   "o n" '((lambda () (interactive)
 	    (dired "~/Documents/Notes"))
 	  :wk "Open notes folder in dired"))
-
-(rd/leader-key
-  "p" '(projectile-command-map :wk "Projectile"))
 
 (rd/leader-key
   "t" '(:ignore t :wk "Toggles")
