@@ -255,6 +255,9 @@ Provides a workspace-like separation in emacs, a good choice if we are opening a
 (use-package perspective
   :custom
   (persp-mode-prefix-key (kbd "C-c M-p"))
+  :config
+  (consult-customize consult--source-buffer :hidden t :default nil)
+  (add-to-list 'consult-buffer-sources persp-consult-source)
   :init
   (persp-mode))
 #+end_src
@@ -344,6 +347,12 @@ Custom keybinds to use with the external packages or internal functions, we will
   "; a" '(eglot-code-actions :wk "Code actions")
   "; f" '(eglot-format-buffer :wk "Format buffer")
   "; r" '(eglot-rename :wk "Rename symbol"))
+
+(rd/leader-key
+  "=" '(:ignore t :wk "Perspective")
+  "= =" '(persp-switch :wk "Switch perspectives")
+  "= b" '(persp-switch-to-buffer* :wk "Switch to buffers in this persp")
+  "= B" '(persp-switch-to-buffer :wk "Switch to buffers in all persp"))
 
 (rd/leader-key
   "b" '(:ignore t :wk "Bookmarks/Buffers")

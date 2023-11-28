@@ -1,3 +1,7 @@
+[character] 
+success_symbol = '[➜](bold green)' 
+
+# Packages and symbols
 [aws]
 symbol = "  "
 
