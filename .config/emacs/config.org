@@ -61,6 +61,11 @@ Org-mode is a major part of emacs, it can be used to write regular text files, n
 (setq org-support-shift-select t
       org-fontify-whole-heading-line t
       org-pretty-entities t
+      org-auto-align-tags nil
+      org-tags-column 0
+      org-catch-invisible-edits 'show-and-error
+      org-special-ctrl-a/e t
+      org-insert-heading-respect-content t
       org-hide-emphasis-markers t
       org-startup-indented t
       org-src-tab-acts-natively t
@@ -280,13 +285,15 @@ Enable shortcuts of various org components
 (require 'org-tempo)
 #+END_SRC
 
-** Org Bullets
-We can have prettier org bullets instead of asterisks
+** Org Modern
+Modern style for org buffers, this package will style headings, keywords, tables and source blocks. Styling is also configurable. 
 
-#+BEGIN_SRC emacs-lisp
-(use-package org-bullets
-  :hook ('org-mode . (lambda () (org-bullets-mode 1))))
-#+END_SRC
+#+begin_src emacs-lisp
+(use-package org-modern
+  :hook
+  ('org-mode . org-modern-mode)
+  ('org-agenda-finalize . org-modern-agenda))
+#+end_src
 
 * Bindings
 All binding related stuff, from VIM emulation, keyboard shortcut setter, and shortcut viewer, to keybinds itself.
