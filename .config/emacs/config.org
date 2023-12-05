@@ -285,12 +285,12 @@ See git status highlighting within emacs, such as edited, new or deleted code. L
 #+begin_src emacs-lisp
 (use-package diff-hl
   :config
-  (diff-hl-dired-mode)
   (global-diff-hl-mode)
   (diff-hl-flydiff-mode)
   (setq diff-hl-disable-on-remote t)
   :hook
   ('magit-pre-refresh . 'diff-hl-magit-pre-refresh)
+  ('dired-mode . 'diff-hl-dired-mode)
   ('magit-post-refresh . 'diff-hl-magit-post-refresh))
 #+end_src
 
