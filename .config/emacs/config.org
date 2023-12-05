@@ -109,6 +109,7 @@ Our first two packages would be icons and themes. we will use =nerd-icons= and =
 
 * Mode Line
 Modeline customization, from library, to format and other supporting mode-line libraries such as mode-line menus etc.
+
 ** Moody 
 Make that little bar on the bottom prettier.
 
@@ -143,18 +144,6 @@ Make delimiters, especially parentheses colorful. This helps to identify delimit
 (use-package rainbow-delimiters
   :hook
   ('prog-mode . 'rainbow-delimiters-mode))
-#+end_src
-
-** Diff HL
-See git status highlighting within emacs, such as edited, new or deleted code. Located on the left border of the screen. 
-
-#+begin_src emacs-lisp
-(use-package diff-hl
-  :config
-  (global-diff-hl-mode)
-  :hook
-  ('magit-pre-refresh . 'diff-hl-magit-pre-refresh)
-  ('magit-post-refresh . 'diff-hl-magit-post-refresh))
 #+end_src
 
 * Completions
@@ -266,13 +255,6 @@ Conda environment integration.
 * Project Management
 Project management tools such as git dashboard, and project/workspace related actions.
 
-** Magit
-Git interface for Emacs, a pretty powerful tool to have.
-
-#+begin_src emacs-lisp
-(use-package magit)
-#+end_src
-
 ** Perspective
 Provides a workspace-like separation in emacs, a good choice if we are opening a few directories/projects at the same time. Each perspective will have its own window layout and buffer list. Perspectives can also be saved into a file, to recover the last session. 
 
@@ -285,6 +267,31 @@ Provides a workspace-like separation in emacs, a good choice if we are opening a
   (add-to-list 'consult-buffer-sources persp-consult-source)
   :init
   (persp-mode))
+#+end_src
+
+* Version Control
+All git-related stuff, a git interface, little UI enhancements and other helper packages.
+
+** Magit
+Massive git interface for Emacs, a pretty powerful tool to have. We have a couple of things we can do with magit, stage/unstage and seeing the diff, doing a commit, pushing, pulling or doing a rebase. Those functions are also flexible as we can add flags when executing it.
+
+#+begin_src emacs-lisp
+(use-package magit)
+#+end_src
+
+** Diff HL
+See git status highlighting within emacs, such as edited, new or deleted code. Located on the left border of the screen. 
+
+#+begin_src emacs-lisp
+(use-package diff-hl
+  :config
+  (diff-hl-dired-mode)
+  (global-diff-hl-mode)
+  (diff-hl-flydiff-mode)
+  (setq diff-hl-disable-on-remote t)
+  :hook
+  ('magit-pre-refresh . 'diff-hl-magit-pre-refresh)
+  ('magit-post-refresh . 'diff-hl-magit-post-refresh))
 #+end_src
 
 * Terminal Emulator
@@ -320,7 +327,7 @@ Modern style for org buffers, this package will style headings, keywords, tables
 All binding related stuff, from VIM emulation, keyboard shortcut setter, and shortcut viewer, to keybinds itself.
 
 ** Evil
-Next, we're going to enable vim-like modal editing with the installation of =evil=. Out of the box, =evil= and =org= has a conflict in the =<TAB>= action. setting the =C-i-jump= to nil solve this. Last thing, is to also enable evil in the minibuffer, as evil by default is not active in there.
+Next, we're going to enable vim-like modal editing with the installation of =evil=. Out of the box, =evil= and =org= has a conflict in the =<TAB>= action. setting the =C-i-jump= to nil solve this. Last thing, is to also enable evil in the minibuffer, as evil by default is not active in there. 
 
 #+begin_src emacs-lisp
 (use-package evil
@@ -331,6 +338,18 @@ Next, we're going to enable vim-like modal editing with the installation of =evi
   :config
   (evil-mode 1)
   (evil-set-undo-system 'undo-redo))
+#+end_src
+
+** Evil-Anzu
+NVIM or VIM has a package called =anzu= that displays the current and total occurrences when searching. A port for emacs with the same name exists, but to use it with evil, we need =evil-anzu=. We will also need anzu.
+
+#+begin_src emacs-lisp
+(use-package anzu
+  :init
+  (anzu-mode +1))
+
+(use-package evil-anzu
+  :after evil anzu)
 #+end_src
 
 ** Evil Collection
