@@ -17,6 +17,7 @@ Configure default variables. Emacs variables things such as startup infos, file 
       auto-save-default nil
       create-lockfiles nil
       tab-always-indent 'complete
+      project-vc-extra-root-markers '("dir-locals.el")
       eldoc-echo-area-use-multiline-p nil)
 
 (setq-default fill-column 80)
@@ -321,6 +322,30 @@ Modern style for org buffers, this package will style headings, keywords, tables
   :hook
   ('org-mode . org-modern-mode)
   ('org-agenda-finalize . org-modern-agenda))
+#+end_src
+
+* LaTeX
+Aside from programming and note-taking, currently I am also doing a research project. Usually, to write our findings and submit them to journal or conferences, academics would write in LaTeX or tex format. 
+
+** AucTex
+The go-to package for tex files editing. It supports autocomplete libraries, it is also filled with commands and key combinations to create environments, exporting to pdf, and do a couple other commands.
+
+#+begin_src emacs-lisp
+(use-package auctex
+  :defer t
+  :hook
+  (LaTeX-mode . (lambda ()
+		  (push (list 'output-pdf "Okular")
+			TeX-view-program-selection))))
+#+end_src
+
+** Latex Preview Pane
+AucTex support external pdf-viewing, but with this package we can get a side-by-side view similar to the default experience in overleaf. Just type the command =latex-preview-pane-mode= and it will show the preview in a vertical split window.
+
+#+begin_src emacs-lisp
+(use-package latex-preview-pane
+  :config
+  (latex-preview-pane-enable))
 #+end_src
 
 * Bindings

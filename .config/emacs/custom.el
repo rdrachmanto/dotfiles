@@ -6,7 +6,7 @@
  '(custom-safe-themes
    '("cd51c4e5a258ab9fd82de1fb4c0eee54326de5e307e3bf2895467ae103bc562b" default))
  '(package-selected-packages
-   '(anzu tangonov-theme evil-anzu apropospriate-theme diminish moody nordic-night org-modern go-mode lua-mode evil-collection embark consult elixir-mode marginalia vertico eldoc-box magit which-key treesit-auto rainbow-delimiters evil)))
+   '(latex-preview-pane auctex anzu tangonov-theme evil-anzu apropospriate-theme diminish moody nordic-night org-modern go-mode lua-mode evil-collection embark consult elixir-mode marginalia vertico eldoc-box magit which-key treesit-auto rainbow-delimiters evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
