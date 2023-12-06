@@ -126,11 +126,13 @@ Make that little bar on the bottom prettier.
 #+end_src
 
 ** Diminish
-Decrease clutter in the mode line by diminishing or hiding the active minor modes.
+Decrease clutter in the mode line by diminishing or hiding the active minor modes. =defer= is applied so this package will be the last one loaded, so the =diminish= command would work properly. 
 
 #+begin_src emacs-lisp
 (use-package diminish
+  :defer t
   :config
+  (diminish 'anzu-mode)
   (diminish 'org-indent-mode)
   (diminish 'evil-collection-unimpaired-mode)
   (diminish 'visual-line-mode)
@@ -382,7 +384,6 @@ Additional key binds for things that evil does not cover. We'll use this package
 
 #+begin_src emacs-lisp
 (use-package evil-collection
-  :diminish
   :after evil
   :custom (evil-collection-setup-minibuffer t)
   :init (evil-collection-init))
@@ -393,7 +394,6 @@ A helper to remember what key combinations are for what actions.
 
 #+begin_src emacs-lisp
 (use-package which-key
-  :diminish
   :init (which-key-mode))
 #+end_src
 
