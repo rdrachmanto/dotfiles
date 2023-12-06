@@ -20,7 +20,10 @@ Configure default variables. Emacs variables things such as startup infos, file 
       project-vc-extra-root-markers '("dir-locals.el")
       eldoc-echo-area-use-multiline-p nil)
 
-(setq-default fill-column 80)
+(setq-default fill-column 80
+	      left-margin-width 0 right-margin-width 2)
+(set-window-buffer nil (current-buffer))
+
 (add-to-list 'default-frame-alist '(font . "Jetbrains Mono Nerd Font-10.5"))
 #+end_src
 
@@ -135,16 +138,6 @@ Provide a menu for minor modes in the mode line, this is also a better way to re
   (minions-mode 1))
 #+end_src
 
-* Minor Utilities 
-** Rainbow Delimiters
-Make delimiters, especially parentheses colorful. This helps to identify delimiter pairings, especially in codes that has a lot of parentheses like elisp. 
-
-#+begin_src emacs-lisp
-(use-package rainbow-delimiters
-  :hook
-  ('prog-mode . 'rainbow-delimiters-mode))
-#+end_src
-
 * Completions
 Emacs can be supported with completion, be it in the minibuffer, or buffer itself, we can configure the completion to follow the LSP, or add meaningful features/info about something if accessing the minibuffer.
 
@@ -242,6 +235,15 @@ Major mode for programming languages. Python and markdown-mode is installed as e
 #+begin_src emacs-lisp
 (use-package markdown-mode)
 (use-package python-mode)
+#+end_src
+
+** Rainbow Delimiters
+Make delimiters, especially parentheses colorful. This helps to identify delimiter pairings, especially in codes that has a lot of parentheses like elisp. 
+
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+  :hook
+  ('prog-mode . 'rainbow-delimiters-mode))
 #+end_src
 
 ** Conda
