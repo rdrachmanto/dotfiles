@@ -125,18 +125,14 @@ Make that little bar on the bottom prettier.
   (moody-replace-eldoc-minibuffer-message-function))
 #+end_src
 
-** Diminish
-Decrease clutter in the mode line by diminishing or hiding the active minor modes. =defer= is applied so this package will be the last one loaded, so the =diminish= command would work properly. 
+** Minions
+Provide a menu for minor modes in the mode line, this is also a better way to remove the minor mode clutter.
 
 #+begin_src emacs-lisp
-(use-package diminish
-  :defer t
+(use-package minions
   :config
-  (diminish 'anzu-mode)
-  (diminish 'org-indent-mode)
-  (diminish 'evil-collection-unimpaired-mode)
-  (diminish 'visual-line-mode)
-  (diminish 'eldoc-mode))
+  (setq minions-prominent-modes '(flymake-mode))
+  (minions-mode 1))
 #+end_src
 
 * Minor Utilities 
@@ -302,8 +298,7 @@ See git status highlighting within emacs, such as edited, new or deleted code. L
 A full fledged terminal emulator for Emacs. It uses C instead of elisp, so we need external tools such as CMake and libvterm to be available in the device.
 
 #+begin_src emacs-lisp
-(use-package vterm
-  :disabled t)
+(use-package vterm)
 #+end_src
 
 * Org
