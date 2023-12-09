@@ -122,6 +122,11 @@ Our first two packages would be icons and themes. we will use =nerd-icons= and =
   :hook
   (dired-mode . nerd-icons-dired-mode))
 
+(use-package nerd-icons-corfu
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
 (use-package tangonov-theme
   :config
   (load-theme 'tangonov t))
@@ -175,7 +180,6 @@ Emacs can be supported with completion, be it in the minibuffer, or buffer itsel
         ([tab] . corfu-next)
         ("S-TAB" . corfu-previous)
         ([backtab] . corfu-previous)))
-(elpaca-wait)
 #+end_src
 
 ** Vertico, Consult & Marginalia
@@ -462,8 +466,8 @@ Custom keybinds to use with the external packages or internal functions, we will
 (rd/leader-key
   "c" '(:ignore t :wk "Config")
   "c r" '((lambda () (interactive)
+	    (load-file user-init-file)
 	    (ignore (elpaca-process-queues))
-	    (load-file user-init-file))
 	  :wk "Reload config"))
 
 (rd/leader-key
