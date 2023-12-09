@@ -1,10 +1,10 @@
-theme = "github_dark"
+theme = "tangonov_port"
 
 [editor]
 line-number = "relative"
 mouse = false
-cursorline = true
 idle-timeout = 0
+cursorline = false
 color-modes = true
 bufferline = "multiple"
 

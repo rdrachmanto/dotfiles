@@ -1,0 +1,5 @@
+inherits = "material_darker"
+
+underline.style = "curl"
+
+"ui.background" = "#151515"
