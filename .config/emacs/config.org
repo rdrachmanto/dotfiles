@@ -233,7 +233,10 @@ Eglot uses eldoc to display the documentation, these documentation popups are at
 Major mode for programming languages. Python and markdown-mode is installed as example.
 
 #+begin_src emacs-lisp
-(use-package markdown-mode)
+(use-package markdown-mode
+  :custom-face
+  (markdown-code-face ((t (:inherit default)))))
+
 (use-package python-mode)
 #+end_src
 
@@ -416,14 +419,19 @@ Custom keybinds to use with the external packages or internal functions, we will
   ";" '(:ignore t :wk "Code")
   "; ;" '(eldoc-box-help-at-point :wk "Documentation on cursor")
   "; a" '(eglot-code-actions :wk "Code actions")
+  "; d" '(eglot-find-declaration :wk "Find declaration")
   "; f" '(eglot-format-buffer :wk "Format buffer")
-  "; r" '(eglot-rename :wk "Rename symbol"))
+  "; i" '(eglot-find-implementation :wk "Find implementation")
+  "; r" '(eglot-rename :wk "Rename symbol")
+  "; t" '(eglot-find-typeDefinition :wk "Find typedef"))
 
 (rd/leader-key
   "=" '(:ignore t :wk "Perspective")
   "= =" '(persp-switch :wk "Switch perspectives")
   "= b" '(persp-switch-to-buffer* :wk "Switch to buffers in this persp")
-  "= B" '(persp-switch-to-buffer :wk "Switch to buffers in all persp"))
+  "= B" '(persp-switch-to-buffer :wk "Switch to buffers in all persp")
+  "= [" '(persp-prev :wk "Previous persp")
+  "= ]" '(persp-next :wk "Next persp"))
 
 (rd/leader-key
   "b" '(:ignore t :wk "Bookmarks/Buffers")
