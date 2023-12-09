@@ -10,6 +10,8 @@ To make this org file not too long, some scripts e.g. Elpaca setup codes are sep
 
 ;; source the scripts
 (require 'elpaca-setup)
+(require 'reset-early-init-val)
+(require 'startup-time)
 #+end_src
 
 * Default Variables
@@ -219,7 +221,7 @@ Eglot is a built-in LSP client available in Emacs 29 onwards. LSPs for the langu
 
 #+begin_src emacs-lisp
 (use-package eglot
-  :ensure nil ;; eglot is integrated in emacs, no need to redownload the package
+  :elpaca nil
   :hook
   ('prog-mode . 'eglot-ensure))
 #+end_src
@@ -460,7 +462,8 @@ Custom keybinds to use with the external packages or internal functions, we will
 (rd/leader-key
   "c" '(:ignore t :wk "Config")
   "c r" '((lambda () (interactive)
-	    (load-file "~/.config/emacs/init.el"))
+	    (ignore (elpaca-process-queues))
+	    (load-file user-init-file))
 	  :wk "Reload config"))
 
 (rd/leader-key
@@ -479,4 +482,3 @@ Custom keybinds to use with the external packages or internal functions, we will
   "t" '(:ignore t :wk "Toggles")
   "t f" 'consult-flymake)
 #+end_src
-
