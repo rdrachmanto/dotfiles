@@ -1,6 +1,17 @@
 #+TITLE: Emacs IDE Config
 #+AUTHOR: Rakandhiya Daanii
 
+* External Scripts
+To make this org file not too long, some scripts e.g. Elpaca setup codes are separated into another file. External files or scripts for this config lives in the =scripts/= folder. 
+
+#+begin_src emacs-lisp
+;; add scripts directory to path
+(add-to-list 'load-path "~/.config/emacs/scripts/")
+
+;; source the scripts
+(require 'elpaca-setup)
+#+end_src
+
 * Default Variables
 Configure default variables. Emacs variables things such as startup infos, file behaviors (auto-saves, backup, lockfiles), and a couple others. I'd change it to reflect what I'm familiar/content with from other code editors I've tried.
 
@@ -18,7 +29,8 @@ Configure default variables. Emacs variables things such as startup infos, file 
       create-lockfiles nil
       tab-always-indent 'complete
       project-vc-extra-root-markers '("dir-locals.el")
-      eldoc-echo-area-use-multiline-p nil)
+      eldoc-echo-area-use-multiline-p nil
+      native-comp-async-report-warnings-errors 'silent)
 
 (setq-default fill-column 80
 	      left-margin-width 0 right-margin-width 2)
@@ -86,6 +98,8 @@ Other text editors recognize path variables easily, but not emacs. Instead emacs
 
 #+begin_src emacs-lisp
 (use-package exec-path-from-shell)
+(elpaca-wait)
+
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 #+end_src
@@ -159,6 +173,7 @@ Emacs can be supported with completion, be it in the minibuffer, or buffer itsel
         ([tab] . corfu-next)
         ("S-TAB" . corfu-previous)
         ([backtab] . corfu-previous)))
+(elpaca-wait)
 #+end_src
 
 ** Vertico, Consult & Marginalia
@@ -402,6 +417,7 @@ Simplify making keybinds with general. With this we dont have to type =evil-defi
 
 #+begin_src emacs-lisp
 (use-package general)
+(elpaca-wait)
 #+end_src
 
 ** Keybinds
