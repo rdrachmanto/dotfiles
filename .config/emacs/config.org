@@ -468,7 +468,7 @@ Custom keybinds to use with the external packages or internal functions, we will
   "c r" '((lambda () (interactive)
 	    (load-file user-init-file)
 	    (ignore (elpaca-process-queues))
-	  :wk "Reload config"))
+	  :wk "Reload config")))
 
 (rd/leader-key
   "f" '(:ignore t :wk "Files")
