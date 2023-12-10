@@ -4,8 +4,8 @@ theme = "tangonov_port"
 line-number = "relative"
 mouse = false
 idle-timeout = 0
-cursorline = false
-color-modes = true
+cursorline = true
+color-modes = false
 bufferline = "multiple"
 
 [editor.cursor-shape]

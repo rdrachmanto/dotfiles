@@ -6,12 +6,13 @@ local config = wezterm.config_builder()
 -- replicate tangonov theme's colors from my emacs config
 config.color_scheme = "Material Darker (base16)"
 config.colors = {
+  cursor_bg = "#ffca41",
   background = "#151515"
 }
 
 -- fonts
 config.font = wezterm.font 'JetBrains Mono Nerd Font'
-config.font_size = 9.0
+config.font_size = 9.5
 
 -- tabs
 config.tab_bar_at_bottom = true
