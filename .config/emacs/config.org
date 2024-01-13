@@ -9,9 +9,9 @@ To make this org file not too long, some scripts e.g. Elpaca setup codes are sep
 (add-to-list 'load-path "~/.config/emacs/scripts/")
 
 ;; source the scripts
-(require 'elpaca-setup)
-(require 'reset-early-init-val)
-(require 'startup-time)
+(require 'straight-setup)
+;; (require 'reset-early-init-val)
+;; (require 'startup-time)
 #+end_src
 
 * Default Variables
@@ -34,8 +34,7 @@ Configure default variables. Emacs variables things such as startup infos, file 
       eldoc-echo-area-use-multiline-p nil
       native-comp-async-report-warnings-errors 'silent)
 
-(setq-default fill-column 80
-	      left-margin-width 0 right-margin-width 2)
+(setq-default fill-column 80)
 (set-window-buffer nil (current-buffer))
 
 (add-to-list 'default-frame-alist '(font . "Jetbrains Mono Nerd Font-10.5"))
@@ -100,7 +99,6 @@ Other text editors recognize path variables easily, but not emacs. Instead emacs
 
 #+begin_src emacs-lisp
 (use-package exec-path-from-shell)
-(elpaca-wait)
 
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
@@ -128,25 +126,18 @@ Our first two packages would be icons and themes. we will use =nerd-icons= and =
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 (use-package tangonov-theme
-  :config
+  :init
   (load-theme 'tangonov t))
 #+end_src
 
-* Mode Line
+* Modeline
 Modeline customization, from library, to format and other supporting mode-line libraries such as mode-line menus etc.
 
-** Moody 
+** Modeline Settings
 Make that little bar on the bottom prettier.
 
 #+begin_src emacs-lisp
-(use-package moody
-  :config
-  (setq x-underline-at-descent-line t
-	moody-mode-line-height 20)
-  (moody-replace-mode-line-front-space)
-  (moody-replace-mode-line-buffer-identification)
-  (moody-replace-vc-mode)
-  (moody-replace-eldoc-minibuffer-message-function))
+;; We will change the default format and style of the modeline. On our own!
 #+end_src
 
 ** Minions
@@ -225,7 +216,7 @@ Eglot is a built-in LSP client available in Emacs 29 onwards. LSPs for the langu
 
 #+begin_src emacs-lisp
 (use-package eglot
-  :elpaca nil
+  :straight nil
   :hook
   ('prog-mode . 'eglot-ensure))
 #+end_src
@@ -362,15 +353,6 @@ The go-to package for tex files editing. It supports autocomplete libraries, it 
 			TeX-view-program-selection))))
 #+end_src
 
-** Latex Preview Pane
-AucTex support external pdf-viewing, but with this package we can get a side-by-side view similar to the default experience in overleaf. Just type the command =latex-preview-pane-mode= and it will show the preview in a vertical split window.
-
-#+begin_src emacs-lisp
-(use-package latex-preview-pane
-  :config
-  (latex-preview-pane-enable))
-#+end_src
-
 * Bindings
 All binding related stuff, from VIM emulation, keyboard shortcut setter, and shortcut viewer, to keybinds itself.
 
@@ -423,7 +405,7 @@ Simplify making keybinds with general. With this we dont have to type =evil-defi
 
 #+begin_src emacs-lisp
 (use-package general)
-(elpaca-wait)
+
 #+end_src
 
 ** Keybinds
@@ -465,10 +447,7 @@ Custom keybinds to use with the external packages or internal functions, we will
 
 (rd/leader-key
   "c" '(:ignore t :wk "Config")
-  "c r" '((lambda () (interactive)
-	    (load-file user-init-file)
-	    (ignore (elpaca-process-queues))
-	  :wk "Reload config")))
+  "c r" '(lambda () (interactive) (load-file user-init-file)))
 
 (rd/leader-key
   "f" '(:ignore t :wk "Files")
