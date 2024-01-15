@@ -110,7 +110,10 @@ Other text editors recognize path variables easily, but not emacs. Instead emacs
 #+end_src
 
 * Icons & Themes
-Our first two packages would be icons and themes. we will use =nerd-icons= and =doom-themes= as they are a pack of a lot of themes
+For icons we will use =nerd-icons= and its complementary packages. For themes, it will be a slightly modified/extended version of =tangonov-theme= that I call =mod-tangonov= for "modified tangonov".
+
+** Icons
+=nerd-icons= is the package that provides the icons. Other packages such as =nerd-icons-completion=, =nerd-icons-dired= etc will enable us to use =nerd-icons= on a specific buffer/frame. For example the =nerd-icons-completion= package will add =nerd-icons= in the minibuffer.
 
 #+begin_src emacs-lisp
 (use-package nerd-icons)
@@ -130,9 +133,14 @@ Our first two packages would be icons and themes. we will use =nerd-icons= and =
   :config
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
-(use-package tangonov-theme
-  :init
-  (load-theme 'tangonov t))
+#+end_src
+
+** Themes
+Emacs by default will look for themes in the default emacs directory. To make the emacs directory neater, the custom theme will instead be moved to ="~/.config/emacs/themes"=.
+
+#+begin_src emacs-lisp
+(add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
+(load-theme 'mod-tangonov t)
 #+end_src
 
 * Modeline
