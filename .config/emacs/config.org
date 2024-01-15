@@ -20,7 +20,6 @@ Configure default variables. Emacs variables things such as startup infos, file 
 #+begin_src emacs-lisp
 (setq inhibit-startup-message t
       ring-bell-function 'ignore
-      column-number-mode t
       scroll-margin 6
       vc-follow-symlinks t
       frame-resize-pixelwise t
@@ -30,20 +29,26 @@ Configure default variables. Emacs variables things such as startup infos, file 
       auto-save-default nil
       create-lockfiles nil
       tab-always-indent 'complete
-      project-vc-extra-root-markers '("dir-locals.el")
+      project-vc-extra-root-markers '(".dir-locals.el")
       eldoc-echo-area-use-multiline-p nil
       native-comp-async-report-warnings-errors 'silent)
 
 (setq-default fill-column 80)
 (set-window-buffer nil (current-buffer))
 
+;; If a string is too long, emacs will truncate a portion of the text and indicate the truncation by using the char "$" in rightmost/leftmost
+;; With this, it will change from $ to SPC as sometimes marginalia docs can be very long. it's weird to see $ in the minibuffer
+(set-display-table-slot standard-display-table 'truncation 32)
+
 (add-to-list 'default-frame-alist '(font . "Jetbrains Mono Nerd Font-10.5"))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
 * Default Modes
 Other than variables, we can also change the major/minor modes to be active/non-active. We can do it globally, or locally, with hooks for example. I'm changing the UI, and a couple behaviors such as removing tool bars, scroll bars, enabling relative numbering vertical lines.
 
 #+begin_src emacs-lisp
+(column-number-mode t)
 (global-auto-revert-mode)
 (savehist-mode)
 (menu-bar-mode -1)
@@ -138,6 +143,15 @@ Make that little bar on the bottom prettier.
 
 #+begin_src emacs-lisp
 ;; We will change the default format and style of the modeline. On our own!
+(setq-default mode-line-format
+	      '(
+		(:propertize ("" evil-mode-line-tag))
+		(:propertize "%l:%C ")
+		(:eval "%b ")
+		(:propertize "%Z%*%*%@ ")
+		(vc-mode vc-mode) " "
+		minions-mode-line-modes mode-line-misc-info
+		))
 #+end_src
 
 ** Minions
