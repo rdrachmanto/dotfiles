@@ -7,7 +7,7 @@ local config = wezterm.config_builder()
 config.color_scheme = "Material Darker (base16)"
 config.colors = {
   cursor_bg = "#ffca41",
-  background = "#151515",
+  background = "#151514",
   tab_bar = {
     background = "#151515",
     active_tab = {
@@ -36,12 +36,15 @@ config.colors = {
   }
 }
 
+-- scrollbar setting
+config.enable_scroll_bar = false 
+
 -- window padding
 config.window_padding = {
   top = 6,
-  left = 6,
-  right = 6,
-  bottom = 2,
+  left = 4,
+  right = 2,
+  bottom = 0,
 }
 
 -- fonts
@@ -49,7 +52,8 @@ config.font = wezterm.font 'JetBrains Mono Nerd Font'
 config.font_size = 9.5
 
 -- tabs
-config.tab_bar_at_bottom = true
+config.tab_bar_at_bottom = true 
 config.use_fancy_tab_bar = false
+
 
 return config

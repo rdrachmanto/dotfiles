@@ -33,7 +33,7 @@ vterm_printf(){
         	printf "\e]%s\e\\" "$1"
     	fi
 }
-alias dotfiles='/usr/bin/git --git-dir=/home/rdrachmanto/.dotfiles/ --work-tree=/home/rdrachmanto'
+alias cfg='/usr/bin/git --git-dir=/home/rdrachmanto/.cfg/ --work-tree=/home/rdrachmanto'
 
 # starship init command
 eval "$(starship init bash)"
