@@ -9,9 +9,8 @@ To make this org file not too long, some scripts e.g. Elpaca setup codes are sep
 (add-to-list 'load-path "~/.config/emacs/scripts/")
 
 ;; source the scripts
-(require 'straight-setup)
-;; (require 'reset-early-init-val)
-;; (require 'startup-time)
+(require 'elpaca-setup)
+(require 'record-startup-time)
 #+end_src
 
 * Default Variables
@@ -31,16 +30,27 @@ Configure default variables. Emacs variables things such as startup infos, file 
       tab-always-indent 'complete
       project-vc-extra-root-markers '(".dir-locals.el")
       eldoc-echo-area-use-multiline-p nil
-      native-comp-async-report-warnings-errors 'silent)
+      use-dialog-box nil
+      use-file-dialog nil
+      native-comp-async-report-warnings-errors 'silent
+      scroll-error-top-bottom t
+      display-fill-column-indicator-character ?\N{U+2502})
 
-(setq-default fill-column 80)
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(setq-default fill-column 80
+	        display-line-numbers-width 3)
+
 (set-window-buffer nil (current-buffer))
+
+;; delete fringe background color
+(set-face-attribute 'fringe nil :background nil)
 
 ;; If a string is too long, emacs will truncate a portion of the text and indicate the truncation by using the char "$" in rightmost/leftmost
 ;; With this, it will change from $ to SPC as sometimes marginalia docs can be very long. it's weird to see $ in the minibuffer
 (set-display-table-slot standard-display-table 'truncation 32)
 
-(add-to-list 'default-frame-alist '(font . "Jetbrains Mono Nerd Font-10.5"))
+(add-to-list 'default-frame-alist '(font . "Jetbrains Mono Nerd Font Mono-10.2"))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
@@ -56,9 +66,10 @@ Other than variables, we can also change the major/minor modes to be active/non-
 (electric-pair-mode 1)
 (scroll-bar-mode -1)
 (recentf-mode)
+(fringe-mode '(2 . 2))
 
 (defun set-prog-modes ()
-  (hl-line-mode)
+  ;; (hl-line-mode)
   (display-fill-column-indicator-mode)
   (display-line-numbers-mode)
   (setq display-line-numbers-type 'relative))
@@ -160,6 +171,8 @@ Make that little bar on the bottom prettier.
 		(vc-mode vc-mode) " "
 		minions-mode-line-modes mode-line-misc-info
 		))
+
+(set-face-attribute 'mode-line nil :box nil)
 #+end_src
 
 ** Minions
@@ -175,24 +188,25 @@ Provide a menu for minor modes in the mode line, this is also a better way to re
 * Completions
 Emacs can be supported with completion, be it in the minibuffer, or buffer itself, we can configure the completion to follow the LSP, or add meaningful features/info about something if accessing the minibuffer.
 
+
 ** Corfu
 =completion-at-point= is the default completion in Emacs, but it's not ideal. =Corfu= is a code autocomplete tool, and =eglot= integrates nicely with this one! For simplicity we'll enable =corfu= globally. We will also get completion when we're in emacs lisp file, and even in normal text files.
 
 #+begin_src emacs-lisp
 (use-package corfu
-  :init (global-corfu-mode)
+  :ensure t
+  :init
+  (global-corfu-mode t)
   :config
-  (setq corfu-auto t
-        corfu-cycle t
-        corfu-preselect 'prompt
-        corfu-auto-delay 0
-        corfu-auto-prefix 1)
-  :bind
-  (:map corfu-map
-        ("TAB" . corfu-next)
-        ([tab] . corfu-next)
-        ("S-TAB" . corfu-previous)
-        ([backtab] . corfu-previous)))
+  (setq corfu-cycle t
+        corfu-auto t
+	    corfu-auto-prefix 2
+	    corfu-auto-delay 0.2)
+  :bind (:map corfu-map
+              ("TAB" . corfu-next)
+              ([tab] . corfu-next)
+              ("S-TAB" . corfu-previous)
+              ([backtab] . corfu-previous)))
 #+end_src
 
 ** Vertico, Consult & Marginalia
@@ -223,24 +237,62 @@ Supercharge the autocomplete, on minibuffer and buffer. With orderless, we can g
 #+begin_src emacs-lisp
 (use-package orderless
   :custom
-  (completion-styles '(orderless flex))
+  (completion-styles '(orderless basic))
   (completion-category-defaults nil)
   (completion-category-overrides
-   '((file (styles partial-completion))
-     (eglot (styles orderless flex)))))
+   '((file (styles partial-completion)))))
+#+end_src
+
+** Cape
+Extending =completion-at-point= will create a better completion experience. In this case, we can add filename, elisp block, keyword, abbrev and dabbrev as =completion-at-point= candidates
+
+#+begin_src emacs-lisp
+(use-package cape
+  :ensure t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-abbrev))
+#+end_src
+
+** Tempel
+
+#+begin_src emacs-lisp
+(use-package tempel
+  :init
+  (defun tempel-setup-capf ()
+    ;; Add the Tempel Capf to `completion-at-point-functions'.
+    ;; `tempel-expand' only triggers on exact matches. Alternatively use
+    ;; `tempel-complete' if you want to see all matches, but then you
+    ;; should also configure `tempel-trigger-prefix', such that Tempel
+    ;; does not trigger too often when you don't expect it. NOTE: We add
+    ;; `tempel-expand' *before* the main programming mode Capf, such
+    ;; that it will be tried first.
+    (setq-local completion-at-point-functions
+                (cons #'tempel-expand
+                      completion-at-point-functions)))
+  (add-hook 'conf-mode-hook 'tempel-setup-capf)
+  (add-hook 'prog-mode-hook 'tempel-setup-capf)
+  (add-hook 'text-mode-hook 'tempel-setup-capf))
+
+(use-package tempel-collection)
 #+end_src
 
 * Programming
 Programming related stuff, such as LSP, syntax highlighting, and major modes.
 
 ** Eglot
-Eglot is a built-in LSP client available in Emacs 29 onwards. LSPs for the languages still needs to be installed by the user. Connecting the client (eglot) to the LSP of choice for a programming language can be done by setting the =eglot-server-programs= with an array of =(mode . (LSP))=. Then to make eglot always activate its LSP capabilities in every programming languages, we hook the =eglot-ensure= function to =prog-mode-hook=.
+Eglot is a built-in LSP client available in Emacs 29 onwards. LSPs for the languages still needs to be installed by the user. Connecting the client (eglot) to the LSP of choice for a programming language can be done by setting the =eglot-server-programs= with an array of =(mode . (LSP))=. Then to make eglot always activate its LSP capabilities in every programming languages, we hook the =eglot-elpaca= function to =prog-mode-hook=.
 
 #+begin_src emacs-lisp
 (use-package eglot
-  :straight nil
+  :ensure nil
   :hook
-  ('prog-mode . 'eglot-ensure))
+  ('prog-mode . 'eglot-ensure)
+  :config
+  (setq eglot-ignored-server-capabilities '(:documentHighlightProvider)))
 #+end_src
 
 ** Treesit Auto
@@ -259,8 +311,19 @@ Eglot uses eldoc to display the documentation, these documentation popups are at
 #+begin_src emacs-lisp
 (use-package eldoc-box
   :config
-  (setq eldoc-box-max-pixel-width 450
-        eldoc-box-max-pixel-height 350))
+  (setq eldoc-box-max-pixel-height 425)
+  (defun rd/eldoc-box-scroll-up ()
+    (interactive)
+    (with-current-buffer eldoc-box--buffer
+      (with-selected-frame eldoc-box--frame
+        (scroll-down 3))))
+  (defun rd/eldoc-box-scroll-down ()
+    (interactive)
+    (with-current-buffer eldoc-box--buffer
+        (with-selected-frame eldoc-box--frame
+        (let ((scroll-up-distance 3))
+            (when (not (pos-visible-in-window-p (point-max)))
+            (scroll-up scroll-up-distance)))))))
 #+end_src
 
 ** Programming Modes
@@ -268,10 +331,14 @@ Major mode for programming languages. Python and markdown-mode is installed as e
 
 #+begin_src emacs-lisp
 (use-package markdown-mode
+  :init
+  (setq markdown-hide-markup nil)
   :custom-face
   (markdown-code-face ((t (:inherit default)))))
 
 (use-package python-mode)
+
+(use-package php-mode)
 #+end_src
 
 ** Rainbow Delimiters
@@ -314,6 +381,7 @@ All git-related stuff, a git interface, little UI enhancements and other helper 
 Massive git interface for Emacs, a pretty powerful tool to have. We have a couple of things we can do with magit, stage/unstage and seeing the diff, doing a commit, pushing, pulling or doing a rebase. Those functions are also flexible as we can add flags when executing it.
 
 #+begin_src emacs-lisp
+(use-package transient)
 (use-package magit)
 #+end_src
 
@@ -330,14 +398,6 @@ See git status highlighting within emacs, such as edited, new or deleted code. L
   ('magit-pre-refresh . 'diff-hl-magit-pre-refresh)
   ('dired-mode . 'diff-hl-dired-mode)
   ('magit-post-refresh . 'diff-hl-magit-post-refresh))
-#+end_src
-
-* Terminal Emulator
-** VTerm
-A full fledged terminal emulator for Emacs. It uses C instead of elisp, so we need external tools such as CMake and libvterm to be available in the device.
-
-#+begin_src emacs-lisp
-(use-package vterm)
 #+end_src
 
 * Org
@@ -427,18 +487,24 @@ Simplify making keybinds with general. With this we dont have to type =evil-defi
 
 #+begin_src emacs-lisp
 (use-package general)
-
+(elpaca-wait)
 #+end_src
 
 ** Keybinds
 Custom keybinds to use with the external packages or internal functions, we will try to approach this mnemonically. As in b for buffers, f for file tree, and others
 
 #+begin_src emacs-lisp
+(general-define-key
+  :states '(normal insert visual emacs)
+  :keymaps 'prog-mode-map
+  "C-k" 'rd/eldoc-box-scroll-up
+  "C-j" 'rd/eldoc-box-scroll-down)
+
 (general-create-definer rd/leader-key
   :states '(normal insert visual emacs)
   :keymaps 'override
   :prefix ";"
-  :global-prefix "M-;")
+  :global-prefix "C-;")
 
 (rd/leader-key
   :keymaps 'prog-mode-map
