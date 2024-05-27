@@ -10,7 +10,7 @@ To make this org file not too long, some scripts e.g. Elpaca setup codes are sep
 
 ;; source the scripts
 (require 'elpaca-setup)
-(require 'record-startup-time)
+(require 'show-startup-info)
 #+end_src
 
 * Default Variables
@@ -52,6 +52,7 @@ Configure default variables. Emacs variables things such as startup infos, file 
 
 (add-to-list 'default-frame-alist '(font . "Jetbrains Mono Nerd Font Mono-10.2"))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+(add-to-list 'default-frame-alist '(internal-border-width . 6))
 #+end_src
 
 * Default Modes
@@ -152,6 +153,26 @@ Emacs by default will look for themes in the default emacs directory. To make th
 #+begin_src emacs-lisp
 (add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
 (load-theme 'mod-tangonov t)
+#+end_src
+
+
+* Headerline 
+Some complementary packages for headerline (like mode-line, but up top) 
+
+** Breadcrumb
+Breadcrumb path for more details about current file's location in the project. If opened in a programming mode, it can also traces class and function.
+
+#+begin_src emacs-lisp
+(use-package breadcrumb
+  :config
+  (setq breadcrumb-project-max-length 0.2
+	    breadcrumb-imenu-max-length 0.4))
+
+(setq-default header-line-format
+	      '(
+		" " (:eval (breadcrumb-project-crumbs))
+		" : " (:eval (breadcrumb-imenu-crumbs))
+		))
 #+end_src
 
 * Modeline
@@ -303,7 +324,7 @@ Eglot uses eldoc to display the documentation, these documentation popups are at
 #+begin_src emacs-lisp
 (use-package eldoc-box
   :config
-  (setq eldoc-box-max-pixel-height 425)
+  (setq eldoc-box-max-pixel-height 350)
   (defun rd/eldoc-box-scroll-up ()
     (interactive)
     (with-current-buffer eldoc-box--buffer
@@ -543,3 +564,4 @@ Custom keybinds to use with the external packages or internal functions, we will
   "t" '(:ignore t :wk "Toggles")
   "t f" 'consult-flymake)
 #+end_src
+
