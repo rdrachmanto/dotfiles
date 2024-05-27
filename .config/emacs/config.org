@@ -171,8 +171,6 @@ Make that little bar on the bottom prettier.
 		(vc-mode vc-mode) " "
 		minions-mode-line-modes mode-line-misc-info
 		))
-
-(set-face-attribute 'mode-line nil :box nil)
 #+end_src
 
 ** Minions
@@ -263,13 +261,6 @@ Extending =completion-at-point= will create a better completion experience. In t
 (use-package tempel
   :init
   (defun tempel-setup-capf ()
-    ;; Add the Tempel Capf to `completion-at-point-functions'.
-    ;; `tempel-expand' only triggers on exact matches. Alternatively use
-    ;; `tempel-complete' if you want to see all matches, but then you
-    ;; should also configure `tempel-trigger-prefix', such that Tempel
-    ;; does not trigger too often when you don't expect it. NOTE: We add
-    ;; `tempel-expand' *before* the main programming mode Capf, such
-    ;; that it will be tried first.
     (setq-local completion-at-point-functions
                 (cons #'tempel-expand
                       completion-at-point-functions)))
@@ -277,7 +268,8 @@ Extending =completion-at-point= will create a better completion experience. In t
   (add-hook 'prog-mode-hook 'tempel-setup-capf)
   (add-hook 'text-mode-hook 'tempel-setup-capf))
 
-(use-package tempel-collection)
+(use-package tempel-collection
+  :ensure t)
 #+end_src
 
 * Programming
@@ -332,9 +324,7 @@ Major mode for programming languages. Python and markdown-mode is installed as e
 #+begin_src emacs-lisp
 (use-package markdown-mode
   :init
-  (setq markdown-hide-markup nil)
-  :custom-face
-  (markdown-code-face ((t (:inherit default)))))
+  (setq markdown-hide-markup nil))
 
 (use-package python-mode)
 
