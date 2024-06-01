@@ -10,7 +10,7 @@ To make this org file not too long, some scripts e.g. Elpaca setup codes are sep
 
 ;; source the scripts
 (require 'elpaca-setup)
-(require 'show-startup-info)
+;; (require 'show-startup-info)
 #+end_src
 
 * Default Variables
@@ -68,6 +68,7 @@ Other than variables, we can also change the major/minor modes to be active/non-
 (scroll-bar-mode -1)
 (recentf-mode)
 (fringe-mode '(2 . 2))
+(delete-selection-mode t)
 
 (defun set-prog-modes ()
   ;; (hl-line-mode)
@@ -101,14 +102,20 @@ Org-mode is a major part of emacs, it can be used to write regular text files, n
       org-special-ctrl-a/e t
       org-insert-heading-respect-content t
       org-hide-emphasis-markers t
-      org-startup-indented t
+      org-startup-indented t)
+
+(setq org-src-preserve-indentation nil
       org-src-tab-acts-natively t
+      org-src-fontify-natively t
       org-edit-src-content-indentation 0)
 
-(add-hook 'org-mode-hook (lambda ()
-         (setq-local electric-pair-inhibit-predicate
-                 `(lambda (c)
-                (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (setq-local electric-pair-inhibit-predicate
+			`(lambda (c)
+			   (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
+
+(add-hook 'org-mode-hook 'org-indent-mode)
 #+end_src
 
 * Set exec-path to mimic $PATH
@@ -144,7 +151,6 @@ For icons we will use =nerd-icons= and its complementary packages. For themes, i
   :after corfu
   :config
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-
 #+end_src
 
 ** Themes
@@ -334,9 +340,9 @@ Eglot uses eldoc to display the documentation, these documentation popups are at
     (interactive)
     (with-current-buffer eldoc-box--buffer
         (with-selected-frame eldoc-box--frame
-        (let ((scroll-up-distance 3))
+          (let ((scroll-up-distance 3))
             (when (not (pos-visible-in-window-p (point-max)))
-            (scroll-up scroll-up-distance)))))))
+              (scroll-up scroll-up-distance)))))))
 #+end_src
 
 ** Programming Modes
@@ -347,9 +353,11 @@ Major mode for programming languages. Python and markdown-mode is installed as e
   :init
   (setq markdown-hide-markup nil))
 
-(use-package python-mode)
-
-(use-package php-mode)
+(use-package python-mode
+  :config
+  (setq python-indent-offset 4
+	    python-indent-guess-indent-offset nil
+	    python-indent-def-block-scale 1))
 #+end_src
 
 ** Rainbow Delimiters
@@ -554,7 +562,7 @@ Custom keybinds to use with the external packages or internal functions, we will
 
 (rd/leader-key
   "o c" '((lambda () (interactive)
-	    (find-file "~/.config/emacs/config.org"))
+	    (find-file "~/dotfiles/.config/emacs/config.org"))
 	  :wk "Open config")
   "o n" '((lambda () (interactive)
 	    (dired "~/Documents/Notes"))

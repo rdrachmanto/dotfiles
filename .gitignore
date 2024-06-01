@@ -1,0 +1,9 @@
+.config/emacs/elpaca
+.config/emacs/eln-cache
+.config/emacs/transient
+.config/emacs/tree-sitter
+.config/emacs/config.el
+.config/emacs/history
+.config/emacs/projects
+.config/emacs/recentf
+
