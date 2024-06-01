@@ -6,4 +6,4 @@
 .config/emacs/history
 .config/emacs/projects
 .config/emacs/recentf
-
+.config/emacs/auto-save-list/
