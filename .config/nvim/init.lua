@@ -106,6 +106,7 @@ local lsp_config = {
   config = function()
     local lspconf = require("lspconfig")
     lspconf.pyright.setup {}
+    lspconf.clangd.setup {}
   end
 }
 
