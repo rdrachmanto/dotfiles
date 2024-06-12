@@ -27,7 +27,7 @@ Configure default variables. Emacs variables things such as startup infos, file 
       make-backup-files nil
       auto-save-default nil
       create-lockfiles nil
-      tab-always-indent 'complete
+      tab-always-indent t 
       project-vc-extra-root-markers '(".dir-locals.el")
       eldoc-echo-area-use-multiline-p nil
       use-dialog-box nil
@@ -43,16 +43,19 @@ Configure default variables. Emacs variables things such as startup infos, file 
 
 (set-window-buffer nil (current-buffer))
 
-;; delete fringe background color
-(set-face-attribute 'fringe nil :background nil)
-
 ;; If a string is too long, emacs will truncate a portion of the text and indicate the truncation by using the char "$" in rightmost/leftmost
 ;; With this, it will change from $ to SPC as sometimes marginalia docs can be very long. it's weird to see $ in the minibuffer
 (set-display-table-slot standard-display-table 'truncation 32)
 
-(add-to-list 'default-frame-alist '(font . "Jetbrains Mono Nerd Font Mono-10.2"))
+(add-to-list 'default-frame-alist '(font . "Jetbrains Mono Nerd Font-10.2"))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'default-frame-alist '(internal-border-width . 6))
+#+end_src
+
+** PGTK Builds Specific Settings
+
+#+begin_src emacs-lisp
+(setq-default pgtk-wait-for-event-timeout 0) 
 #+end_src
 
 * Default Modes
@@ -213,9 +216,10 @@ Provide a menu for minor modes in the mode line, this is also a better way to re
 * Completions
 Emacs can be supported with completion, be it in the minibuffer, or buffer itself, we can configure the completion to follow the LSP, or add meaningful features/info about something if accessing the minibuffer.
 
-
 ** Corfu
 =completion-at-point= is the default completion in Emacs, but it's not ideal. =Corfu= is a code autocomplete tool, and =eglot= integrates nicely with this one! For simplicity we'll enable =corfu= globally. We will also get completion when we're in emacs lisp file, and even in normal text files.
+
+*Currently disabled due to corfu making LSP segfault and crashing emacs, replaced temporarily with company-mode*
 
 #+begin_src emacs-lisp
 (use-package corfu
@@ -224,14 +228,21 @@ Emacs can be supported with completion, be it in the minibuffer, or buffer itsel
   (global-corfu-mode t)
   :config
   (setq corfu-cycle t
-        corfu-auto t
-	    corfu-auto-prefix 2
-	    corfu-auto-delay 0.2)
-  :bind (:map corfu-map
-              ("TAB" . corfu-next)
-              ([tab] . corfu-next)
-              ("S-TAB" . corfu-previous)
-              ([backtab] . corfu-previous)))
+	    corfu-preview-current nil
+	    corfu-auto t 
+	    corfu-auto-delay 0.12
+	    corfu-auto-prefix 3
+	    corfu-preselect 'prompt))
+#+end_src
+
+** Company
+Another in-buffer auto completion library, similar to corfu. Used as a backup because corfu is crashing emacs through segfaults in the LSP.
+
+#+begin_src emacs-lisp
+(use-package company
+  :disabled
+  :hook
+  ('after-init . 'global-company-mode))
 #+end_src
 
 ** Vertico, Consult & Marginalia
@@ -465,7 +476,8 @@ Next, we're going to enable vim-like modal editing with the installation of =evi
   :init
   (setq evil-want-C-i-jump nil
         evil-want-keybinding nil
-        evil-want-minibuffer t)
+        evil-want-minibuffer t
+        evil-move-cursor-back nil)
   :config
   (evil-mode 1)
   (evil-set-undo-system 'undo-redo))
@@ -518,6 +530,12 @@ Custom keybinds to use with the external packages or internal functions, we will
   :keymaps 'prog-mode-map
   "C-k" 'rd/eldoc-box-scroll-up
   "C-j" 'rd/eldoc-box-scroll-down)
+
+(general-define-key
+  :states '(insert)
+  :keymaps 'prog-mode-map
+  "C-." 'completion-at-point
+  "C-/" 'tempel-complete)
 
 (general-create-definer rd/leader-key
   :states '(normal insert visual emacs)
