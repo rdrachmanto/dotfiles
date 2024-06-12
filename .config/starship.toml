@@ -1,5 +1,14 @@
+format = "$all$line_break$jobs$character"
+
+[username]
+show_always = true
+
 [character] 
-success_symbol = '[➜](bold green)' 
+success_symbol = '[λ](bold green)' 
+error_symbol = '[λ](bold red)' 
+
+[cmd_duration]
+disabled = true
 
 # Packages and symbols
 [aws]
