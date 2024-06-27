@@ -37,3 +37,12 @@ alias cfg='/usr/bin/git --git-dir=/home/rdrachmanto/.cfg/ --work-tree=/home/rdra
 
 # starship init command
 eval "$(starship init bash)"
+
+[ -f "/home/rdrachmanto/.ghcup/env" ] && . "/home/rdrachmanto/.ghcup/env" # ghcup-env
+
+# Ocaml OPAM env
+eval "$(opam env)"
+
+# Rye setup (python)
+source "$HOME/.rye/env"
+. "$HOME/.cargo/env"
