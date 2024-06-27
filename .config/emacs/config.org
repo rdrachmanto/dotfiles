@@ -164,7 +164,6 @@ Emacs by default will look for themes in the default emacs directory. To make th
 (load-theme 'mod-tangonov t)
 #+end_src
 
-
 * Headerline 
 Some complementary packages for headerline (like mode-line, but up top) 
 
@@ -314,7 +313,7 @@ Extending =completion-at-point= will create a better completion experience. In t
 Programming related stuff, such as LSP, syntax highlighting, and major modes.
 
 ** Eglot
-Eglot is a built-in LSP client available in Emacs 29 onwards. LSPs for the languages still needs to be installed by the user. Connecting the client (eglot) to the LSP of choice for a programming language can be done by setting the =eglot-server-programs= with an array of =(mode . (LSP))=. Then to make eglot always activate its LSP capabilities in every programming languages, we hook the =eglot-elpaca= function to =prog-mode-hook=.
+Eglot is a built-in LSP client available in Emacs 29 onwards. LSPs for the languages still needs to be installed by the user. Connecting the client (eglot) to the LSP of choice for a programming language can be done by setting the =eglot-server-programs= with an array of =(mode . (LSP))=. Then to make eglot always activate its LSP capabilities in every programming languages, we hook the =eglot-ensure= function to =prog-mode-hook=.
 
 #+begin_src emacs-lisp
 (use-package eglot
@@ -369,6 +368,8 @@ Major mode for programming languages. Python and markdown-mode is installed as e
   (setq python-indent-offset 4
 	    python-indent-guess-indent-offset nil
 	    python-indent-def-block-scale 1))
+
+(use-package haskell-mode)
 #+end_src
 
 ** Rainbow Delimiters
