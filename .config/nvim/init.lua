@@ -3,7 +3,11 @@ require("defaults")
 
 
 -- Setup lazy
-require("plugins.lazy")
+require("package-manager")
+
+
+-- Autocommands
+require("scripts.autocmd")
 
 
 -- Mappings

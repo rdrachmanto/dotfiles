@@ -8,6 +8,7 @@ o.cursorline=true
 o.number=true
 o.numberwidth=3
 o.relativenumber=true
+o.showtabline=2
 
 o.autoindent=true
 o.expandtab=true
