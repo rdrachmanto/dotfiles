@@ -1,5 +1,4 @@
 local o = vim.o
-local g = vim.g
 
 o.termguicolors=true
 
@@ -20,11 +19,10 @@ o.ignorecase=true
 o.smartcase=true
 
 vim.opt.fillchars={ eob=' ' }
-g.loaded_netrw= 1
-g.loaded_netrwPlugin=1
 
 -- Statusline and winbar
 vim.opt.laststatus = 3
+vim.opt.winbar = " %f %m"
 
 -- Diagnostic signs
 vim.diagnostic.config({

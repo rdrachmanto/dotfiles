@@ -1,3 +1,4 @@
+-- Focusing on UI enhancements
 return {
   { "nvim-tree/nvim-web-devicons", lazy=true },
   {
@@ -11,21 +12,15 @@ return {
           },
           sections = {
             lualine_a = {
-              { "mode", color={ fg="#232323" } },
+              { "mode", color={ fg="#303030" } },
             },
             lualine_c = {
               { "filename", path=1 },
             },
             lualine_z = {
-              { "location", color={ fg="#232323" } },
+              { "location", color={ fg="#303030" } },
             },
           },
-          winbar = {
-            lualine_c = {{ "filename", path=1 }},
-          },
-          inactive_winbar = {
-            lualine_c = {{ "filename", path=1 }}
-          }
         })
      end
   },
