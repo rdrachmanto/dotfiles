@@ -21,8 +21,8 @@ o.smartcase=true
 vim.opt.fillchars={ eob=' ' }
 
 -- Statusline and winbar
-vim.opt.laststatus = 3
-vim.opt.winbar = " %f %m"
+vim.o.laststatus = 3
+vim.o.winbar = " %t %{%v:lua.require'nvim-navic'.get_location()%}"
 
 -- Diagnostic signs
 vim.diagnostic.config({

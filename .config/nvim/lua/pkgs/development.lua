@@ -3,8 +3,8 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       local lspconf = require("lspconfig")
+      require('lspconfig.ui.windows').default_options.border = 'single'
       lspconf.basedpyright.setup {}
-      lspconf.ocamllsp.setup {}
       lspconf.marksman.setup {}
       lspconf.lua_ls.setup {
         settings = { Lua = { diagnostics = { globals = {'vim'} } } }
@@ -44,19 +44,9 @@ return {
             require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
           end,
         },
-        mapping = {
-          ['<Tab>'] = cmp.mapping.select_next_item(),
-          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.close(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        },
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
           { name = 'luasnip' }, -- For luasnip users.
-          { name = 'buffer' },
           { name = 'path' }
         }),
         performance = { debounce = 300, },
@@ -70,7 +60,6 @@ return {
       "L3MON4D3/LuaSnip",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
-      "hrsh7th/cmp-buffer",
     }
   }
 }

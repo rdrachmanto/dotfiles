@@ -1,5 +1,5 @@
 return {
-  { "numToStr/Comment.nvim", opts = {} },
+  -- { "numToStr/Comment.nvim", opts = {} },
   { "HiPhish/rainbow-delimiters.nvim", },
   { "windwp/nvim-autopairs", event = "InsertEnter", config = true, },
   {
@@ -8,7 +8,11 @@ return {
     opts = {
       preset = "helix",
       icons = { rules = false },
-      win = { border = "single", no_overlap = true },
+      win = {
+        border = "single",
+        no_overlap = true,
+        padding = { 0, 0 },
+      },
     },
   }
 }

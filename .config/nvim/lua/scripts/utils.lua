@@ -12,9 +12,15 @@ function M.package_loader(...)
   return packages
 end
 
-function M.set_keymaps(mode, keymapl)
+function M.set_keymaps(mode, group, keymapl)
+  local wk = require("which-key")
+
+  -- for group 
+  wk.add({group[1], group=group[2]})
+
+  -- keymaps of group
   for _, keymap in ipairs(keymapl) do
-    vim.keymap.set(mode, keymap[1], keymap[2], keymap[3])
+    wk.add({keymap[1], keymap[2], desc=keymap[3], mode=mode})
   end
 end
 
