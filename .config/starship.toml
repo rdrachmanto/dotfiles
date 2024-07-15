@@ -1,7 +1,7 @@
 format = "$all$line_break$jobs$character"
 
 [username]
-show_always = true
+show_always = false 
 
 [character] 
 success_symbol = '[λ](bold green)' 
