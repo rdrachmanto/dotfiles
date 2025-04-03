@@ -33,16 +33,8 @@ vterm_printf(){
         	printf "\e]%s\e\\" "$1"
     	fi
 }
-alias cfg='/usr/bin/git --git-dir=/home/rdrachmanto/.cfg/ --work-tree=/home/rdrachmanto'
+
+export BAT_THEME="Material-Dark"
 
 # starship init command
 eval "$(starship init bash)"
-
-[ -f "/home/rdrachmanto/.ghcup/env" ] && . "/home/rdrachmanto/.ghcup/env" # ghcup-env
-
-# Ocaml OPAM env
-eval "$(opam env)"
-
-# Rye setup (python)
-source "$HOME/.rye/env"
-. "$HOME/.cargo/env"
