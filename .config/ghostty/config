@@ -1,0 +1,11 @@
+font-family = "IBM Plex Mono"
+font-size = 11
+
+window-padding-x = 6
+
+theme = "MaterialDarker"
+background = "#151515"
+
+cursor-style = "block"
+
+keybind = ctrl+shift+l=new_split:right
