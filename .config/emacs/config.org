@@ -47,7 +47,7 @@ Configure default variables. Emacs variables things such as startup infos, file 
 ;; With this, it will change from $ to SPC as sometimes marginalia docs can be very long. it's weird to see $ in the minibuffer
 (set-display-table-slot standard-display-table 'truncation 32)
 
-(add-to-list 'default-frame-alist '(font . "Jetbrains Mono Nerd Font-10.2"))
+(add-to-list 'default-frame-alist '(font . "Jetbrains Mono-10"))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'default-frame-alist '(internal-border-width . 6))
 #+end_src
