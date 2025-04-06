@@ -47,7 +47,7 @@ Configure default variables. Emacs variables things such as startup infos, file 
 ;; With this, it will change from $ to SPC as sometimes marginalia docs can be very long. it's weird to see $ in the minibuffer
 (set-display-table-slot standard-display-table 'truncation 32)
 
-(add-to-list 'default-frame-alist '(font . "Jetbrains Mono-10"))
+(add-to-list 'default-frame-alist '(font . "Jetbrains Mono-10.5"))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'default-frame-alist '(internal-border-width . 6))
 #+end_src
@@ -234,16 +234,6 @@ Emacs can be supported with completion, be it in the minibuffer, or buffer itsel
 	    corfu-preselect 'prompt))
 #+end_src
 
-** Company
-Another in-buffer auto completion library, similar to corfu. Used as a backup because corfu is crashing emacs through segfaults in the LSP.
-
-#+begin_src emacs-lisp
-(use-package company
-  :disabled
-  :hook
-  ('after-init . 'global-company-mode))
-#+end_src
-
 ** Vertico, Consult & Marginalia
 =Vertico= provides completions for minibuffers, while being a bit more minimalistic than =Ivy=. By default =vertico= does not have command/variable description like =Ivy=, but with =marginalia= we can replicate that. Consult has a ton of little helper commands available to us from the minibuffer.
 
@@ -276,116 +266,6 @@ Supercharge the autocomplete, on minibuffer and buffer. With orderless, we can g
   (completion-category-defaults nil)
   (completion-category-overrides
    '((file (styles partial-completion)))))
-#+end_src
-
-** Cape
-Extending =completion-at-point= will create a better completion experience. In this case, we can add filename, elisp block, keyword, abbrev and dabbrev as =completion-at-point= candidates
-
-#+begin_src emacs-lisp
-(use-package cape
-  :ensure t
-  :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-  (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-abbrev))
-#+end_src
-
-** Tempel
-
-#+begin_src emacs-lisp
-(use-package tempel
-  :init
-  (defun tempel-setup-capf ()
-    (setq-local completion-at-point-functions
-                (cons #'tempel-expand
-                      completion-at-point-functions)))
-  (add-hook 'conf-mode-hook 'tempel-setup-capf)
-  (add-hook 'prog-mode-hook 'tempel-setup-capf)
-  (add-hook 'text-mode-hook 'tempel-setup-capf))
-
-(use-package tempel-collection
-  :ensure t)
-#+end_src
-
-* Programming
-Programming related stuff, such as LSP, syntax highlighting, and major modes.
-
-** Eglot
-Eglot is a built-in LSP client available in Emacs 29 onwards. LSPs for the languages still needs to be installed by the user. Connecting the client (eglot) to the LSP of choice for a programming language can be done by setting the =eglot-server-programs= with an array of =(mode . (LSP))=. Then to make eglot always activate its LSP capabilities in every programming languages, we hook the =eglot-ensure= function to =prog-mode-hook=.
-
-#+begin_src emacs-lisp
-(use-package eglot
-  :ensure nil
-  :hook
-  ('prog-mode . 'eglot-ensure)
-  :config
-  (setq eglot-ignored-server-capabilities '(:documentHighlightProvider)))
-#+end_src
-
-** Treesit Auto
-Treesitter is a library for syntax highlighting. It can recognize symbols in the code (keywords, variables) among other things and then assigning it different colors. Treesitter tends to be more accurate in doing those tasks compared to regex-based highlighting. In Emacs, we still need to install the treesitter grammars manually and then set the major mode to use the treesitter grammar, like switching from =python-mode= to =python-ts-mode=. This package makes it easier to install the grammars and will automatically switch the major mode to use the grammar if we have it. 
-
-#+begin_src emacs-lisp
-(use-package treesit-auto
-  :config
-  (global-treesit-auto-mode)
-  (setq treesit-auto-install t))
-#+end_src
-
-** Eldoc Box
-Eglot uses eldoc to display the documentation, these documentation popups are at the bottom, this can be very distracting. Eldoc box itself has a capability similar to =lsp-ui= package in displaying the documentation on hover.
-
-#+begin_src emacs-lisp
-(use-package eldoc-box
-  :config
-  (setq eldoc-box-max-pixel-height 350)
-  (defun rd/eldoc-box-scroll-up ()
-    (interactive)
-    (with-current-buffer eldoc-box--buffer
-      (with-selected-frame eldoc-box--frame
-        (scroll-down 3))))
-  (defun rd/eldoc-box-scroll-down ()
-    (interactive)
-    (with-current-buffer eldoc-box--buffer
-        (with-selected-frame eldoc-box--frame
-          (let ((scroll-up-distance 3))
-            (when (not (pos-visible-in-window-p (point-max)))
-              (scroll-up scroll-up-distance)))))))
-#+end_src
-
-** Programming Modes
-Major mode for programming languages. Python and markdown-mode is installed as example.
-
-#+begin_src emacs-lisp
-(use-package markdown-mode
-  :init
-  (setq markdown-hide-markup nil))
-
-(use-package python-mode
-  :config
-  (setq python-indent-offset 4
-	    python-indent-guess-indent-offset nil
-	    python-indent-def-block-scale 1))
-
-(use-package haskell-mode)
-#+end_src
-
-** Rainbow Delimiters
-Make delimiters, especially parentheses colorful. This helps to identify delimiter pairings, especially in codes that has a lot of parentheses like elisp. 
-
-#+begin_src emacs-lisp
-(use-package rainbow-delimiters
-  :hook
-  ('prog-mode . 'rainbow-delimiters-mode))
-#+end_src
-
-** Conda
-Conda environment integration.
-
-#+begin_src emacs-lisp
-(use-package conda)
 #+end_src
 
 * Project Management
@@ -449,21 +329,6 @@ Modern style for org buffers, this package will style headings, keywords, tables
   :hook
   ('org-mode . org-modern-mode)
   ('org-agenda-finalize . org-modern-agenda))
-#+end_src
-
-* LaTeX
-Aside from programming and note-taking, currently I am also doing a research project. Usually, to write our findings and submit them to journal or conferences, academics would write in LaTeX or tex format. 
-
-** AucTex
-The go-to package for tex files editing. It supports autocomplete libraries, it is also filled with commands and key combinations to create environments, exporting to pdf, and do a couple other commands.
-
-#+begin_src emacs-lisp
-(use-package auctex
-  :defer t
-  :hook
-  (LaTeX-mode . (lambda ()
-		  (push (list 'output-pdf "Okular")
-			TeX-view-program-selection))))
 #+end_src
 
 * Bindings
@@ -581,7 +446,7 @@ Custom keybinds to use with the external packages or internal functions, we will
 
 (rd/leader-key
   "o c" '((lambda () (interactive)
-	    (find-file "~/dotfiles/.config/emacs/config.org"))
+	    (find-file "~/.dotfiles/.config/emacs/config.org"))
 	  :wk "Open config")
   "o n" '((lambda () (interactive)
 	    (dired "~/Documents/Notes"))
