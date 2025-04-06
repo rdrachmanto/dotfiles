@@ -16,14 +16,3 @@ utils.set_keymaps(
     {"<leader>;f", ":lua require('conform').format()<CR>", "Format buffer"},
   }
 )
-
--- Nvim CMP
--- Can be placed in the config, but placed here to conform with grouping
-local cmp_maps = require("cmp").mapping
-require("cmp").setup({
-  mapping = {
-    ['<Tab>'] = cmp_maps.select_next_item(),
-    ['<S-Tab>'] = cmp_maps.select_prev_item(),
-    ['<CR>'] = cmp_maps.confirm({ select = true }),
-  }
-})

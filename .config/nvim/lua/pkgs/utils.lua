@@ -1,5 +1,4 @@
 return {
-  -- { "numToStr/Comment.nvim", opts = {} },
   { "HiPhish/rainbow-delimiters.nvim", },
   { "windwp/nvim-autopairs", event = "InsertEnter", config = true, },
   {

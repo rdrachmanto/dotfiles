@@ -5,10 +5,6 @@ return {
       local lspconf = require("lspconfig")
       require('lspconfig.ui.windows').default_options.border = 'single'
       lspconf.basedpyright.setup {}
-      lspconf.marksman.setup {}
-      lspconf.lua_ls.setup {
-        settings = { Lua = { diagnostics = { globals = {'vim'} } } }
-      }
     end
   },
   {
@@ -35,31 +31,37 @@ return {
     end
   },
   {
-    "hrsh7th/nvim-cmp",
-    config = function()
-      local cmp = require("cmp")
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-          end,
+    'saghen/blink.cmp',
+    version = "1.*",
+    opts = {
+      keymap = { preset = "enter" },
+      appearance = {
+        nerd_font_variant = "normal",
+      },
+      completion = { 
+        documentation = { auto_show = false },
+        menu = {
+          scrollbar = false,
+          draw = {
+            columns = {
+              { "kind_icon" },
+              { "label", "label_description", gap=1 }
+            },
+            treesitter = { "lsp" }
+          } 
         },
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' }, -- For luasnip users.
-          { name = 'path' }
-        }),
-        performance = { debounce = 300, },
-        completion = { keywordlength = 2 },
-        view = {
-          docs = { auto_open = false }
-        }
-      })
-    end,
-    dependencies = {
-      "L3MON4D3/LuaSnip",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-path",
-    }
+        list = {
+          selection = { 
+            preselect = false,
+            auto_insert = false
+          }
+        },
+      },
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer" }
+      },
+      fuzzy = { implementation = "prefer_rust_with_warning" }
+    },
+    opts_extend = { "sources.default" }
   }
 }
