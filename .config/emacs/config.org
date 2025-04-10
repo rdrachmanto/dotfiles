@@ -1,341 +1,132 @@
-#+TITLE: Emacs IDE Config
-#+AUTHOR: Rakandhiya Daanii
+#+TITLE: My Emacs Config
+#+AUTHOR: Rakandhiya Rachmanto
 
-* External Scripts
-To make this org file not too long, some scripts e.g. Elpaca setup codes are separated into another file. External files or scripts for this config lives in the =scripts/= folder. 
+* Core Defaults
 
-#+begin_src emacs-lisp
-;; add scripts directory to path
-(add-to-list 'load-path "~/.config/emacs/scripts/")
-
-;; source the scripts
-(require 'elpaca-setup)
-;; (require 'show-startup-info)
-#+end_src
-
-* Default Variables
-Configure default variables. Emacs variables things such as startup infos, file behaviors (auto-saves, backup, lockfiles), and a couple others. I'd change it to reflect what I'm familiar/content with from other code editors I've tried.
+** Variables
 
 #+begin_src emacs-lisp
 (setq inhibit-startup-message t
-      ring-bell-function 'ignore
-      scroll-margin 6
-      vc-follow-symlinks t
-      frame-resize-pixelwise t
-      enable-recursive-minibuffers t
-      isearch-lazy-count t
-      make-backup-files nil
-      auto-save-default nil
-      create-lockfiles nil
-      tab-always-indent t 
-      project-vc-extra-root-markers '(".dir-locals.el")
-      eldoc-echo-area-use-multiline-p nil
-      use-dialog-box nil
-      use-file-dialog nil
-      native-comp-async-report-warnings-errors 'silent
-      scroll-error-top-bottom t
-      display-fill-column-indicator-character ?\N{U+2502})
+      ring-bell-function 'ignore)
 
+(setq make-backup-files nil
+      auto-save-default nil
+      create-lockfiles nil)
+
+(setq enable-recursive-minibuffers t)
+
+(setq tab-always-indent t)
+
+(setq use-dialog-box nil
+      use-file-dialog nil)
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(setq-default fill-column 80
-	        display-line-numbers-width 3)
-
-(set-window-buffer nil (current-buffer))
-
-;; If a string is too long, emacs will truncate a portion of the text and indicate the truncation by using the char "$" in rightmost/leftmost
-;; With this, it will change from $ to SPC as sometimes marginalia docs can be very long. it's weird to see $ in the minibuffer
-(set-display-table-slot standard-display-table 'truncation 32)
-
-(add-to-list 'default-frame-alist '(font . "Jetbrains Mono-10.5"))
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-(add-to-list 'default-frame-alist '(internal-border-width . 6))
+(set-frame-font "IBM Plex Mono 10" nil t)
 #+end_src
 
-** PGTK Builds Specific Settings
+** Default Minor Modes
 
 #+begin_src emacs-lisp
-(setq-default pgtk-wait-for-event-timeout 0) 
-#+end_src
-
-* Default Modes
-Other than variables, we can also change the major/minor modes to be active/non-active. We can do it globally, or locally, with hooks for example. I'm changing the UI, and a couple behaviors such as removing tool bars, scroll bars, enabling relative numbering vertical lines.
-
-#+begin_src emacs-lisp
-(column-number-mode t)
-(global-auto-revert-mode)
-(savehist-mode)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(electric-pair-mode 1)
-(scroll-bar-mode -1)
 (recentf-mode)
-(fringe-mode '(2 . 2))
+(savehist-mode)
+(electric-pair-mode t)
 (delete-selection-mode t)
+#+end_src
 
-(defun set-prog-modes ()
-  ;; (hl-line-mode)
-  (display-fill-column-indicator-mode)
-  (display-line-numbers-mode)
-  (setq display-line-numbers-type 'relative))
+** User Interface 
+
+#+begin_src emacs-lisp
+(load-theme 'modus-operandi t)
+
+(column-number-mode t)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
 
 (defun set-text-modes ()
+  (hl-line-mode)
   (display-line-numbers-mode)
-  (setq display-line-numbers-type 'relative))
+  (setq display-line-numbers-type 'relative)
+  (setq-default display-line-numbers-width 3))
 
-(add-hook 'prog-mode-hook
-          (lambda () (set-prog-modes)))
-(add-hook 'text-mode-hook
-          (lambda () (set-text-modes)))
-
-(add-hook 'dired-after-readin-hook 'hl-line-mode)
-(add-hook 'org-mode-hook 'visual-line-mode)
+(add-hook 'org-mode-hook (lambda () (set-text-modes)))
 #+end_src
 
-* Default Org Settings
-Org-mode is a major part of emacs, it can be used to write regular text files, notes, schedules and all that. Org-mode itself has a lot of extensions but we can also configure its defaults.
+* Org Defaults
 
 #+begin_src emacs-lisp
-(setq org-support-shift-select t
-      org-fontify-whole-heading-line t
+(setq org-fontify-whole-heading-line t
       org-pretty-entities t
-      org-auto-align-tags nil
-      org-tags-column 0
-      org-catch-invisible-edits 'show-and-error
-      org-special-ctrl-a/e t
-      org-insert-heading-respect-content t
       org-hide-emphasis-markers t
-      org-startup-indented t)
+      org-startup-indented t
+      org-insert-heading-respect-content t)
+
+(setq org-auto-align-tags nil
+      org-tags-column 0
+      org-special-ctrl-a/e t
+      org-catch-invisible-edits 'show-and-error)
 
 (setq org-src-preserve-indentation nil
       org-src-tab-acts-natively t
       org-src-fontify-natively t
       org-edit-src-content-indentation 0)
-
-(add-hook 'org-mode-hook
-	  (lambda ()
-	    (setq-local electric-pair-inhibit-predicate
-			`(lambda (c)
-			   (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
-
-(add-hook 'org-mode-hook 'org-indent-mode)
 #+end_src
 
-* Set exec-path to mimic $PATH
-Other text editors recognize path variables easily, but not emacs. Instead emacs relies on internal variable called =exec-path=. This can be a pain because we have to set =exec-path= again and again every time we add someting to path that we might need in emacs. By setting the =exec-path= to mimic =$PATH=, we wont need to manually modify set =exec-path= again if we installed a new thing.
+* Packages
+
+** Completions
+
+*** Common
 
 #+begin_src emacs-lisp
-(use-package exec-path-from-shell)
-
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+(use-package embark)
 #+end_src
 
-* Icons & Themes
-For icons we will use =nerd-icons= and its complementary packages. For themes, it will be a slightly modified/extended version of =tangonov-theme= that I call =mod-tangonov= for "modified tangonov".
-
-** Icons
-=nerd-icons= is the package that provides the icons. Other packages such as =nerd-icons-completion=, =nerd-icons-dired= etc will enable us to use =nerd-icons= on a specific buffer/frame. For example the =nerd-icons-completion= package will add =nerd-icons= in the minibuffer.
+*** Buffer Completions 
 
 #+begin_src emacs-lisp
-(use-package nerd-icons)
-
-(use-package nerd-icons-completion
-  :after marginalia
-  :config
-  (nerd-icons-completion-mode)
-  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
-
-(use-package nerd-icons-dired
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
-
-(use-package nerd-icons-corfu
-  :after corfu
-  :config
-  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-#+end_src
-
-** Themes
-Emacs by default will look for themes in the default emacs directory. To make the emacs directory neater, the custom theme will instead be moved to ="~/.config/emacs/themes"=.
-
-#+begin_src emacs-lisp
-(add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
-(load-theme 'mod-tangonov t)
-#+end_src
-
-* Headerline 
-Some complementary packages for headerline (like mode-line, but up top) 
-
-** Breadcrumb
-Breadcrumb path for more details about current file's location in the project. If opened in a programming mode, it can also traces class and function.
-
-#+begin_src emacs-lisp
-(use-package breadcrumb
-  :config
-  (setq breadcrumb-project-max-length 0.2
-	    breadcrumb-imenu-max-length 0.4))
-
-(setq-default header-line-format
-	      '(
-		" " (:eval (breadcrumb-project-crumbs))
-		" : " (:eval (breadcrumb-imenu-crumbs))
-		))
-#+end_src
-
-* Modeline
-Modeline customization, from library, to format and other supporting mode-line libraries such as mode-line menus etc.
-
-** Modeline Settings
-Make that little bar on the bottom prettier.
-
-#+begin_src emacs-lisp
-;; We will change the default format and style of the modeline. On our own!
-(setq-default mode-line-format
-	      '(
-		(:propertize ("" evil-mode-line-tag))
-		(:propertize "%l:%C ")
-		(:eval "%b ")
-		(:propertize "%Z%*%*%@ ")
-		(vc-mode vc-mode) " "
-		minions-mode-line-modes mode-line-misc-info
-		))
-#+end_src
-
-** Minions
-Provide a menu for minor modes in the mode line, this is also a better way to remove the minor mode clutter.
-
-#+begin_src emacs-lisp
-(use-package minions
-  :config
-  (setq minions-prominent-modes '(flymake-mode))
-  (minions-mode 1))
-#+end_src
-
-* Completions
-Emacs can be supported with completion, be it in the minibuffer, or buffer itself, we can configure the completion to follow the LSP, or add meaningful features/info about something if accessing the minibuffer.
-
-** Corfu
-=completion-at-point= is the default completion in Emacs, but it's not ideal. =Corfu= is a code autocomplete tool, and =eglot= integrates nicely with this one! For simplicity we'll enable =corfu= globally. We will also get completion when we're in emacs lisp file, and even in normal text files.
-
-*Currently disabled due to corfu making LSP segfault and crashing emacs, replaced temporarily with company-mode*
-
-#+begin_src emacs-lisp
+;; In buffer completion menu
 (use-package corfu
-  :ensure t
+  :defer t
   :init
-  (global-corfu-mode t)
-  :config
-  (setq corfu-cycle t
-	    corfu-preview-current nil
-	    corfu-auto t 
-	    corfu-auto-delay 0.12
-	    corfu-auto-prefix 3
-	    corfu-preselect 'prompt))
+  (global-corfu-mode)
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t))
+
+(use-package cape
+  :init
+  (add-hook 'completion-at-point-functions #'cape-elisp-block)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-dabbrev))
+
 #+end_src
 
-** Vertico, Consult & Marginalia
-=Vertico= provides completions for minibuffers, while being a bit more minimalistic than =Ivy=. By default =vertico= does not have command/variable description like =Ivy=, but with =marginalia= we can replicate that. Consult has a ton of little helper commands available to us from the minibuffer.
+*** Minibuffer Completions 
 
 #+begin_src emacs-lisp
+;; Minibuffer completion menu
 (use-package vertico
-  :init (vertico-mode)
+  :init
+  (vertico-mode)
   :config
-  (setq vertico-cycle t
-        read-file-name-completion-ignore-case t
-        read-buffer-completion-ignore-case t
-        completion-ignore-case t))
+  (setq vertico-resize t
+	vertico-cycle t))
 
-(use-package consult
-  :config
-  (add-to-list 'consult-buffer-filter '"^\\*")) ;; hides star buffers
+(use-package consult)
+
+(use-package embark-consult
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package marginalia
-  :init (marginalia-mode)
+  :init
+  (marginalia-mode)
   :config
   (setq marginalia-align 'right))
 #+end_src
 
-** Orderless
-Supercharge the autocomplete, on minibuffer and buffer. With orderless, we can get completion, regardless of typing order and spacing.
-
-#+begin_src emacs-lisp
-(use-package orderless
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-defaults nil)
-  (completion-category-overrides
-   '((file (styles partial-completion)))))
-#+end_src
-
-* Project Management
-Project management tools such as git dashboard, and project/workspace related actions.
-
-** Perspective
-Provides a workspace-like separation in emacs, a good choice if we are opening a few directories/projects at the same time. Each perspective will have its own window layout and buffer list. Perspectives can also be saved into a file, to recover the last session. 
-
-#+begin_src emacs-lisp
-(use-package perspective
-  :custom
-  (persp-mode-prefix-key (kbd "C-c M-p"))
-  :config
-  (consult-customize consult--source-buffer :hidden t :default nil)
-  (add-to-list 'consult-buffer-sources persp-consult-source)
-  :init
-  (persp-mode))
-#+end_src
-
-* Version Control
-All git-related stuff, a git interface, little UI enhancements and other helper packages.
-
-** Magit
-Massive git interface for Emacs, a pretty powerful tool to have. We have a couple of things we can do with magit, stage/unstage and seeing the diff, doing a commit, pushing, pulling or doing a rebase. Those functions are also flexible as we can add flags when executing it.
-
-#+begin_src emacs-lisp
-(use-package transient)
-(use-package magit)
-#+end_src
-
-** Diff HL
-See git status highlighting within emacs, such as edited, new or deleted code. Located on the left border of the screen. 
-
-#+begin_src emacs-lisp
-(use-package diff-hl
-  :config
-  (global-diff-hl-mode)
-  (diff-hl-flydiff-mode)
-  (setq diff-hl-disable-on-remote t)
-  :hook
-  ('magit-pre-refresh . 'diff-hl-magit-pre-refresh)
-  ('dired-mode . 'diff-hl-dired-mode)
-  ('magit-post-refresh . 'diff-hl-magit-post-refresh))
-#+end_src
-
-* Org
-Org related packages
-
-** Org Tempo
-Enable shortcuts of various org components
-
-#+begin_src emacs-lisp
-(require 'org-tempo)
-#+end_src
-
-** Org Modern
-Modern style for org buffers, this package will style headings, keywords, tables and source blocks. Styling is also configurable. 
-
-#+begin_src emacs-lisp
-(use-package org-modern
-  :hook
-  ('org-mode . org-modern-mode)
-  ('org-agenda-finalize . org-modern-agenda))
-#+end_src
-
-* Bindings
-All binding related stuff, from VIM emulation, keyboard shortcut setter, and shortcut viewer, to keybinds itself.
-
-** Evil
-Next, we're going to enable vim-like modal editing with the installation of =evil=. Out of the box, =evil= and =org= has a conflict in the =<TAB>= action. setting the =C-i-jump= to nil solve this. Last thing, is to also enable evil in the minibuffer, as evil by default is not active in there. 
+** Modal Editing
 
 #+begin_src emacs-lisp
 (use-package evil
@@ -347,113 +138,99 @@ Next, we're going to enable vim-like modal editing with the installation of =evi
   :config
   (evil-mode 1)
   (evil-set-undo-system 'undo-redo))
-#+end_src
 
-** Evil-Anzu
-NVIM or VIM has a package called =anzu= that displays the current and total occurrences when searching. A port for emacs with the same name exists, but to use it with evil, we need =evil-anzu=. We will also need anzu.
-
-#+begin_src emacs-lisp
 (use-package anzu
   :init
   (global-anzu-mode +1))
 
 (use-package evil-anzu
-  :after evil anzu)
-#+end_src
+  :after anzu evil)
 
-** Evil Collection
-Additional key binds for things that evil does not cover. We'll use this package as the =evil-want-minibuffer= variable is only about enabling the modes, but the keybinds are not set. =Evil-collection= will handle the keybinds for us. And if we want, this package also has bindings for a couple more things.
-
-#+begin_src emacs-lisp
 (use-package evil-collection
   :after evil
   :custom (evil-collection-setup-minibuffer t)
   :init (evil-collection-init))
 #+end_src
-  
-** Which Key
-A helper to remember what key combinations are for what actions.
+
+** Org
+
+#+begin_src emacs-lisp
+(use-package org
+  :config
+  (setq org-hide-emphasis-markers t
+	org-startup-indented t)
+  (require 'org-tempo))
+
+(use-package org-modern
+  :hook
+  ('org-mode . org-modern-mode))
+#+end_src
+
+** User Interface
+
+#+begin_src emacs-lisp
+(use-package nerd-icons)
+
+(use-package nerd-icons-completion
+  :after marginalia
+  :config
+  (nerd-icons-completion-mode)
+  :hook
+  ('marginalia-mode . #'nerd-icons-completion-marginalia-setup))
+
+(use-package nerd-icons-corfu
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+(use-package doom-modeline
+  :init
+  (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-modal-icon nil))
+#+end_src
+
+** Utility
 
 #+begin_src emacs-lisp
 (use-package which-key
-  :init (which-key-mode))
+  :config
+  (which-key-mode))
+
+(use-package general
+  :defer t)
+
+(use-package rainbow-delimiters
+  :hook
+  ('prog-mode . #'rainbow-delimiters-mode))
 #+end_src
 
-** General
-Simplify making keybinds with general. With this we dont have to type =evil-define-key= multiple times.
+* Keybinds
 
 #+begin_src emacs-lisp
-(use-package general)
-(elpaca-wait)
-#+end_src
-
-** Keybinds
-Custom keybinds to use with the external packages or internal functions, we will try to approach this mnemonically. As in b for buffers, f for file tree, and others
-
-#+begin_src emacs-lisp
-(general-define-key
-  :states '(normal insert visual emacs)
-  :keymaps 'prog-mode-map
-  "C-k" 'rd/eldoc-box-scroll-up
-  "C-j" 'rd/eldoc-box-scroll-down)
-
-(general-define-key
-  :states '(insert)
-  :keymaps 'prog-mode-map
-  "C-." 'completion-at-point
-  "C-/" 'tempel-complete)
-
 (general-create-definer rd/leader-key
   :states '(normal insert visual emacs)
   :keymaps 'override
-  :prefix ";"
-  :global-prefix "C-;")
+  :prefix "SPC"
+  :global-prefix "C-SPC")
 
-(rd/leader-key
-  :keymaps 'prog-mode-map
-  ";" '(:ignore t :wk "Code")
-  "; ;" '(eldoc-box-help-at-point :wk "Documentation on cursor")
-  "; a" '(eglot-code-actions :wk "Code actions")
-  "; d" '(eglot-find-declaration :wk "Find declaration")
-  "; f" '(eglot-format-buffer :wk "Format buffer")
-  "; i" '(eglot-find-implementation :wk "Find implementation")
-  "; r" '(eglot-rename :wk "Rename symbol")
-  "; t" '(eglot-find-typeDefinition :wk "Find typedef"))
+(general-define-key
+ :states '(normal visual insert emacs)
+ "C-." 'embark-act
+ "C-;" 'embark-dwim)
 
-(rd/leader-key
-  "=" '(:ignore t :wk "Perspective")
-  "= =" '(persp-switch :wk "Switch perspectives")
-  "= b" '(persp-switch-to-buffer* :wk "Switch to buffers in this persp")
-  "= B" '(persp-switch-to-buffer :wk "Switch to buffers in all persp")
-  "= [" '(persp-prev :wk "Previous persp")
-  "= ]" '(persp-next :wk "Next persp"))
+(general-define-key
+ :keymaps 'minibuffer-local-map
+ "C-." 'embark-act
+ "C-;" 'embark-dwim)
 
+;; Files
 (rd/leader-key
-  "b" '(:ignore t :wk "Bookmarks/Buffers")
-  "b b" '(consult-buffer :wk "Switch to buffer")
-  "b k" '(kill-this-buffer :wk "Kill this buffer")
-  "b p" '(consult-project-buffer :wk "Switch to project buffer")
-  "b r" '(revert-buffer :wk "Revert buffer")
-  "b R" '(rename-visited-file :wk "Rename buffer"))
+ "f" '(:ignore t :wk "File")
+ "ff" '(consult-recent-file :wk "Open recent files"))
 
+;; Buffers
 (rd/leader-key
-  "c" '(:ignore t :wk "Config")
-  "c r" '(lambda () (interactive) (load-file user-init-file)))
-
-(rd/leader-key
-  "f" '(:ignore t :wk "Files")
-  "f r" '(consult-recent-file :wk "Find recent files"))
-
-(rd/leader-key
-  "o c" '((lambda () (interactive)
-	    (find-file "~/.dotfiles/.config/emacs/config.org"))
-	  :wk "Open config")
-  "o n" '((lambda () (interactive)
-	    (dired "~/Documents/Notes"))
-	  :wk "Open notes folder in dired"))
-
-(rd/leader-key
-  "t" '(:ignore t :wk "Toggles")
-  "t f" 'consult-flymake)
+ "b" '(:ignore t :wk "Buffer")
+ "bb" '(consult-buffer :wk "Switch buffers"))
 #+end_src
-

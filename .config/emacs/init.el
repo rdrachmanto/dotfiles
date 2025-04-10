@@ -1,4 +1,10 @@
-;; Read and tangle the emacs-config.org file
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+        ("gnu"   . "https://elpa.gnu.org/packages/")))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+
 (require 'org)
 (org-babel-load-file
   (expand-file-name "config.org" user-emacs-directory))
