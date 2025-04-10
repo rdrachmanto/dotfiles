@@ -7,6 +7,19 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "ssh_connections": [
+    {
+      "host": "fox1.cs.uga.edu",
+      "username": "rdr78068",
+      "projects": [
+        {
+          "paths": [
+            "/data/rdr78068/satnerf-base"
+          ]
+        }
+      ]
+    }
+  ],
   "icon_theme": "JetBrains Icons Dark",
   "vim_mode": false,
   "telemetry": {
