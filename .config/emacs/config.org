@@ -21,7 +21,11 @@
       use-file-dialog nil)
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(set-frame-font "IBM Plex Mono 10" nil t)
+(setq eldoc-echo-area-use-multiline-p nil)
+
+(setq native-comp-async-report-warnings-errors 'silent)
+
+(set-frame-font "IosevkaTerm Nerd Font-10.8" nil t)
 #+end_src
 
 ** Default Minor Modes
@@ -43,13 +47,14 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
-(defun set-text-modes ()
+(defun set-modes ()
   (hl-line-mode)
   (display-line-numbers-mode)
   (setq display-line-numbers-type 'relative)
   (setq-default display-line-numbers-width 3))
 
-(add-hook 'org-mode-hook (lambda () (set-text-modes)))
+(add-hook 'org-mode-hook (lambda () (set-modes)))
+(add-hook 'prog-mode-hook (lambda () (set-modes)))
 #+end_src
 
 * Org Defaults
@@ -73,6 +78,24 @@
 #+end_src
 
 * Packages
+
+** Code
+
+Anything related to code, from LSP integration to error checking and documentation-viewing
+
+#+begin_src emacs-lisp
+(use-package markdown-mode)
+
+(use-package eglot
+  :hook
+  ('prog-mode . 'eglot-ensure)
+  :config
+  (add-to-list 'eglot-server-programs
+	       '((python-mode python-ts-mode)
+		 "basedpyright-langserver" "--stdio")))
+
+(use-package eldoc-box)
+#+end_src
 
 ** Completions
 
@@ -113,7 +136,12 @@
   (setq vertico-resize t
 	vertico-cycle t))
 
-(use-package consult)
+(use-package consult
+  :config
+  (setq consult-fd-args
+	`((if (executable-find "fdfind" 'remote) "fdfind" "fd")
+	  "--full-path --color=never --hidden --exclude .git")
+	))
 
 (use-package embark-consult
   :hook
@@ -203,6 +231,10 @@
 (use-package rainbow-delimiters
   :hook
   ('prog-mode . #'rainbow-delimiters-mode))
+
+(use-package tree-sitter-langs
+  :hook
+  ('prog-mode . #'tree-sitter-hl-mode))
 #+end_src
 
 * Keybinds
@@ -227,10 +259,16 @@
 ;; Files
 (rd/leader-key
  "f" '(:ignore t :wk "File")
- "ff" '(consult-recent-file :wk "Open recent files"))
+ "ff" '(consult-fd :wk "Open files in current project")
+ "fr" '(consult-recent-file :wk "Open files in current project"))
 
 ;; Buffers
 (rd/leader-key
  "b" '(:ignore t :wk "Buffer")
  "bb" '(consult-buffer :wk "Switch buffers"))
+
+(rd/leader-key
+  :keymaps 'prog-mode-map
+  ";" '(:ignore t :wk "Code")
+  "; ;" '(eldoc-box-help-at-point :wk "Documentation on cursor"))
 #+end_src
