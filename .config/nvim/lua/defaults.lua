@@ -1,4 +1,15 @@
 local o = vim.o
+local g = vim.g
+
+g.netrw_banner=0
+g.netrw_browse_split=4
+g.netrw_altv=1
+g.netrw_liststyle=3
+
+o.clipboard = unnamedplus
+
+o.splitbelow = true
+o.splitright = true
 
 o.termguicolors=true
 

@@ -25,7 +25,8 @@ return {
 
       -- Re-enable cursorline highlighting
       vim.api.nvim_exec([[
-        hi StatusLine cterm=NONE guibg=#303030
+        hi MsgArea cterm=NONE guibg=NONE guifg=#878580
+        hi StatusLine cterm=NONE guibg=NONE guifg=#878580
         hi WinBar cterm=NONE guibg=#303030
         hi WinBarNC cterm=NONE guifg=#303030 guibg=NONE
         hi CursorLine cterm=NONE guibg=#101010
