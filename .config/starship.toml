@@ -1,11 +1,11 @@
-format = "$all$line_break$jobs$character"
+format = " $all$line_break$jobs$character"
 
 [username]
 show_always = false 
 
 [character] 
-success_symbol = '[λ](bold green)' 
-error_symbol = '[λ](bold red)' 
+success_symbol = ' [λ](bold green)' 
+error_symbol = ' [λ](bold red)' 
 
 [cmd_duration]
 disabled = true
