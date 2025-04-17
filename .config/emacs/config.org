@@ -40,7 +40,7 @@
 ** User Interface 
 
 #+begin_src emacs-lisp
-(load-theme 'modus-operandi t)
+(load-theme 'cisco t)
 
 (column-number-mode t)
 (scroll-bar-mode -1)
@@ -56,6 +56,9 @@
 (add-hook 'org-mode-hook (lambda () (set-modes)))
 (add-hook 'prog-mode-hook (lambda () (set-modes)))
 #+end_src
+
+#+RESULTS:
+| tree-sitter-hl-mode | rainbow-delimiters-mode | eglot-ensure | (lambda nil (set-modes)) |
 
 * Org Defaults
 
