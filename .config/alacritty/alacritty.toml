@@ -1,4 +1,5 @@
 [window]
+decorations_theme_variant = "Dark"
 padding = {x = 0, y = 0}
 
 [font]
@@ -8,3 +9,13 @@ normal = { family = "IosevkaTerm Nerd Font" }
 [colors.primary]
 background = "#0E100F"
 foreground = "#CECDC3"
+
+[colors.normal]
+black = "#0E100F"
+red = "#D14D41"
+green = "#879A39"
+yellow = "#F3CD07"
+blue = "#5B79E3"
+magenta = "#E394DC"
+cyan = "#3AA99F"
+white = "#FFFFFF"
