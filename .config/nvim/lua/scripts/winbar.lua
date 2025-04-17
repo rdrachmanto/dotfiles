@@ -4,7 +4,7 @@ function M.set_winbar()
   local winbar_fmt = {
     " ",
     "%t",
-    " ",
+    " "
   }
 
   if vim.api.nvim_get_current_win() == vim.api.nvim_get_current_win() then

@@ -25,11 +25,15 @@ o.expandtab=true
 o.tabstop=2
 o.shiftwidth=2
 o.signcolumn="yes"
+o.foldcolumn="1"
 
 o.ignorecase=true
 o.smartcase=true
 
 vim.opt.fillchars={ eob=' ' }
+
+-- Colorscheme
+vim.cmd("colorscheme cisco")
 
 -- Statusline and winbar
 vim.o.laststatus = 3
@@ -38,9 +42,14 @@ vim.o.winbar = " %t %{%v:lua.require'nvim-navic'.get_location()%}"
 -- Diagnostic signs
 vim.diagnostic.config({
   virtual_text = false,
+  underline = {
+    severity = {
+      min = vim.diagnostic.severity.HINT,
+    }
+  },
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = "●",
+      [vim.diagnostic.severity.ERROR] = "▲",
       [vim.diagnostic.severity.WARN] = "●",
       [vim.diagnostic.severity.INFO] = "○",
       [vim.diagnostic.severity.HINT] = "○",

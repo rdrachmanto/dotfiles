@@ -12,7 +12,7 @@ local finder = require("pkgs.finder")
 
 
 local pkgs = utils.package_loader(
-  ui, development, ut, vc, finder, colorscheme
+  ui, development, ut, vc, finder
 )
 
 require("lazy").setup(pkgs, {
