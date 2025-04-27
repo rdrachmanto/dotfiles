@@ -1,0 +1,31 @@
+confirm-before-quit=false
+
+padding-x = 4
+padding-y = [0, 0]
+
+draw-bold-text-with-light-colors = true
+
+[cursor]
+shape="block"
+blinking=true
+
+[fonts]
+size=14
+family="IosevkaTerm Nerd Font"
+
+[navigation]
+mode="Plain"  # options: "TopTab" "BottomTab" "Bookmark"
+
+[colors]
+background = "#0E100F"
+foreground = "#CECDC3"
+black = "#0E100F"
+red = "#D14D41"
+green = "#879A39"
+yellow = "#F3CD07"
+blue = "#5B79E3"
+magenta = "#E394DC"
+cyan = "#3AA99F"
+white = "#FFFFFF"
+
+cursor = "#FE9900"

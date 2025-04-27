@@ -25,7 +25,7 @@
 
 (setq native-comp-async-report-warnings-errors 'silent)
 
-(set-frame-font "IosevkaTerm Nerd Font-10.8" nil t)
+(set-frame-font "Iosevka Nerd Font-10.8" nil t)
 #+end_src
 
 ** Default Minor Modes
@@ -40,6 +40,9 @@
 ** User Interface 
 
 #+begin_src emacs-lisp
+;; Autothemer
+(use-package autothemer)
+
 (load-theme 'cisco t)
 
 (column-number-mode t)
@@ -56,9 +59,6 @@
 (add-hook 'org-mode-hook (lambda () (set-modes)))
 (add-hook 'prog-mode-hook (lambda () (set-modes)))
 #+end_src
-
-#+RESULTS:
-| tree-sitter-hl-mode | rainbow-delimiters-mode | eglot-ensure | (lambda nil (set-modes)) |
 
 * Org Defaults
 

@@ -7,7 +7,6 @@ g.netrw_altv=1
 g.netrw_liststyle=3
 
 o.clipboard = unnamedplus
-
 o.splitbelow = true
 o.splitright = true
 
@@ -29,6 +28,8 @@ o.foldcolumn="1"
 
 o.ignorecase=true
 o.smartcase=true
+
+o.winborder="none" -- Options: single, double, rounded, solid, shadow
 
 vim.opt.fillchars={ eob=' ' }
 
