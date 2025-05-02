@@ -7,6 +7,10 @@
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
+      "custom/syslogo",
+      "custom/separator",
+      "clock",
+      "custom/separator",
       "hyprland/window"
     ],
     "modules-center": [
@@ -15,14 +19,17 @@
     "modules-right": [
       "tray",
       "custom/separator",
-      "pulseaudio",
-      "custom/bluetui",
-      "custom/nmtui",
+      "group/controls",
       "custom/separator",
       "battery"
     ],
+    "clock": {
+      "interval": 10,
+      "format": "{:%A, %d %b %H:%M}"
+    },
     "hyprland/window": {
-      "separate-outputs": true
+      "separate-outputs": true,
+      "max-length": 70
     },
     "hyprland/workspaces": {
       "disable-scroll": true,
@@ -98,11 +105,6 @@
     "tray": {
         // "icon-size": 21,
         "spacing": 10
-    },
-    "clock": {
-        // "timezone": "America/New_York",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"
     },
     "cpu": {
         "format": "{usage}% ",
@@ -214,8 +216,19 @@
       "tooltip-format": "Open Bluetooth (nmtui)",
       "on-click": "rio -e bluetui"
     },
+    "group/controls": {
+      "orientation": "horizontal",
+      "modules": [
+        "pulseaudio",
+        "custom/bluetui",
+        "custom/nmtui"
+      ]
+    },
     "custom/separator": {
       "format": "|",
       "tooltip": false
+    },
+    "custom/syslogo": {
+      "format": " "
     }
 }
