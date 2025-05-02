@@ -25,7 +25,8 @@
 
 (setq native-comp-async-report-warnings-errors 'silent)
 
-(set-frame-font "Iosevka Nerd Font-10.8" nil t)
+;; (set-frame-font "Iosevka Nerd Font-10.8" nil t)
+(set-frame-font "UDEV Gothic NF-10.8" nil t)
 #+end_src
 
 ** Default Minor Modes
@@ -235,6 +236,7 @@ Anything related to code, from LSP integration to error checking and documentati
   :hook
   ('prog-mode . #'rainbow-delimiters-mode))
 
+(use-package tree-sitter)
 (use-package tree-sitter-langs
   :hook
   ('prog-mode . #'tree-sitter-hl-mode))

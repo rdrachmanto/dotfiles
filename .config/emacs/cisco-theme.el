@@ -93,6 +93,8 @@
   (minibuffer-prompt (:foreground cisco-blue5))
 
   (vertico-current (:inherit 'hl-line))
+
+  (org-block (:background cisco-black3))
   
   ))
 
