@@ -95,6 +95,8 @@
   (vertico-current (:inherit 'hl-line))
 
   (org-block (:background cisco-black3))
+
+  (org-level-2 (:foreground cisco-orange1))
   
   ))
 

@@ -67,7 +67,7 @@
 (setq org-fontify-whole-heading-line t
       org-pretty-entities t
       org-hide-emphasis-markers t
-      org-startup-indented t
+      org-startup-indented nil
       org-insert-heading-respect-content t)
 
 (setq org-auto-align-tags nil
@@ -196,6 +196,10 @@ Anything related to code, from LSP integration to error checking and documentati
 (use-package org-modern
   :hook
   ('org-mode . org-modern-mode))
+
+(use-package org-journal
+  :config
+  (setq org-journal-dir "~/Documents/Reflections/"))
 #+end_src
 
 ** User Interface
