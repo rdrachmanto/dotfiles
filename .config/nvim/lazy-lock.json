@@ -1,8 +1,9 @@
 {
   "blink.cmp": { "branch": "main", "commit": "4f38ce99a472932d5776337f08f7a8180f1f571a" },
+  "cisco-theme.nvim": { "branch": "main", "commit": "543fc291d0a81f31743fa11aaa5f04cf8db3f033" },
   "conform.nvim": { "branch": "master", "commit": "372fc521f8421b7830ea6db4d6ea3bae1c77548c" },
-  "fzf-lua": { "branch": "main", "commit": "fe71a7c072e98e43d448d8d198595ee9ebdcb27a" },
-  "gitsigns.nvim": { "branch": "main", "commit": "1796c7cedfe7e5dd20096c5d7b8b753d8f8d22eb" },
+  "fzf-lua": { "branch": "main", "commit": "9a1f4b6f9e37d6fad6730301af58c29b00d363f8" },
+  "gitsigns.nvim": { "branch": "main", "commit": "7ce11abbb8b038a9de4fb6f75d8289c58d81aed7" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
   "nvim-autopairs": { "branch": "master", "commit": "4d74e75913832866aa7de35e4202463ddf6efd1b" },
   "nvim-navic": { "branch": "master", "commit": "d0a8c17c4dc721b00bc2ac305c6ffbb036beeb74" },
