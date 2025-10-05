@@ -5,7 +5,7 @@ function M.toggle_inlay_hints()
 end
 
 function M.toggle_diagnostics_float()
-  vim.diagnostic.open_float(nil, { focus = false, scope = "cursor", border = "single" })
+  vim.diagnostic.open_float(nil, { focus = false, scope = "cursor", })
 end
 
 return M

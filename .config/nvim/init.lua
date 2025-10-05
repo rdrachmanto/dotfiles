@@ -1,7 +1,7 @@
 -- R.D.R  - Remember where you came from.
 -- NVIM Config
+-- Let's try to be as vanilla as possible! (incorporating nvim's features instead of packages)
 -- 2025
-
 
 -- --------------------------------------------------------------
 -- Early Setup Scripts 
@@ -12,7 +12,6 @@
 
 local utils = require("scripts.utils")
 require("scripts.autocmd")
-
 
 -- --------------------------------------------------------------
 -- Defaults 
@@ -66,11 +65,26 @@ vim.o.laststatus = 3
 vim.o.winbar = " %t %{%v:lua.require'nvim-navic'.get_location()%}"
 
 -- LSP
+vim.cmd[[ set completeopt+=menuone,noselect,popup ]]
+vim.lsp.enable({ "lua_ls", "basedpyright", "r_language_server", "tinymist", "metals", "bashls" })
 vim.lsp.config("*", {
-  root_markers = { ".git" }
+  root_markers = { ".git" },
+  on_attach = function(client, bufnr)
+    -- Trigger autocompletion, always
+    -- Might be slow
+    local chars = {}
+    for i = 32, 126 do
+      table.insert(chars, string.char(i))
+    end
+    client.server_capabilities.completionProvider.triggerCharacters = chars
+    vim.lsp.completion.enable(true, client.id, bufnr, {
+      autotrigger = true,
+      convert = function(item)
+        return { abbr = item.label:gsub('%b()', '') }
+      end,
+    })
+  end,
 })
-
-vim.lsp.enable({ "lua_ls", "basedpyright" })
 
 -- Diagnostic signs
 vim.diagnostic.config({
@@ -140,40 +154,40 @@ local devel_pkgs = {
       })
     end
   },
-  {
-    'saghen/blink.cmp',
-    version = "1.*",
-    opts = {
-      keymap = { preset = "enter" },
-      appearance = {
-        nerd_font_variant = "normal",
-      },
-      completion = {
-        documentation = { auto_show = false },
-        menu = {
-          scrollbar = false,
-          draw = {
-            columns = {
-              { "kind_icon" },
-              { "label", "label_description", gap=1 }
-            },
-            treesitter = { "lsp" }
-          }
-        },
-        list = {
-          selection = {
-            preselect = true,
-            auto_insert = false
-          }
-        },
-      },
-      sources = {
-        default = { "lsp", "path", "snippets", "buffer" }
-      },
-      fuzzy = { implementation = "prefer_rust_with_warning" }
-    },
-    opts_extend = { "sources.default" }
-  },
+  -- {
+  --   'saghen/blink.cmp',
+  --   version = "1.*",
+  --   opts = {
+  --     keymap = { preset = "enter" },
+  --     appearance = {
+  --       nerd_font_variant = "normal",
+  --     },
+  --     completion = {
+  --       documentation = { auto_show = false },
+  --       menu = {
+  --         scrollbar = false,
+  --         draw = {
+  --           columns = {
+  --             { "kind_icon" },
+  --             { "label", "label_description", gap=1 }
+  --           },
+  --           treesitter = { "lsp" }
+  --         }
+  --       },
+  --       list = {
+  --         selection = {
+  --           preselect = true,
+  --           auto_insert = false
+  --         }
+  --       },
+  --     },
+  --     sources = {
+  --       default = { "lsp", "path", "snippets", "buffer" }
+  --     },
+  --     fuzzy = { implementation = "prefer_rust_with_warning" }
+  --   },
+  --   opts_extend = { "sources.default" }
+  -- },
   { "HiPhish/rainbow-delimiters.nvim", },
   { "windwp/nvim-autopairs", event = "InsertEnter", config = true, },
   { "lewis6991/gitsigns.nvim", config = true },
@@ -199,17 +213,20 @@ local util_pkgs = {
         "fzf-native",
         fzf_colors = true,
         winopts = {
+          backdrop = 60,
           border = vim.o.winborder,
           preview = {
+            default = "cat",
             border = vim.o.winborder,
             delay = 250,
           }
         },
         previewers = {
-          bat = {
-            cmd = "bat",
-            theme = "Material-Dark"
-          }
+          cat = {}
+          -- bat = {
+          --   cmd = "bat",
+          --   theme = "Material-Dark"
+          -- }
         }
       })
     end
@@ -217,30 +234,33 @@ local util_pkgs = {
 }
 
 local colorschemes = {
-  {
-    "rdrachmanto/cisco-theme.nvim",
-    config = function()
-      require("cisco").setup({
-        contrast = {
-          floating_windows = true
-        }
-      })
-      vim.cmd.colorscheme("cisco")
-    end
-  },
   -- {
-  --   dir = "~/Devel/cisco-theme.nvim",
-  --   name = "cisco-theme.nvim",
-  --   lazy = false,
-  --   priority = 1000,
+  --   "rdrachmanto/cisco-theme.nvim",
   --   config = function()
   --     require("cisco").setup({
   --       contrast = {
-  --         floating_windows = true
-  --       }
+  --         floating_windows = true 
+  --       },
+  --       mode = "light"  -- options: "dark" or "light"
   --     })
-  --   end,
-  -- }
+  --     vim.cmd.colorscheme("cisco")
+  --   end
+  -- },
+  {
+    dir = "~/Devel/cisco-theme.nvim",
+    name = "cisco-theme.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("cisco").setup({
+        contrast = {
+          floating_windows = true 
+        },
+        mode = "light"
+      })
+      vim.cmd.colorscheme("cisco")
+    end,
+  }
 }
 
 local enabled_pkgs = utils.package_loader(
