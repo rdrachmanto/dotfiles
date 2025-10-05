@@ -7,12 +7,7 @@
    '("604afb0a32766a27ba949d6a29923c8241f5f3c9a05f1680d14740d5eacb9b03"
      "408cb53860c67e4e7bc2ec5b7ce652831969965fe516ccd7507e4ea6e79dd6cc"
      default))
- '(package-selected-packages
-   '(autothemer cape corfu doom-modeline eldoc-box embark-consult
-		evil-anzu evil-collection exec-path-from-shell general
-		marginalia markdown-mode nerd-icons-completion
-		nerd-icons-corfu org-journal org-modern
-		rainbow-delimiters tree-sitter-langs vertico)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

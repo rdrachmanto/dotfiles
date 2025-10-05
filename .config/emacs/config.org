@@ -26,7 +26,7 @@
 (setq native-comp-async-report-warnings-errors 'silent)
 
 ;; (set-frame-font "Iosevka Nerd Font-10.8" nil t)
-(set-frame-font "UDEV Gothic NF-10.8" nil t)
+(set-frame-font "ZedMono Nerd Font-10.8" nil t)
 #+end_src
 
 ** Default Minor Modes
@@ -88,8 +88,6 @@
 Anything related to code, from LSP integration to error checking and documentation-viewing
 
 #+begin_src emacs-lisp
-(use-package markdown-mode)
-
 (use-package eglot
   :hook
   ('prog-mode . 'eglot-ensure)
@@ -99,6 +97,11 @@ Anything related to code, from LSP integration to error checking and documentati
 		 "basedpyright-langserver" "--stdio")))
 
 (use-package eldoc-box)
+
+;; Language major mode
+(use-package markdown-mode)
+(use-package arduino-mode)
+(use-package r-mode)
 #+end_src
 
 ** Completions
