@@ -3,13 +3,16 @@ decorations_theme_variant = "Dark"
 padding = {x = 6, y = 0}
 
 [font]
-size = 10
-# normal = { family = "IosevkaTerm Nerd Font" }
-normal = { family = "UDEV Gothic NF" }
+size = 11
+normal = { family = "ZedMono Nerd Font" }
+# normal = { family = "UDEV Gothic NF" }
 
 [colors.primary]
-background = "#0E100F"
-foreground = "#CECDC3"
+# background = "#0E100F"
+# foreground = "#CECDC3"
+
+background = "#FEFEFE"
+foreground = "#0E100F"
 
 [colors.normal]
 black = "#0E100F"
