@@ -1,5 +1,5 @@
 return {
-  cmd = { "/home/rdrachmanto/Devel/lua-language-server/bin/lua-language-server" },
+  cmd = { "/home/rdrachmanto/Deps/lua-language-server/bin/lua-language-server" },
   filetypes = { "lua" },
   root_markers = {
     '.luarc.json',

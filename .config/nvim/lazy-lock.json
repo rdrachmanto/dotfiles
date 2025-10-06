@@ -1,8 +1,6 @@
 {
-  "blink.cmp": { "branch": "main", "commit": "327fff91fe6af358e990be7be1ec8b78037d2138" },
-  "cisco-theme.nvim": { "branch": "main", "commit": "817abcb3d24bafeebbc5612df8be6e3c3a02eeb4" },
-  "conform.nvim": { "branch": "master", "commit": "9d6f881a4047a51c7709223dcf24e967633c6523" },
-  "fzf-lua": { "branch": "main", "commit": "478869cf8c4b4354771c27b6b8e9f985cb274de2" },
+  "conform.nvim": { "branch": "master", "commit": "9d859cbfbde7a1bd1770e7c97aef30ec5a237a71" },
+  "fzf-lua": { "branch": "main", "commit": "a13c5c500b60f076b7ae1ae5df3cd4b547418ca1" },
   "gitsigns.nvim": { "branch": "main", "commit": "1ee5c1fd068c81f9dd06483e639c2aa4587dc197" },
   "lazy.nvim": { "branch": "main", "commit": "59334064f8604ca073791c25dcc5c9698865406e" },
   "nvim-autopairs": { "branch": "master", "commit": "23320e75953ac82e559c610bec5a90d9c6dfa743" },

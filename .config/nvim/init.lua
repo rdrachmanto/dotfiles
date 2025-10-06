@@ -72,11 +72,15 @@ vim.lsp.config("*", {
   on_attach = function(client, bufnr)
     -- Trigger autocompletion, always
     -- Might be slow
-    local chars = {}
-    for i = 32, 126 do
-      table.insert(chars, string.char(i))
-    end
-    client.server_capabilities.completionProvider.triggerCharacters = chars
+    -- local chars = {}
+    -- for i = 32, 126 do
+    --   table.insert(chars, string.char(i))
+    -- end
+    -- More conservative autocompletion
+    -- local chars = {
+    --   ".", "("
+    -- }
+    -- client.server_capabilities.completionProvider.triggerCharacters = chars
     vim.lsp.completion.enable(true, client.id, bufnr, {
       autotrigger = true,
       convert = function(item)
