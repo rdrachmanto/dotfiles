@@ -1,31 +1,36 @@
 // -*- mode: jsonc -*-
 {
-    "margin-top": 8,
-    "margin-left": 8,
-    "margin-right": 8,
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
     "height": 32, // Waybar height (to be removed for auto height)
-    "spacing": 4, // Gaps between modules (4px)
+    "spacing": 6, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
-      "custom/syslogo",
-      "custom/separator",
-      "clock",
-      "custom/separator",
-      "hyprland/window"
+      "niri/window"
     ],
     "modules-center": [
-      "hyprland/workspaces"
+      "clock"
     ],
     "modules-right": [
       "tray",
-      "custom/separator",
-      "group/controls",
-      "custom/separator",
+      // "custom/separator",
+      // "group/controls",
+      "cpu",
+      "memory",
+      // "custom/separator",
+      "pulseaudio",
+      "custom/bluetui",
+      "custom/nmtui",
       "battery"
     ],
+    "niri/window": {
+      "icon": false,
+      "icon-size": "14px"
+    },
     "clock": {
-      "interval": 10,
-      "format": "{:%A, %d %b %H:%M}"
+      "interval": 60,
+      "format": "{:%d %b %H:%M}"
     },
     "hyprland/window": {
       "separate-outputs": true,
@@ -107,11 +112,11 @@
         "spacing": 10
     },
     "cpu": {
-        "format": "{usage}% ",
+        "format": "{usage}%   ",
         "tooltip": false
     },
     "memory": {
-        "format": "{}% "
+        "format": "{}%   "
     },
     "temperature": {
         // "thermal-zone": 2,
@@ -170,13 +175,13 @@
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
+            "headphone": " ",
+            "hands-free": " ",
+            "headset": " ",
+            "phone": " ",
+            "portable": " ",
+            "car": " ",
+            "default": [" ", "  ", "   "]
         },
         "on-click": "pavucontrol"
     },
@@ -211,7 +216,7 @@
       "on-click": "rio -e nmtui"
     },
     "custom/bluetui": {
-      "format": "",
+      "format": "Blu.",
       "tooltip": true,
       "tooltip-format": "Open Bluetooth (nmtui)",
       "on-click": "rio -e bluetui"

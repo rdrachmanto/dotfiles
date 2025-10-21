@@ -1,18 +1,18 @@
 [window]
 decorations_theme_variant = "Dark"
-padding = {x = 6, y = 0}
+padding = {x = 3, y = 3}
 
 [font]
 size = 11
-normal = { family = "ZedMono Nerd Font" }
+normal = { family = "Zed Mono Nerd Font" }
 # normal = { family = "UDEV Gothic NF" }
 
 [colors.primary]
-# background = "#0E100F"
-# foreground = "#CECDC3"
+background = "#0E100F"
+foreground = "#CECDC3"
 
-background = "#FEFEFE"
-foreground = "#0E100F"
+# background = "#FEFEFE"
+# foreground = "#0E100F"
 
 [colors.normal]
 black = "#0E100F"

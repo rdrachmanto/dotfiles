@@ -44,14 +44,14 @@ o.cursorline=true
 o.number=true
 o.numberwidth=3
 o.relativenumber=true
-o.showtabline=2
+-- o.showtabline=2
 
 o.autoindent=true
 o.expandtab=true
 o.tabstop=2
 o.shiftwidth=2
 o.signcolumn="yes"
-o.foldcolumn="1"
+o.foldcolumn="0"
 
 o.ignorecase=true
 o.smartcase=true
@@ -62,11 +62,17 @@ vim.opt.fillchars={ eob=' ' }
 
 -- Statusline and winbar
 vim.o.laststatus = 3
-vim.o.winbar = " %t %{%v:lua.require'nvim-navic'.get_location()%}"
 
 -- LSP
 vim.cmd[[ set completeopt+=menuone,noselect,popup ]]
-vim.lsp.enable({ "lua_ls", "basedpyright", "r_language_server", "tinymist", "metals", "bashls" })
+vim.lsp.enable({ 
+  "lua_ls", 
+  "basedpyright", 
+  "r_language_server", 
+  "tinymist", 
+  "metals", 
+  "bashls"
+})
 vim.lsp.config("*", {
   root_markers = { ".git" },
   on_attach = function(client, bufnr)
@@ -87,6 +93,7 @@ vim.lsp.config("*", {
         return { abbr = item.label:gsub('%b()', '') }
       end,
     })
+    vim.o.winbar = "%t %{%v:lua.require'nvim-navic'.get_location()%}"
   end,
 })
 
@@ -207,6 +214,7 @@ local util_pkgs = {
       win = {
         no_overlap = true,
         padding = { 1, 2 },
+        border = "none",
       },
     },
   },
@@ -260,9 +268,8 @@ local colorschemes = {
         contrast = {
           floating_windows = true 
         },
-        mode = "light"
       })
-      vim.cmd.colorscheme("cisco")
+      vim.cmd.colorscheme("cisco-dark")
     end,
   }
 }
