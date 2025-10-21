@@ -55,4 +55,6 @@ unset __conda_setup
 eval "$(starship init bash)"
 
 export TERM=xterm-256color
-. "$HOME/.cargo/env"
+export EDITOR=nvim
+
+# . "$HOME/.cargo/env"
