@@ -55,6 +55,8 @@ unset __conda_setup
 eval "$(starship init bash)"
 
 export TERM=xterm-256color
-export EDITOR=nvim
+export EDITOR=hx
+# export PATH="/home/rdrachmanto/VM/ubuntu/.local/share/qlot/bin:$PATH"
+export PATH="$PATH:/home/rdrachmanto/.local/share/coursier/bin"
 
 # . "$HOME/.cargo/env"
