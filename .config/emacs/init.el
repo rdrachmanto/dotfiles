@@ -1,23 +1,31 @@
 (add-to-list 'load-path
 	     (expand-file-name "lisp/" user-emacs-directory))
-
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(add-to-list 'custom-theme-load-path
+	     (expand-file-name "themes/" user-emacs-directory))
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory)
+      treesit-extra-load-path '("~/.config/emacs/tree-sitter"))
 
 (setq auto-save-default nil
       make-backup-files nil)
+
+(set-fringe-mode '(3 . 3))
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
 (global-display-line-numbers-mode)
-(global-hl-line-mode 1)
+;; (global-hl-line-mode 1)
 (menu-bar--display-line-numbers-mode-relative)
 (fido-vertical-mode t)
+(which-key-mode t)
+
+(setq initial-scratch-message ""
+      inhibit-startup-screen t)
 
 (setq tab-always-indent 'complete)
 
-(load-theme 'modus-vivendi t)
+(load-theme 'cisco-dark t)
 
 (setq ring-bell-function 'ignore)
 
@@ -47,9 +55,24 @@
 	corfu-auto-delay 0.3
 	corfu-auto-prefix 3))
 
+;; (use-package doom-themes
+;;   :ensure t
+;;   :config
+;;   (load-theme 'doom-one t))
+
 ;; Programming modes
 (use-package rust-mode
   :ensure t)
+(use-package markdown-mode
+  :ensure t)
+
+;; Treesitter
+(setq treesit-font-lock-level 4)   ;; max level
+(add-to-list 'major-mode-remap-alist '(rust-mode . rust-ts-mode))
+
+;; (use-package scala-mode
+;;   :ensure t
+;;   :interpreter ("scala" . scala-mode))
 
 ;; Modal editing
 (use-package meow

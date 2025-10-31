@@ -4,7 +4,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(consult corfu diff-hl meow rust-mode)))
+ '(package-selected-packages
+   '(consult corfu diff-hl doom-themes goto-chg markdown-mode meow moody
+	     rust-mode scala-mode scala-ts-mode treesit-auto)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
