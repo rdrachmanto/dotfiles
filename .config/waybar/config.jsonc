@@ -20,12 +20,12 @@
       "memory",
       // "custom/separator",
       "pulseaudio",
-      "custom/bluetui",
-      "custom/nmtui",
+      // "custom/bluetui",
+      // "custom/nmtui",
       "battery"
     ],
     "niri/window": {
-      "icon": false,
+      "icon": true,
       "icon-size": "14px"
     },
     "clock": {

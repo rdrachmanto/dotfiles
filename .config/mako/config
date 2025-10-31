@@ -2,5 +2,5 @@ font="Zed Mono Nerd Font" 10
 border-radius=4
 background-color=#1f211f
 border-color=#403e3c
-anchor=top-center
+anchor=top-right
 default-timeout=6000
