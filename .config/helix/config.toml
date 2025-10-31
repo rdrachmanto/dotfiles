@@ -1,0 +1,13 @@
+theme = "cisco-dark"
+
+[editor]
+line-number = "relative"
+mouse = false
+cursorline = true
+color-modes = true
+gutters = ["diff", "diagnostics", "line-numbers", "spacer"]
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
