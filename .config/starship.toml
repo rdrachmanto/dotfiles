@@ -1,11 +1,17 @@
 format = "$all$line_break$jobs$character"
 
 [username]
-show_always = true 
+show_always = false
+format = '[$user](green)'
 
-[character] 
-success_symbol = '[λ](bold green)' 
-error_symbol = '[λ](bold red)' 
+[character]
+success_symbol = '[└](lightgray) [λ](bold green)' 
+error_symbol = '[└](lightgray) [λ](bold red)' 
+
+[time]
+disabled = false
+style = 'fg:#403e3c'
+format = '· [$time]($style)'
 
 [cmd_duration]
 disabled = true
@@ -19,24 +25,31 @@ symbol = " "
 
 [c]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
 
 [conda]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
 
 [dart]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
 
 [directory]
 read_only = " 󰌾"
+style = 'fg:#79b8ff'
+format = "┌ [$path]($style) "
 
 [docker_context]
 symbol = " "
 
 [elixir]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
 
 [elm]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
 
 [fossil_branch]
 symbol = " "
@@ -46,30 +59,40 @@ symbol = " "
 
 [golang]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
 
 [guix_shell]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
 
 [haskell]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
 
 [haxe]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
 
 [hg_branch]
 symbol = " "
 
 [hostname]
 ssh_symbol = " "
+style = 'fg:green'
+ssh_only = true
+format = '@[hostname]($style)'
 
 [java]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
 
 [julia]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
 
 [lua]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
 
 [memory_usage]
 symbol = "󰍛 "
@@ -79,12 +102,16 @@ symbol = "󰔷 "
 
 [nim]
 symbol = "󰆥 "
+format = '—  [$symbol($version )]($style)'
+
 
 [nix_shell]
 symbol = " "
 
 [nodejs]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
+
 
 [os.symbols]
 Alpaquita = " "
@@ -135,15 +162,25 @@ symbol = " "
 
 [python]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
+
 
 [rlang]
 symbol = "󰟔 "
+format = '—  [$symbol($version )]($style)'
+
 
 [ruby]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
+
 
 [rust]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
+
 
 [scala]
 symbol = " "
+format = '—  [$symbol($version )]($style)'
+
