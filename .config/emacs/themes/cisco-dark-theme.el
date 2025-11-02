@@ -46,7 +46,9 @@
    ;; UI elements
    `(default ((t (:background ,black1 :foreground ,light2))))
    `(vertical-border ((t (:foreground ,black4))))
-   `(mode-line ((t (:background ,black3 :foreground ,light2))))
+   `(internal-border ((t (:foreground ,black4, :background ,black1))))
+   `(mode-line ((t (:background ,black3 :foreground ,light2 :box t))))
+   `(mode-line-inactive ((t (:background ,black1 :foreground ,black4))))
    `(region ((t (:background ,black4))))
    `(hl-line ((t (:background ,black2))))
 
@@ -74,7 +76,7 @@
    `(font-lock-keyword-face ((t (:foreground ,pink))))
 
    ;; Flymake
-   `(flymake-note-echo ((t (:foreground ,light2))))
+   `(flymake-note-echo ((t (:foreground ,blue5))))
    `(flymake-warning-echo ((t (:foreground ,orange3))))
    `(flymake-error-echo ((t (:foreground ,pink))))
 
@@ -82,13 +84,10 @@
    `(markdown-code-face ((t (:inherit nil))))
    `(markdown-hr-face ((t (:foreground ,black2))))
 
+   ;; Eglot
+   `(eglot-inlay-hint-face ((t (:inherit nil :foreground ,black5 :height 0.8))))
+   
    ))
-   ;; (with-eval-after-load 'markdown-mode
-   ;;   (custom-set-faces
-   ;;    '(markdown-code-face ((t (:inherit nil))))
-   ;;    '(markdown-hr-face ((t (:foreground ))))
-   ;;    ))
-   ;; ))
 
 (provide-theme 'cisco-dark)
 (provide 'cisco-dark-theme)

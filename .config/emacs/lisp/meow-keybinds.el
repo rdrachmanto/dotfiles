@@ -4,6 +4,9 @@
    '("j" . meow-next)
    '("k" . meow-prev)
    '("<escape>" . ignore))
+  (setq meow-selection-command-fallback
+	'((meow-kill . meow-delete)
+	  (meow-change . meow-change-char)))
   (meow-leader-define-key
    ;; Use SPC (0-9) for digit arguments.
    '("1" . meow-digit-argument)
@@ -17,6 +20,7 @@
    '("9" . meow-digit-argument)
    '("0" . meow-digit-argument)
    '("/" . meow-keypad-describe-key)
+   '("k" . eldoc-box-help-at-point)
    '("?" . meow-cheatsheet))
   (meow-normal-define-key
    '("0" . meow-expand-0)
@@ -72,8 +76,12 @@
    ;; '("s" . meow-kill)
    '("t" . meow-till)
    '("u" . meow-undo)
-   '("U" . meow-undo-in-selection)
-   '("v" . meow-visit)
+   '("U" . undo-redo)
+   ;; '("v" . meow-visit)
+   '("v" . meow-block)
+   '("V" . meow-to-block)
+   '("/" . consult-line)
+   '("?" . comment-dwim)		
    '("w" . meow-mark-word)
    '("W" . meow-mark-symbol)
    '("x" . meow-line)
