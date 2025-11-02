@@ -9,3 +9,5 @@
 .config/emacs/recentf
 .config/emacs/auto-save-list/
 .config/emacs/url
+.config/emacs/eshell/
+.config/emacs/tramp
