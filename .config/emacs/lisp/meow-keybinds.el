@@ -4,6 +4,7 @@
    '("j" . meow-next)
    '("k" . meow-prev)
    '("<escape>" . ignore))
+  (setq meow-use-clipboard t)
   (setq meow-selection-command-fallback
 	'((meow-kill . meow-delete)
 	  (meow-change . meow-change-char)))

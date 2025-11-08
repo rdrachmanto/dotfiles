@@ -50,8 +50,10 @@
    `(line-number ((t (:foreground ,black5))))
    `(line-number-current-line ((t (:foreground ,orange1))))
 
-   `(mode-line ((t (:background ,light2 :foreground ,black1, :box t))))
-   `(mode-line-inactive ((t (:background ,light3 :foreground ,black5))))
+   `(mode-line ((t (:background ,light2 :foreground ,black1))))
+   `(mode-line-inactive ((t (:foreground ,black4))))
+
+   `(fringe ((t (:background ,light3 :foreground ,light3))))
 
    ;; Text highlighting
    `(font-lock-comment-face ((t (:foreground ,black5))))

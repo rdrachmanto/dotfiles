@@ -126,7 +126,7 @@ cursor {
 layout {
     background-color "transparent"
     // Set gaps around windows in logical pixels.
-    gaps 6
+    gaps 3
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -289,6 +289,7 @@ spawn-at-startup "swww-daemon"
 spawn-at-startup "udiskie"
 spawn-at-startup "nm-applet"
 spawn-at-startup "blueman-applet"
+spawn-at-startup "xwayland-satellite"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"

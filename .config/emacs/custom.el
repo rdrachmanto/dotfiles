@@ -7,7 +7,8 @@
  '(package-selected-packages
    '(consult corfu diff-hl eldoc-box emmet-mode ess goto-chg
 	     markdown-mode meow nix-mode rainbow-delimiters rust-mode
-	     scala-mode scala-ts-mode toml-mode web-mode)))
+	     scala-mode scala-ts-mode toml-mode transpose-frame
+	     web-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

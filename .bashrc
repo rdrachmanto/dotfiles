@@ -52,6 +52,9 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 # starship init command
+
+fastfetch
+
 eval "$(starship init bash)"
 
 export TERM=xterm-256color

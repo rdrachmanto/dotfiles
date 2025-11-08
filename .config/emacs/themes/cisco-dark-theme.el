@@ -47,7 +47,7 @@
    `(default ((t (:background ,black1 :foreground ,light2))))
    `(vertical-border ((t (:foreground ,black4))))
    `(internal-border ((t (:foreground ,black4, :background ,black1))))
-   `(mode-line ((t (:background ,black3 :foreground ,light2 :box t))))
+   `(mode-line ((t (:background ,black3 :foreground ,light2))))
    `(mode-line-inactive ((t (:background ,black1 :foreground ,black4))))
    `(region ((t (:background ,black4))))
    `(hl-line ((t (:background ,black2))))
@@ -55,6 +55,9 @@
    `(line-number ((t (:foreground ,black5))))
    `(line-number-current-line ((t (:foreground ,orange2))))
 
+   `(fringe ((t (:background ,black1 :foreground ,black1))))
+   `(window-divider ((t (:background ,black1 :foreground ,black4))))
+   
    `(minibuffer-prompt ((t (:foreground ,blue5))))
    `(icomplete-selected-match ((t (:background ,black4))))
 

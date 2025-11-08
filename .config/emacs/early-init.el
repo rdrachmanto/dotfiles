@@ -21,12 +21,12 @@
 ;; UI tweaks
 ;; Padding and font
 (dolist (var '(default-frame-alist initial-frame-alist))
-  ;; (add-to-list var '(right-divider-width . 10))
+  (add-to-list var '(right-divider-width . 10))
   (add-to-list var '(internal-border-width . 8))
   (add-to-list var '(font . "Zed Mono Nerd Font-11")))
 
-(setq window-divider-default-bottom-width 8
-      window-divider-default-right-width 8
+(setq window-divider-default-bottom-width 1
+      window-divider-default-right-width 1
       window-divider-default-places t)
 (add-hook 'after-init-hook #'window-divider-mode)
 
