@@ -17,105 +17,31 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+  home.packages = with pkgs; [];
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-    waybar
-    swaylock
-    mako
-    tmux
-    stow
-    btop
-    networkmanager 
-    ripgrep
-    fd
-    fzf
-    starship
-    zathura
-    swww
-    yazi
-    overskride
-    networkmanagerapplet
-    blueman
-    fastfetch
-    unzip
-    cliphist
-
-    helix
-    emacs
-    neovim
-    zed-editor
-    
-    pulsemixer
-    nautilus
-    swayimg
-    solaar
-
-    rustup
-    bash-language-server
-    R
-    vscode-langservers-extracted
-
-    python312
-    python312Packages.pip
-    basedpyright
-
-    jdk
-    scala-next
-    sbt
-    coursier
-    metals
-
-    servo
-    ladybird
-
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.zed-mono
-  ];
-
-  programs.obs-studio = {
-    enable = true;
-
-    # optional Nvidia hardware acceleration
-    # package = (
-    #   pkgs.obs-studio.override {
-    #     cudaSupport = true;
-    #   }
-    # );
-
-    plugins = with pkgs.obs-studio-plugins; [
-      wlrobs
-      obs-backgroundremoval
-      obs-pipewire-audio-capture
-      # obs-vaapi #optional AMD hardware acceleration
-      obs-gstreamer
-      obs-vkcapture
-    ];
+  home.pointerCursor = {
+    name = "Adwaita";
+    package = pkgs.adwaita-icon-theme;
+    size = 24;
+    gtk.enable = true;
+    x11.enable = true;
   };
 
   gtk = {
     enable = true;
     gtk3 = {
-      extraConfig.gtk-application-prefer-dark-theme = true;
+      extraConfig.gtk-application-prefer-dark-theme = false;
     };
   };
 
   dconf.settings."org/gnome/desktop/interface" = {
-    color-scheme = "prefer-dark";
+    color-scheme = "prefer-light";
+  };
+
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+    desktop = null;   # disable if you don't want ~/Desktop
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
