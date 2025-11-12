@@ -15,7 +15,7 @@
      `(window-divider ((t (:background ,bg :foreground ,bg))))
      `(window-divider-first-pixel ((t (:background ,bg :foreground ,bg))))
      `(window-divider-last-pixel ((t (:background ,bg :foreground ,bg)))))))
-(load-theme 'cisco-dark t)
+(load-theme 'cisco t)
 ;; (add-hook 'enable-theme-functions #'rd/set-invisible-dividers-for-themes)
 
 
@@ -143,6 +143,10 @@
 (add-to-list 'major-mode-remap-alist '(sh-mode . bash-ts-mode))
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 (add-to-list 'major-mode-remap-alist '(rust-mode . rust-ts-mode))
+
+;; Magit
+(use-package magit
+  :ensure t)
 
 ;; Window management
 (use-package transpose-frame
