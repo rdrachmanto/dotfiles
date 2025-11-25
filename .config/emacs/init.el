@@ -7,7 +7,7 @@
   (let ((bg (face-background 'default))
 	(fg (face-foreground 'default)))
     
-    (setq window-divider-default-bottom-width 8
+    (setq window-divider-default-bottom-width 2
 	  window-divider-default-right-width 8
 	  window-divider-default-places t)
     (custom-set-faces
@@ -15,7 +15,7 @@
      `(window-divider ((t (:background ,bg :foreground ,bg))))
      `(window-divider-first-pixel ((t (:background ,bg :foreground ,bg))))
      `(window-divider-last-pixel ((t (:background ,bg :foreground ,bg)))))))
-(load-theme 'cisco t)
+(load-theme 'cisco-dark t)
 ;; (add-hook 'enable-theme-functions #'rd/set-invisible-dividers-for-themes)
 
 
@@ -34,22 +34,57 @@
   (menu-bar--display-line-numbers-mode-relative)
   (set-fringe-mode '(5 . 5))
   (electric-pair-mode)
-  (global-hl-line-mode)
+  (tab-bar-mode)
+  (save-place-mode)
+  (global-auto-revert-mode)
 
+  (setq history-length 25)
+  (savehist-mode)
   (recentf-mode)
+
+  (setq use-dialog-box nil)
+
+  
   ;; Completion settings
-  (setq tab-always-indent 'complete)
+  (setq tab-always-indent t)
+  (global-completion-preview-mode)
   (setq read-file-name-completion-ignore-case t
-	read-buffer-completion-ignore-case t)
+	read-buffer-completion-ignore-case t
+	completion-auto-help 'always
+	completion-auto-select 'second-tab
+	completion-cycle-threshold 3
+	completions-format 'horizontal
+	completions-sort 'historical
+	completions-max-height 10
+	completion-show-help nil
+	completion-styles '(basic partial-completion substring initials))
   (setq minibuffer-visible-completions t
 	resize-mini-windows t
-	max-mini-window-height 0.15)
+	max-mini-window-height 0.15
+	completions-detailed t)
+  
   ;; Initial screen
   (setq initial-scratch-message ""
 	inhibit-startup-screen t)
+  
   ;; Scroll smoothly
   (setq scroll-conservatively 10
-      scroll-margin 15)
+	scroll-margin 15)
+  
+  ;; Tab-bar
+  (setq tab-bar-tab-hints t
+	tab-bar-close-button-show nil
+	tab-bar-auto-width nil
+	tab-bar-new-button nil
+	tab-bar-new-tab-choice "*scratch*")
+  ;; Remove the leftmost tab-separator
+  (advice-add 'tab-bar-format-tabs :around
+	      (lambda (orig-fun)
+		(cdr (funcall orig-fun))))
+
+  (setq org-hide-leading-stars t
+	org-startup-indented t)
+  
   :hook
   ;; (prog-mode . display-line-numbers-mode)
   (org-mode . display-line-numbers-mode)
@@ -58,9 +93,9 @@
 ;; Hooks
 (add-hook 'prog-mode-hook
 	  (lambda ()
-	    ;; (setq fill-column 80)
-	    (display-line-numbers-mode)))
-	    ;; (display-fill-column-indicator-mode)))
+	    (setq display-line-numbers-width 4)
+	    (display-line-numbers-mode)
+	    (column-number-mode)))
 
 ;; Dired
 (use-package dired
@@ -87,39 +122,36 @@
   (add-to-list 'display-buffer-alist
 	       '("^\\*eldoc\\*$"
 		 (display-buffer-in-side-window)
-		 (side . right)))
+		 (side . right)
+		 (window-width . 0.18)))
   (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly
 	eldoc-echo-area-use-multiline-p nil))
 
+;; Display rules
+(add-to-list 'display-buffer-alist
+	     '("^\\*compilation\\*$"
+	       (display-buffer-in-side-window)
+	       (side . right)
+	       (window-width . 0.18)))
+
+(setq my-bottom-panel-buffers
+      '("Flymake diagnostics for .*"
+        "Completions"
+	"terminal"
+	"eat"
+	"xref"))
+
+(add-to-list
+ 'display-buffer-alist
+ `(,(concat "\\*\\(" (string-join my-bottom-panel-buffers "\\|") "\\)\\*")
+   (display-buffer-in-side-window)
+   (side . bottom)
+   (slot . 0)
+   (window-height . 0.18)))
 
 ;; -------------------------------------------------
 ;; Packages
 ;; -------------------------------------------------
-
-;; Minibuffer
-(use-package consult
-  :ensure t)
-
-;; Completions
-(use-package corfu
-  :ensure t
-  :init
-  (global-corfu-mode)
-  :config
-  (setq corfu-cycle t
-	corfu-quit-at-boundary nil
-	corfu-quit-no-match t)
-  ;; Autocompletion settings
-  (setq corfu-auto t
-	corfu-auto-delay 0.3
-	corfu-auto-prefix 2))
-
-;; Documentation on hover
-(use-package eldoc-box
-  :ensure t
-  :config
-  (setq eldoc-box-only-multi-line t
-	eldoc-box-hover-display-frame-above-point t))
 
 ;; Programming modes
 (setq treesit-font-lock-level 4)   ;; max level
@@ -148,9 +180,26 @@
 (use-package magit
   :ensure t)
 
-;; Window management
-(use-package transpose-frame
+;; Autocompletions
+;; (use-package corfu
+;;   :ensure t
+;;   :config
+;;   (setq corfu-cycle t
+;; 	corfu-auto t
+;; 	corfu-auto-delay 0.2
+;; 	corfu-auto-prefix 2
+;; 	corfu-quit-no-match t)
+;;   :hook (prog-mode . corfu-mode))
+
+;; Popup documentation
+(use-package eldoc-box
   :ensure t)
+
+;; Movement
+(use-package ace-window
+  :ensure t
+  :config
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 ;; Modal editing
 (use-package meow
@@ -170,3 +219,26 @@
   :ensure t
   :hook
   (prog-mode . rainbow-delimiters-mode))
+
+(use-package nerd-icons
+  :ensure t)
+(use-package nerd-icons-completion
+  :ensure t
+  :config
+  (nerd-icons-completion-mode))
+(use-package nerd-icons-dired
+  :ensure t
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+(use-package nerd-icons-ibuffer
+  :ensure t
+  :hook
+  (ibuffer-mode . nerd-icons-ibuffer-mode))
+
+(use-package pulsar
+  :ensure t
+  :config
+  (pulsar-global-mode 1))
+
+(use-package eat
+  :ensure t)

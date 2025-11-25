@@ -11,6 +11,8 @@
       (light1 "#f8f8f8")
       (light2 "#cecdc3")
       (light3 "#fefefe")
+      (light4 "#e0e0e0")
+      (light5 "#c5c5c5")
       
       (blue1 "#2b5375")
       (blue2 "#3aa99f")
@@ -31,6 +33,7 @@
       (orange2 "#fe9900")
       (orange3 "#ffab70")
       (orange4 "#ffc799")
+      (orange5 "#c46222")
       
       (purple1 "#b392f1")
       (purple2 "#e394dc")
@@ -38,6 +41,7 @@
       
       (pink "#fa7584")
       (pink2 "#f84055")
+      (pink3 "#d3081f")
       
       (red1 "#d14d41")
       (red2 "#d3604f"))
@@ -49,40 +53,46 @@
    `(region ((t (:background ,light2))))
    `(line-number ((t (:foreground ,black5))))
    `(line-number-current-line ((t (:foreground ,orange1))))
+   `(cursor ((t (:background ,orange1))))
 
-   `(mode-line ((t (:background ,light2 :foreground ,black1))))
-   `(mode-line-inactive ((t (:foreground ,black4))))
+   `(mode-line ((t :background ,light2 :foreground ,black1)))
+   `(mode-line-inactive ((t :foreground ,black4)))
 
    `(fringe ((t (:background ,light3 :foreground ,light3))))
 
+   ;; Tab-bar mode
+   `(tab-bar ((t (:inherit nil :background ,light3))))
+   `(tab-bar-tab-inactive ((t :background ,light4 :box (:color ,light4 :line-width 4))))
+   `(tab-bar-tab ((t :background ,light2 :weight bold :box (:color ,light2 :line-width 4))))
+   
    ;; Text highlighting
    `(font-lock-comment-face ((t (:foreground ,black5))))
    `(font-lock-doc-face ((t (:inherit 'font-lock-comment-face))))
    `(font-lock-comment-delimiter-face ((t (:inherit 'font-lock-comment-face))))
-   `(font-lock-type-face ((t (:foreground ,blue4))))
-   `(font-lock-string-face ((t (:foreground ,orange1))))
+   `(font-lock-type-face ((t (:foreground ,blue1))))
+   `(font-lock-string-face ((t (:foreground ,orange5))))
    `(font-lock-regexp-face ((t (:foreground ,black6))))
-   `(font-lock-constant-face ((t (:foreground ,blue4))))
+   `(font-lock-constant-face ((t (:foreground ,blue1))))
    `(font-lock-variable-name-face ((t (:foreground ,black1))))
    `(font-lock-variable-use-face ((t (:inherit 'font-lock-variable-name-face))))
-   `(font-lock-builtin-face ((t (:foreground ,blue4))))
+   `(font-lock-builtin-face ((t (:foreground ,blue1))))
    `(font-lock-punctuation-face ((t (:foreground ,black1))))
    `(font-lock-function-name-face ((t (:foreground ,purple3))))
    `(font-lock-function-call-face ((t (:inherit 'font-lock-function-name-face))))
-   `(font-lock-operator-face ((t (:foreground ,pink2))))
-   `(font-lock-keyword-face ((t (:foreground ,pink2))))
+   `(font-lock-operator-face ((t (:foreground ,pink3))))
+   `(font-lock-keyword-face ((t (:foreground ,pink3))))
    
    ;; Flymake
-   `(flymake-note-echo ((t (:foreground ,blue4))))
+   `(flymake-note-echo ((t (:foreground ,blue1))))
    `(flymake-warning-echo ((t (:foreground ,orange1))))
-   `(flymake-error-echo ((t (:foreground ,pink2))))
+   `(flymake-error-echo ((t (:foreground ,pink3))))
 
    ;; Markdown
    `(markdown-code-face ((t (:inherit nil))))
    `(markdown-hr-face ((t (:foreground ,black2))))
    
    ;; Eldoc box
-   `(eldoc-box-body ((t (:background ,light1))))
+   `(eldoc-box-body ((t (:background ,light4))))
    `(eldoc-box-border ((t (:background ,black5))))
 
    ;; Rainbow delimiters
@@ -93,6 +103,10 @@
    `(rainbow-delimiters-depth-5-face ((t (:foreground ,blue4))))
    `(rainbow-delimiters-depth-6-face ((t (:foreground ,blue6))))
    `(rainbow-delimiters-depth-7-face ((t (:foreground ,purple2))))
+
+   ;; Diff-hl
+   `(diff-hl-insert ((t :foreground ,green2 :background ,lightgreen :inherit nil)))
+   `(diff-hl-change ((t :foreground ,blue1 :background ,blue5 :inherit nil)))
    ))
 
 (provide-theme 'cisco)

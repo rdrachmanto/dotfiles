@@ -47,10 +47,11 @@
    `(default ((t (:background ,black1 :foreground ,light2))))
    `(vertical-border ((t (:foreground ,black4))))
    `(internal-border ((t (:foreground ,black4, :background ,black1))))
-   `(mode-line ((t (:background ,black3 :foreground ,light2))))
+   `(mode-line ((t (:background ,black4 :foreground ,light2))))
    `(mode-line-inactive ((t (:background ,black1 :foreground ,black4))))
    `(region ((t (:background ,black4))))
    `(hl-line ((t (:background ,black2))))
+   `(cursor ((t (:background ,orange2))))
 
    `(line-number ((t (:foreground ,black5))))
    `(line-number-current-line ((t (:foreground ,orange2))))
@@ -61,6 +62,11 @@
    `(minibuffer-prompt ((t (:foreground ,blue5))))
    `(icomplete-selected-match ((t (:background ,black4))))
 
+   ;; Tab-bar mode
+   `(tab-bar ((t (:inherit nil :background ,black1))))
+   `(tab-bar-tab-inactive ((t :background ,black2 :box (:color ,black2 :line-width 4))))
+   `(tab-bar-tab ((t :background ,black4 :weight bold :box (:color ,black4 :line-width 4))))
+   
    ;; Text highlighting
    `(font-lock-comment-face ((t (:foreground ,black5))))
    `(font-lock-doc-face ((t (:inherit 'font-lock-comment-face))))
@@ -89,7 +95,29 @@
 
    ;; Eglot
    `(eglot-inlay-hint-face ((t (:inherit nil :foreground ,black5 :height 0.8))))
-   
+
+   `(rainbow-delimiters-depth-1-face ((t (:foreground ,red1))))
+   `(rainbow-delimiters-depth-2-face ((t (:foreground ,orange1))))
+   `(rainbow-delimiters-depth-3-face ((t (:foreground ,yellow1))))
+   `(rainbow-delimiters-depth-4-face ((t (:foreground ,green2))))
+   `(rainbow-delimiters-depth-5-face ((t (:foreground ,blue4))))
+   `(rainbow-delimiters-depth-6-face ((t (:foreground ,blue6))))
+   `(rainbow-delimiters-depth-7-face ((t (:foreground ,purple2))))
+
+   ;; Org
+   `(org-document-info-keyword ((t (:foreground ,black5))))
+   `(outline-1 ((t (:foreground ,red1 :weight bold))))
+   `(outline-2 ((t (:foreground ,orange1 :weight bold))))
+   `(outline-3 ((t (:foreground ,yellow1 :weight bold))))
+   `(outline-4 ((t (:foreground ,green2 :weight bold))))
+   `(outline-5 ((t (:foreground ,blue4 :weight bold))))
+   `(outline-6 ((t (:foreground ,blue6 :weight bold))))
+   `(outline-7 ((t (:foreground ,purple2 :weight bold))))
+
+   ;; Diff-hl
+   `(diff-hl-insert ((t :foreground ,green2 :background nil :inherit nil)))
+   `(diff-hl-change ((t :foreground ,blue3 :background nil :inherit nil)))
+   `(diff-hl-delete ((t :foreground ,red1 :background nil :inherit nil)))
    ))
 
 (provide-theme 'cisco-dark)

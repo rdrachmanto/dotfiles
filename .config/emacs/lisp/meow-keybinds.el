@@ -3,7 +3,8 @@
   (meow-motion-overwrite-define-key
    '("j" . meow-next)
    '("k" . meow-prev)
-   '("<escape>" . ignore))
+   '("<escape>" . ignore)
+   )
   (setq meow-use-clipboard t)
   (setq meow-selection-command-fallback
 	'((meow-kill . meow-delete)
@@ -92,7 +93,8 @@
    '("z" . meow-pop-selection)
    '("'" . repeat)
    '("<escape>" . meow-cancel-selection)
-   '("<return>" . ignore)))
+   '("<return>" . ignore)
+   '("<backspace>" . ignore)))
 
 (provide 'meow-keybinds)
 ;;; meow-keybinds.el ends here
