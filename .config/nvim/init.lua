@@ -1,4 +1,4 @@
--- R.D.R  - Remember where you came from.
+-- R.D.R.
 -- NVIM Config
 -- Let's try to be as vanilla as possible! (incorporating nvim's features instead of packages)
 -- 2025
@@ -246,23 +246,8 @@ local util_pkgs = {
 }
 
 local colorschemes = {
-  -- {
-  --   "rdrachmanto/cisco-theme.nvim",
-  --   config = function()
-  --     require("cisco").setup({
-  --       contrast = {
-  --         floating_windows = true 
-  --       },
-  --       mode = "light"  -- options: "dark" or "light"
-  --     })
-  --     vim.cmd.colorscheme("cisco")
-  --   end
-  -- },
   {
-    dir = "~/Devel/cisco-theme.nvim",
-    name = "cisco-theme.nvim",
-    lazy = false,
-    priority = 1000,
+    "rdrachmanto/cisco-theme.nvim",
     config = function()
       require("cisco").setup({
         contrast = {
@@ -270,8 +255,22 @@ local colorschemes = {
         },
       })
       vim.cmd.colorscheme("cisco-dark")
-    end,
-  }
+    end
+  },
+  -- {
+  --   dir = "~/Devel/cisco-dark-dark-theme.nvim",
+  --   name = "cisco-dark-dark-theme.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require("cisco-dark-dark").setup({
+  --       contrast = {
+  --         floating_windows = true 
+  --       },
+  --     })
+  --     vim.cmd.colorscheme("cisco-dark-dark")
+  --   end,
+  -- }
 }
 
 local enabled_pkgs = utils.package_loader(
