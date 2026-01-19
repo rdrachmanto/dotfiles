@@ -6,7 +6,7 @@ fi
 
 # User specific environment
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-fi 
+fi
 export PATH
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature: export SYSTEMD_PAGER=
@@ -55,10 +55,7 @@ unset __conda_setup
 
 fastfetch
 
-eval "$(starship init bash)"
-
 export TERM=xterm-256color
-export EDITOR=hx
 # export PATH="/home/rdrachmanto/VM/ubuntu/.local/share/qlot/bin:$PATH"
 export PATH="$PATH:/home/rdrachmanto/.local/share/coursier/bin"
 

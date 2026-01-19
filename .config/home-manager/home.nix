@@ -18,7 +18,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [];
-
+  
   home.pointerCursor = {
     name = "Adwaita";
     package = pkgs.adwaita-icon-theme;
@@ -29,8 +29,12 @@
 
   gtk = {
     enable = true;
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
     gtk3 = {
-      extraConfig.gtk-application-prefer-dark-theme = false;
+      extraConfig.gtk-application-prefer-dark-theme=false;
     };
   };
 
@@ -41,8 +45,23 @@
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
-    desktop = null;   # disable if you don't want ~/Desktop
+    desktop = null;
   };
+
+  
+
+  # xdg.desktopEntries."org.gnome.Nautilus" = {
+  #   name = "Files";
+  #   type = "Application";
+  #   exec = "nautilus --new-window";
+  #   icon = "org.gnome.Nautilus";
+  #   terminal = false;
+  #   categories = [ "System" "FileManager" ];
+
+  #   settings = {
+  #     DBusActivatable = "false";
+  #   };
+  # };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
