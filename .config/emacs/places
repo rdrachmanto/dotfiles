@@ -1,0 +1,115 @@
+;;; -*- coding: utf-8; mode: lisp-data -*-
+(("/home/rdrachmanto/.dotfiles/.config/emacs/themes/cisco-theme.el"
+  . 2680)
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/themes/cisco-dark-theme.el"
+  . 3550)
+ ("/home/rdrachmanto/Nix/configuration.nix" . 11)
+ ("/home/rdrachmanto/Devel/llm-quant-characterization/benchmarker/tegrastats.py"
+  . 387)
+ ("/home/rdrachmanto/Nix/flake.nix" . 708)
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/"
+  (dired-filename
+   . "/home/rdrachmanto/.dotfiles/.config/emacs/init.el"))
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/init.el" . 1755)
+ ("/home/rdrachmanto/.dotfiles/.config/"
+  (dired-filename . "/home/rdrachmanto/.dotfiles/.config/emacs"))
+ ("/home/rdrachmanto/.dotfiles/.config/alacritty/"
+  (dired-filename . "/home/rdrachmanto/.dotfiles/.config"))
+ ("/home/rdrachmanto/.dotfiles/"
+  (dired-filename . "/home/rdrachmanto/.dotfiles/.config"))
+ ("/home/rdrachmanto/"
+  (dired-filename . "/home/rdrachmanto/.dotfiles"))
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/themes/"
+  (dired-filename . "/home/rdrachmanto/.dotfiles/.config/emacs"))
+ ("/ssh:compgrp@172.22.85.251:/data2/llm-benchmarker/some_path/"
+  (dired-filename
+   . "/ssh:compgrp@172.22.85.251:/data2/llm-benchmarker/some_path/main.stdout.log"))
+ ("/ssh:compgrp@172.22.85.251:/data2/llm-benchmarker/some_path/main.stdout.log"
+  . 20)
+ ("/home/rdrachmanto/Research/LLM/p1-llm-benchmarker/benchmarker/tegrastats.py"
+  . 18)
+ ("/home/rdrachmanto/Research/SitS/log-timestamps-issues/"
+  (dired-filename
+   . "/home/rdrachmanto/Research/SitS/log-timestamps-issues/sch.log"))
+ ("/home/rdrachmanto/Research/SitS/log-timestamps-issues/sch.log"
+  . 35862)
+ ("/home/rdrachmanto/Research/SitS/"
+  (dired-filename
+   . "/home/rdrachmanto/Research/SitS/log-timestamps-issues"))
+ ("/home/rdrachmanto/Devel/me/content/index.org" . 1048)
+ ("/home/rdrachmanto/Devel/me/public/static/style.css" . 850)
+ ("/home/rdrachmanto/Devel/me/public/index.html" . 3240)
+ ("/home/rdrachmanto/Devel/me/build-site.el" . 1282)
+ ("/home/rdrachmanto/Devel/me/"
+  (dired-filename . "/home/rdrachmanto/Devel/me/build.sh"))
+ ("/home/rdrachmanto/Devel/SitS/sensing.sh" . 2113)
+ ("/home/rdrachmanto/Devel/SitS/main.sh" . 2222)
+ ("/home/rdrachmanto/.dotfiles/.config/nvim/init.lua" . 1915)
+ ("/home/rdrachmanto/Devel/SitS/src/scheduler/driver.py" . 6524)
+ ("/home/rdrachmanto/Devel/SitS/src/pijuice/time.py" . 845)
+ ("/home/rdrachmanto/Research/SitS/sch.log" . 13372)
+ ("/home/rdrachmanto/.config/emacs/projects" . 306)
+ ("/home/rdrachmanto/Documents/plan.org" . 905)
+ ("/home/rdrachmanto/Downloads/Ardunio-I2C-EC-sample-code/Ardunio-I2C-EC-sample-code.ino"
+  . 3351)
+ ("/home/rdrachmanto/Downloads/Ardunio-I2C-EC-sample-code/"
+  (dired-filename
+   . "/home/rdrachmanto/Downloads/Ardunio-I2C-EC-sample-code/Ardunio-I2C-EC-sample-code.ino"))
+ ("/home/rdrachmanto/Devel/SitS/bootstrap.sh" . 3504)
+ ("/home/rdrachmanto/Devel/r-setup-in-pi.org" . 612)
+ ("/home/rdrachmanto/Devel/SitS/src/sensing/moi2/moi2.ino" . 66)
+ ("/home/rdrachmanto/Devel/SitS/src/sensing/ec1/run.sh" . 88)
+ ("/home/rdrachmanto/Devel/SitS/src/sensing/ec1/ec1.ino" . 2024)
+ ("/home/rdrachmanto/.zshrc" . 174)
+ ("/home/rdrachmanto/.dotfiles/.config/home-manager/home.nix" . 24)
+ ("/home/rdrachmanto/Documents/gace-mentorship-one-on-one" . 2280)
+ ("/home/rdrachmanto/Devel/SitS/src/scheduler/"
+  (dired-filename
+   . "/home/rdrachmanto/Devel/SitS/src/scheduler/driver.py"))
+ ("/home/rdrachmanto/Devel/SitS/src/"
+  (dired-filename . "/home/rdrachmanto/Devel/SitS/src/scheduler"))
+ ("/home/rdrachmanto/Devel/SitS/"
+  (dired-filename . "/home/rdrachmanto/Devel/SitS/src"))
+ ("/nix/store/3lll9y925zz9393sa59h653xik66srjb-python3-3.13.9/lib/python3.13/subprocess.py"
+  . 17482)
+ ("/home/rdrachmanto/Devel/pulse/main.janet" . 426)
+ ("/home/rdrachmanto/Devel/R-for-SitS/newscript.R" . 742)
+ ("/home/rdrachmanto/Devel/SitS/src/sensing/ec1/"
+  (dired-filename
+   . "/home/rdrachmanto/Devel/SitS/src/sensing/ec1/run.sh"))
+ ("/home/rdrachmanto/Devel/SitS/src/sensing/ph1/ph1.ino" . 3667)
+ ("/home/rdrachmanto/Devel/scaffold/main.janet" . 1035)
+ ("/home/rdrachmanto/Devel/llm-quant-characterization/benchmarker/desktop.py"
+  . 652)
+ ("/home/rdrachmanto/Devel/scaffold/mkpython.janet" . 17)
+ ("/home/rdrachmanto/Devel/scaffold/utils.janet" . 399)
+ ("/home/rdrachmanto/.dotfiles/.config/waybar/style.css" . 232)
+ ("/home/rdrachmanto/.dotfiles/.config/niri/config.kdl" . 13033)
+ ("/home/rdrachmanto/Documents/llm-2-notes.org" . 177)
+ ("/home/rdrachmanto/Documents/llm-on-edge.org" . 544)
+ ("/home/rdrachmanto/Devel/SitS/docs/"
+  (dired-filename
+   . "/home/rdrachmanto/Devel/SitS/docs/Getting Started.pdf"))
+ ("/home/rdrachmanto/.config/rofi/current.rasi" . 172)
+ ("/home/rdrachmanto/Documents/passwords.org" . 65)
+ ("/home/rdrachmanto/Documents/wishlist.org" . 67)
+ ("/home/rdrachmanto/Documents/Algo-finals.org" . 486)
+ ("/home/rdrachmanto/Downloads/SimpleEncoder.scala" . 2308)
+ ("/home/rdrachmanto/Documents/26112025-log.org" . 238)
+ ("/home/rdrachmanto/Documents/data-science-finals.org" . 660)
+ ("/home/rdrachmanto/.config/rofi/config.rasi" . 191)
+ ("/home/rdrachmanto/Devel/scaffold/project.janet" . 210)
+ ("/home/rdrachmanto/Devel/scaffold/"
+  (dired-filename . "/home/rdrachmanto/Devel/scaffold/main.janet"))
+ ("/home/rdrachmanto/Nix/wrappers/janet-lsp.nix" . 1143)
+ ("/home/rdrachmanto/Documents/term-project-README.md" . 741)
+ ("/home/rdrachmanto/.dotfiles/.bashrc" . 546)
+ ("/home/rdrachmanto/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/result.rs"
+  . 20844)
+ ("/home/rdrachmanto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-core-0.8.6/src/pool/options.rs"
+  . 6656)
+ ("/home/rdrachmanto/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-postgres-0.8.6/src/lib.rs"
+  . 1859)
+ ("/home/rdrachmanto/Nix/"
+  (dired-filename . "/home/rdrachmanto/Nix/flake.nix"))
+ ("/home/rdrachmanto/Run/theme-switcher" . 1036))

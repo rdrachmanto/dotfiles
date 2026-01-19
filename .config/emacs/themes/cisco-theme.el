@@ -1,112 +1,126 @@
 (deftheme cisco
   "Cisco Theme")
 
-(let ((black1 "#0e100f")
-      (black2 "#1e201f")
-      (black3 "#1f211f")
-      (black4 "#403e3c")
-      (black5 "#878580")
-      (black6 "#a0a0a0")
-      
-      (light1 "#f8f8f8")
-      (light2 "#cecdc3")
-      (light3 "#fefefe")
-      (light4 "#e0e0e0")
-      (light5 "#c5c5c5")
-      
-      (blue1 "#2b5375")
-      (blue2 "#3aa99f")
-      (blue3 "#4385be")
-      (blue4 "#5b79e3")
-      (blue5 "#79b8ff")
-      (blue6 "#8caec1")
+(let (
+      ;; Color definitions
+      ;; Let's do it in a clear way
 
-      (lightgreen "#a9be50")
-      (green "#879a39")
-      (green2 "#6c7b2e")
+      ;; UI colors
+      (bg "#fefefe")
+      (bg+1 "#cecdc3")
+      (bg+2 "#e0e0e0")
+      (border "#403e3c")
+      (fg "#0e100f")
+      (fg-dim "#878580")
 
-      (yellow1 "#ad8301")
-      (yellow2 "#d0a215")
-      (yellow3 "#f3cd07")
+      ;; Accents for syntax
+      ;; (accent-def "#b3071a")
+      (accent-parens "#5b79e3")
+      (accent-def "#834de8")
+      (accent-str "#448c27")
+      (accent-num "#c46222")
+      (accent-doc "#d3604f")
+      (accent-comments "#878580")
+      (accent-var "#5b79e3")
 
-      (orange1 "#da702c")
-      (orange2 "#fe9900")
-      (orange3 "#ffab70")
-      (orange4 "#ffc799")
-      (orange5 "#c46222")
-      
-      (purple1 "#b392f1")
-      (purple2 "#e394dc")
-      (purple3 "#834de8")
-      
-      (pink "#fa7584")
-      (pink2 "#f84055")
-      (pink3 "#d3081f")
-      
-      (red1 "#d14d41")
-      (red2 "#d3604f"))
+      ;; UI accents
+      (accent-cursor "#da702c")
+      (accent-hl-line "#b392f1")
+
+      ;; Signals -- for diagnostics and diff-hl
+      ;; reuse signal-ok for diff-hl-insert
+      ;;       signal-info for diff-hl-change
+      ;;       signal-error for diff-hl-delete
+      (signal-ok "#6c7b2e")
+      (signal-warn "#ffab70")
+      (signal-error "#d14d41")
+      (signal-info "#79b8ff"))
   (custom-theme-set-faces
    'cisco
    ;; UI elements
-   `(default ((t (:background ,light3 :foreground ,black1))))
-   `(vertical-border ((t (:foreground ,black4))))
-   `(region ((t (:background ,light2))))
-   `(line-number ((t (:foreground ,black5))))
-   `(line-number-current-line ((t (:foreground ,orange1))))
-   `(cursor ((t (:background ,orange1))))
+   `(default ((t (:background ,bg :foreground ,fg))))
+   `(vertical-border ((t (:foreground ,border))))
+   `(region ((t (:background ,bg+1))))
+   `(line-number ((t (:foreground ,fg-dim))))
+   `(line-number-current-line ((t (:foreground ,accent-num))))
+   `(cursor ((t (:background ,accent-num))))
 
-   `(mode-line ((t :background ,light2 :foreground ,black1)))
-   `(mode-line-inactive ((t :foreground ,black4)))
+   `(mode-line ((t :background ,bg+1 :foreground ,fg)))
+   `(mode-line-inactive ((t :foreground ,border)))
 
-   `(fringe ((t (:background ,light3 :foreground ,light3))))
+   `(fringe ((t (:background ,bg :foreground ,bg))))
 
    ;; Tab-bar mode
-   `(tab-bar ((t (:inherit nil :background ,light3))))
-   `(tab-bar-tab-inactive ((t :background ,light4 :box (:color ,light4 :line-width 4))))
-   `(tab-bar-tab ((t :background ,light2 :weight bold :box (:color ,light2 :line-width 4))))
+   `(tab-bar ((t (:inherit nil :background ,bg))))
+   `(tab-bar-tab-inactive ((t :background ,bg+2 :box (:color ,bg+2 :line-width 4))))
+   `(tab-bar-tab ((t :background ,bg+1 :weight bold :box (:color ,bg+1 :line-width 4))))
    
    ;; Text highlighting
-   `(font-lock-comment-face ((t (:foreground ,black5))))
-   `(font-lock-doc-face ((t (:inherit 'font-lock-comment-face))))
+   `(font-lock-comment-face ((t (:foreground ,accent-comments))))
+   `(font-lock-doc-face ((t (:foreground ,accent-doc))))
    `(font-lock-comment-delimiter-face ((t (:inherit 'font-lock-comment-face))))
-   `(font-lock-type-face ((t (:foreground ,blue1))))
-   `(font-lock-string-face ((t (:foreground ,orange5))))
-   `(font-lock-regexp-face ((t (:foreground ,black6))))
-   `(font-lock-constant-face ((t (:foreground ,blue1))))
-   `(font-lock-variable-name-face ((t (:foreground ,black1))))
-   `(font-lock-variable-use-face ((t (:inherit 'font-lock-variable-name-face))))
-   `(font-lock-builtin-face ((t (:foreground ,blue1))))
-   `(font-lock-punctuation-face ((t (:foreground ,black1))))
-   `(font-lock-function-name-face ((t (:foreground ,purple3))))
-   `(font-lock-function-call-face ((t (:inherit 'font-lock-function-name-face))))
-   `(font-lock-operator-face ((t (:foreground ,pink3))))
-   `(font-lock-keyword-face ((t (:foreground ,pink3))))
+   `(font-lock-string-face ((t (:foreground ,accent-str))))
+   `(font-lock-number-face ((t (:foreground ,accent-num))))
+   `(font-lock-regexp-face ((t (:inherit 'default))))
+   `(font-lock-punctuation-face ((t (:foreground ,fg-dim))))
+   `(font-lock-operator-face ((t (:inherit 'default))))
+
+   `(font-lock-constant-face ((t (:foreground ,accent-num))))
+   `(font-lock-variable-name-face ((t (:inherit 'default))))
+   `(font-lock-variable-use-face ((t (:inherit 'default))))
+   `(font-lock-function-name-face ((t (:foreground ,accent-def))))
+   `(font-lock-function-call-face ((t (:inherit 'default))))
+   `(font-lock-type-face ((t (:inherit 'default))))
+   
+   `(font-lock-builtin-face ((t (:inherit 'default))))
+   `(font-lock-keyword-face ((t (:inherit 'default))))
    
    ;; Flymake
-   `(flymake-note-echo ((t (:foreground ,blue1))))
-   `(flymake-warning-echo ((t (:foreground ,orange1))))
-   `(flymake-error-echo ((t (:foreground ,pink3))))
+   `(flymake-note-echo ((t (:foreground ,signal-info))))
+   `(flymake-warning ((t (:underline (:style wave :color ,signal-warn)))))
+   `(flymake-warning-echo ((t (:foreground ,signal-warn))))
+   `(warning ((t (:foreground ,signal-warn))))
+   `(flymake-error-echo ((t (:foreground ,signal-error))))
 
    ;; Markdown
    `(markdown-code-face ((t (:inherit nil))))
-   `(markdown-hr-face ((t (:foreground ,black2))))
+   `(markdown-hr-face ((t (:foreground ,fg-dim))))
    
    ;; Eldoc box
-   `(eldoc-box-body ((t (:background ,light4))))
-   `(eldoc-box-border ((t (:background ,black5))))
+   `(eldoc-box-body ((t (:background ,bg+2))))
+   `(eldoc-box-border ((t (:background ,bg+2))))
 
    ;; Rainbow delimiters
-   `(rainbow-delimiters-depth-1-face ((t (:foreground ,red1))))
-   `(rainbow-delimiters-depth-2-face ((t (:foreground ,orange1))))
-   `(rainbow-delimiters-depth-3-face ((t (:foreground ,yellow1))))
-   `(rainbow-delimiters-depth-4-face ((t (:foreground ,green2))))
-   `(rainbow-delimiters-depth-5-face ((t (:foreground ,blue4))))
-   `(rainbow-delimiters-depth-6-face ((t (:foreground ,blue6))))
-   `(rainbow-delimiters-depth-7-face ((t (:foreground ,purple2))))
+   `(rainbow-delimiters-depth-1-face ((t (:foreground ,accent-parens))))
+   `(rainbow-delimiters-depth-2-face ((t (:foreground ,accent-parens))))
+   `(rainbow-delimiters-depth-3-face ((t (:foreground ,accent-parens))))
+   `(rainbow-delimiters-depth-4-face ((t (:foreground ,accent-parens))))
+   `(rainbow-delimiters-depth-5-face ((t (:foreground ,accent-parens))))
+   `(rainbow-delimiters-depth-6-face ((t (:foreground ,accent-parens))))
+   `(rainbow-delimiters-depth-7-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-1-face ((t (:foreground ,accent-def))))
+   ;; `(rainbow-delimiters-depth-2-face ((t (:foreground ,accent-str))))
+   ;; `(rainbow-delimiters-depth-3-face ((t (:foreground ,accent-num))))
+   ;; `(rainbow-delimiters-depth-4-face ((t (:foreground ,signal-ok))))
+   ;; `(rainbow-delimiters-depth-5-face ((t (:foreground ,signal-warn))))
+   ;; `(rainbow-delimiters-depth-6-face ((t (:foreground ,signal-error))))
+   ;; `(rainbow-delimiters-depth-7-face ((t (:foreground ,signal-info))))
+
+
+   ;; Org
+   `(org-document-info-keyword ((t (:foreground ,fg))))
+   `(outline-1 ((t (:foreground ,accent-def))))
+   `(outline-2 ((t (:foreground ,accent-def))))
+   `(outline-3 ((t (:foreground ,accent-def))))
+   `(outline-4 ((t (:foreground ,accent-def))))
+   `(outline-5 ((t (:foreground ,accent-def))))
+   `(outline-6 ((t (:foreground ,accent-def))))
+   `(outline-7 ((t (:foreground ,accent-def))))
 
    ;; Diff-hl
-   `(diff-hl-insert ((t :foreground ,green2 :background ,lightgreen :inherit nil)))
-   `(diff-hl-change ((t :foreground ,blue1 :background ,blue5 :inherit nil)))
+   `(diff-hl-insert ((t :foreground ,signal-ok :background ,signal-ok :inherit nil)))
+   `(diff-hl-change ((t :foreground ,signal-info :background ,signal-info :inherit nil)))
+   `(diff-hl-delete ((t :foreground ,signal-error :background ,signal-error :inherit nil)))
    ))
 
 (provide-theme 'cisco)

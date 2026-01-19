@@ -4,11 +4,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(ace-window diff-hl eat eldoc-box emmet-mode magit markdown-mode meow
-		nerd-icons-completion nerd-icons-dired
-		nerd-icons-ibuffer nix-mode pulsar rainbow-delimiters
-		rust-mode web-mode)))
+ '(custom-safe-themes
+   '("53e68cc52243583a7f2c4d71532a3860bbf96cb554ec4278cf866027a191dd05"
+     default)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

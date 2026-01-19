@@ -15,7 +15,7 @@
      `(window-divider ((t (:background ,bg :foreground ,bg))))
      `(window-divider-first-pixel ((t (:background ,bg :foreground ,bg))))
      `(window-divider-last-pixel ((t (:background ,bg :foreground ,bg)))))))
-(load-theme 'cisco-dark t)
+(load-theme 'cisco t)
 ;; (add-hook 'enable-theme-functions #'rd/set-invisible-dividers-for-themes)
 
 
@@ -23,6 +23,7 @@
 ;; Builtin
 ;; -------------------------------------------------
 
+(setq-default indent-tabs-mode nil)
 ;; Emacs
 (use-package emacs
   :ensure nil
@@ -32,11 +33,12 @@
   (which-key-mode t)
   (windmove-default-keybindings)
   (menu-bar--display-line-numbers-mode-relative)
-  (set-fringe-mode '(5 . 5))
+  (set-fringe-mode '(5 . 0))
   (electric-pair-mode)
   (tab-bar-mode)
   (save-place-mode)
   (global-auto-revert-mode)
+  (global-hl-line-mode)
 
   (setq history-length 25)
   (savehist-mode)
@@ -44,13 +46,12 @@
 
   (setq use-dialog-box nil)
 
-  
   ;; Completion settings
-  (setq tab-always-indent t)
+  (setq tab-always-indent 'complete)
   (global-completion-preview-mode)
   (setq read-file-name-completion-ignore-case t
 	read-buffer-completion-ignore-case t
-	completion-auto-help 'always
+	completion-auto-help nil
 	completion-auto-select 'second-tab
 	completion-cycle-threshold 3
 	completions-format 'horizontal
@@ -93,15 +94,20 @@
 ;; Hooks
 (add-hook 'prog-mode-hook
 	  (lambda ()
-	    (setq display-line-numbers-width 4)
+	    (setq display-line-numbers-width 3)
 	    (display-line-numbers-mode)
 	    (column-number-mode)))
+
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (set-window-fringes
+             (minibuffer-window frame) 6 6 nil t)))
 
 ;; Dired
 (use-package dired
   :ensure nil
   :config
-  (setq dired-listing-switches "-al --group-directories-first"
+  (setq dired-listing-switches "-alh --group-directories-first --no-group"
 	dired-dwim-target t
 	dired-recursive-copies 'always
 	dired-create-destination-dirs 'ask
@@ -112,6 +118,8 @@
 ;; Eglot Settings
 (use-package eglot
   :ensure nil
+  :config
+  (setq eglot-ignored-server-capabilites '(:inlayHintProvider))
   :hook
   (prog-mode . eglot-ensure))
 
@@ -153,8 +161,20 @@
 ;; Packages
 ;; -------------------------------------------------
 
+;; direnv
+(use-package direnv
+  :ensure t
+  :config (direnv-mode))
+
+;; smartparens
+(use-package smartparens
+  :ensure t
+  :hook (prog-mode text-mode markdown-mode)
+  :config
+  (require 'smartparens-config))
+
 ;; Programming modes
-(setq treesit-font-lock-level 4)   ;; max level
+(setq treesit-font-lock-level 4)   ;; max level is 4
 (use-package rust-mode
   :ensure t)
 (use-package markdown-mode
@@ -171,10 +191,18 @@
 (use-package nix-mode
   :ensure t)
 
+(use-package clojure-mode
+  :ensure t)
+(use-package clojure-ts-mode
+  :ensure t)
+(use-package cider
+  :ensure t)
+
 ;; Major mode remap
 (add-to-list 'major-mode-remap-alist '(sh-mode . bash-ts-mode))
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 (add-to-list 'major-mode-remap-alist '(rust-mode . rust-ts-mode))
+(add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode))
 
 ;; Magit
 (use-package magit
