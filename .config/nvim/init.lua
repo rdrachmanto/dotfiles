@@ -66,12 +66,10 @@ vim.o.laststatus = 3
 -- LSP
 vim.cmd[[ set completeopt+=menuone,noselect,popup ]]
 vim.lsp.enable({ 
-  "lua_ls", 
   "basedpyright", 
-  "r_language_server", 
-  "tinymist", 
-  "metals", 
-  "bashls"
+  "bashls",
+  "janet_lsp",
+  "metals"
 })
 vim.lsp.config("*", {
   root_markers = { ".git" },
@@ -87,12 +85,12 @@ vim.lsp.config("*", {
     --   ".", "("
     -- }
     -- client.server_capabilities.completionProvider.triggerCharacters = chars
-    vim.lsp.completion.enable(true, client.id, bufnr, {
-      autotrigger = true,
-      convert = function(item)
-        return { abbr = item.label:gsub('%b()', '') }
-      end,
-    })
+    -- vim.lsp.completion.enable(true, client.id, bufnr, {
+    --   autotrigger = true,
+    --   convert = function(item)
+    --     return { abbr = item.label:gsub('%b()', '') }
+    --   end,
+    -- })
     vim.o.winbar = "%t %{%v:lua.require'nvim-navic'.get_location()%}"
   end,
 })
@@ -165,40 +163,40 @@ local devel_pkgs = {
       })
     end
   },
-  -- {
-  --   'saghen/blink.cmp',
-  --   version = "1.*",
-  --   opts = {
-  --     keymap = { preset = "enter" },
-  --     appearance = {
-  --       nerd_font_variant = "normal",
-  --     },
-  --     completion = {
-  --       documentation = { auto_show = false },
-  --       menu = {
-  --         scrollbar = false,
-  --         draw = {
-  --           columns = {
-  --             { "kind_icon" },
-  --             { "label", "label_description", gap=1 }
-  --           },
-  --           treesitter = { "lsp" }
-  --         }
-  --       },
-  --       list = {
-  --         selection = {
-  --           preselect = true,
-  --           auto_insert = false
-  --         }
-  --       },
-  --     },
-  --     sources = {
-  --       default = { "lsp", "path", "snippets", "buffer" }
-  --     },
-  --     fuzzy = { implementation = "prefer_rust_with_warning" }
-  --   },
-  --   opts_extend = { "sources.default" }
-  -- },
+  {
+    'saghen/blink.cmp',
+    version = "1.*",
+    opts = {
+      keymap = { preset = "enter" },
+      appearance = {
+        nerd_font_variant = "normal",
+      },
+      completion = {
+        documentation = { auto_show = false },
+        menu = {
+          scrollbar = false,
+          draw = {
+            columns = {
+              { "kind_icon" },
+              { "label", "label_description", gap=1 }
+            },
+            treesitter = { "lsp" }
+          }
+        },
+        list = {
+          selection = {
+            preselect = true,
+            auto_insert = false
+          }
+        },
+      },
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer" }
+      },
+      fuzzy = { implementation = "prefer_rust_with_warning" }
+    },
+    opts_extend = { "sources.default" }
+  },
   { "HiPhish/rainbow-delimiters.nvim", },
   { "windwp/nvim-autopairs", event = "InsertEnter", config = true, },
   { "lewis6991/gitsigns.nvim", config = true },
@@ -254,7 +252,7 @@ local colorschemes = {
           floating_windows = true 
         },
       })
-      vim.cmd.colorscheme("cisco-dark")
+      vim.cmd.colorscheme("cisco")
     end
   },
   -- {
