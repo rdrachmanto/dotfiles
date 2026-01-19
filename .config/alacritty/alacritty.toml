@@ -1,6 +1,6 @@
 [general]
 import = [
-       "./themes/dark.toml"
+       "./themes/light.toml"
 ]
 
 [window]
