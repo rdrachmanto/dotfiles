@@ -15,7 +15,7 @@
      `(window-divider ((t (:background ,bg :foreground ,bg))))
      `(window-divider-first-pixel ((t (:background ,bg :foreground ,bg))))
      `(window-divider-last-pixel ((t (:background ,bg :foreground ,bg)))))))
-(load-theme 'cisco t)
+(load-theme 'cisco-dark t)
 ;; (add-hook 'enable-theme-functions #'rd/set-invisible-dividers-for-themes)
 
 

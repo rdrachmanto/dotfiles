@@ -34,12 +34,12 @@
       package = pkgs.papirus-icon-theme;
     };
     gtk3 = {
-      extraConfig.gtk-application-prefer-dark-theme=false;
+      extraConfig.gtk-application-prefer-dark-theme=true;
     };
   };
 
   dconf.settings."org/gnome/desktop/interface" = {
-    color-scheme = "prefer-light";
+    color-scheme = "prefer-dark";
   };
 
   xdg.userDirs = {
@@ -96,6 +96,7 @@
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
+    QT_QPA_PLATFORMTHEME="gtk3";
   };
 
   # Let Home Manager install and manage itself.

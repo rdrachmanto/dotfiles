@@ -11,9 +11,24 @@
     {
       "host": "fox1.cs.uga.edu",
       "username": "rdr78068",
+      "args": [],
       "projects": [
         {
-          "paths": ["/data/rdr78068/satnerf-base"]
+          "paths": [
+            "/data/rdr78068/satnerf-base"
+          ]
+        }
+      ]
+    },
+    {
+      "host": "172.22.85.251",
+      "username": "compgrp",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/data2/llm-benchmarker/./"
+          ]
         }
       ]
     }
@@ -29,9 +44,9 @@
   "buffer_font_family": "Zed Plex Mono",
   "buffer_font_size": 13.5,
   "theme": {
-    "mode": "system",
-    "light": "One Light",
-    "dark": "Ayu Dark"
+    "mode": "light",
+    "light": "Alabaster",
+    "dark": "Alabaster Dark"
   },
   "project_panel": {
     "dock": "right"

@@ -25,7 +25,6 @@
       ;; UI accents
       (accent-cursor "#fe9900")
       (accent-hl-line "#1e201f")
-      (accent-region "#203e58")
 
       ;; Signals -- for diagnostics and diff-hl
       ;; reuse signal-ok for diff-hl-insert
@@ -43,7 +42,7 @@
    `(internal-border ((t (:foreground ,border, :background ,bg))))
    `(mode-line ((t (:background ,border foreground ,fg))))
    `(mode-line-inactive ((t (:background ,bg :foreground ,accent-comments))))
-   `(region ((t (:background ,accent-region :foreground ,bg))))
+   `(region ((t (:background ,border))))
    `(hl-line ((t (:background ,accent-hl-line))))
    `(cursor ((t (:background ,accent-cursor))))
 

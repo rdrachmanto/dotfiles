@@ -252,7 +252,7 @@ local colorschemes = {
           floating_windows = true 
         },
       })
-      vim.cmd.colorscheme("cisco")
+      vim.cmd.colorscheme("cisco-dark")
     end
   },
   -- {
