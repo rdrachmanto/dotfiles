@@ -5,8 +5,8 @@ show_always = false
 format = '[$user](green)'
 
 [character]
-success_symbol = '[└](lightgray) [λ](bold green)' 
-error_symbol = '[└](lightgray) [λ](bold red)' 
+success_symbol = '[λ](bold green)' 
+error_symbol = '[λ](bold red)' 
 
 [time]
 disabled = false
@@ -38,7 +38,7 @@ format = '—  [$symbol($version )]($style)'
 [directory]
 read_only = " 󰌾"
 style = 'fg:#79b8ff'
-format = "┌ [$path]($style) "
+format = "[$path]($style) "
 
 [docker_context]
 symbol = " "

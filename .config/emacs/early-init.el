@@ -7,8 +7,17 @@
 ;; Additional load paths
 (add-to-list 'load-path
 	     (expand-file-name "lisp/" user-emacs-directory))
-(add-to-list 'custom-theme-load-path
-	     (expand-file-name "themes/" user-emacs-directory))
+
+;; Load all inside themes/
+(let ((theme-dir (expand-file-name "themes/" user-emacs-directory)))
+  (add-to-list 'custom-theme-load-path theme-dir)
+  (add-to-list 'load-path theme-dir)
+  
+  (dolist (dir (directory-files theme-dir t "^[^.]"))
+    (when (file-directory-p dir)
+      (add-to-list 'load-path dir)
+      (add-to-list 'custom-theme-load-path dir))))
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory)
       treesit-extra-load-path '("~/.config/emacs/tree-sitter"))
 

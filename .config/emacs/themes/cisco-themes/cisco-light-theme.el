@@ -21,8 +21,8 @@
       (accent-num "#c46222")
       (accent-doc "#d3604f")
       (accent-comments "#878580")
-      (accent-var "#5b79e3")
-
+      (accent-var "#1f5f99")
+      (accent-types "#2f7d5f")
       ;; UI accents
       (accent-cursor "#da702c")
       (accent-hl-line "#b392f1")
@@ -66,14 +66,15 @@
    `(font-lock-operator-face ((t (:inherit 'default))))
 
    `(font-lock-constant-face ((t (:foreground ,accent-num))))
-   `(font-lock-variable-name-face ((t (:inherit 'default))))
+   `(font-lock-variable-name-face ((t (:foreground ,accent-var))))
    `(font-lock-variable-use-face ((t (:inherit 'default))))
+   `(font-lock-property-use-face ((t (:inherit 'default))))
    `(font-lock-function-name-face ((t (:foreground ,accent-def))))
    `(font-lock-function-call-face ((t (:inherit 'default))))
-   `(font-lock-type-face ((t (:inherit 'default))))
+   `(font-lock-type-face ((t (:foreground ,accent-types))))
    
-   `(font-lock-builtin-face ((t (:inherit 'default))))
-   `(font-lock-keyword-face ((t (:inherit 'default))))
+   `(font-lock-builtin-face ((t (:inherit 'default :slant italic))))
+   `(font-lock-keyword-face ((t (:inherit 'default :slant italic))))
    
    ;; Flymake
    `(flymake-note-echo ((t (:foreground ,signal-info))))
@@ -91,13 +92,13 @@
    `(eldoc-box-border ((t (:background ,bg+2))))
 
    ;; Rainbow delimiters
-   `(rainbow-delimiters-depth-1-face ((t (:foreground ,accent-parens))))
-   `(rainbow-delimiters-depth-2-face ((t (:foreground ,accent-parens))))
-   `(rainbow-delimiters-depth-3-face ((t (:foreground ,accent-parens))))
-   `(rainbow-delimiters-depth-4-face ((t (:foreground ,accent-parens))))
-   `(rainbow-delimiters-depth-5-face ((t (:foreground ,accent-parens))))
-   `(rainbow-delimiters-depth-6-face ((t (:foreground ,accent-parens))))
-   `(rainbow-delimiters-depth-7-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-1-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-2-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-3-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-4-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-5-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-6-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-7-face ((t (:foreground ,accent-parens))))
    ;; `(rainbow-delimiters-depth-1-face ((t (:foreground ,accent-def))))
    ;; `(rainbow-delimiters-depth-2-face ((t (:foreground ,accent-str))))
    ;; `(rainbow-delimiters-depth-3-face ((t (:foreground ,accent-num))))

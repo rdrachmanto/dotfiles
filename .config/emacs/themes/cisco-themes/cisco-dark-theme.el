@@ -1,50 +1,56 @@
+(require 'cisco-themes)
+
 (deftheme cisco-dark
   "Cisco Dark Theme")
 
 (let (;; Color definitions
       ;; Let's do it in a clear way
       
-      ;; UI colors
-      (bg "#0e100f")
+      ;; (bg "#0e100f")
+      (bg "#1e1e21")
       (bg+1 "#1e201f")
       (bg+2 "#1f211f")
       (border "#403e3c")
+
       (fg "#a0a0a0")
       (fg-dim "#878580")
       (fg-dim+1 "#403e3c")
 
       ;; Accents for syntax
       (accent-parens "#2b5375")
-      (accent-def "#b392f1")
-      (accent-var "#4385be")
+      (accent-def "#a884c7")
+      (accent-var "#5f86ad")
+      (accent-todos "#f0f8ff")
+      (accent-keys "#7f95a6")
       (accent-str "#879a39")
-      (accent-num "#da702c")
-      (accent-comments "#ad8301")
+      (accent-num "#c98245")
+      (accent-comments "#76726e")
       (accent-doc "#ad8301")
-      
+      (accent-types "#5fa8a1")
+
       ;; UI accents
       (accent-cursor "#fe9900")
       (accent-hl-line "#1e201f")
 
-      ;; Signals -- for diagnostics and diff-hl
-      ;; reuse signal-ok for diff-hl-insert
-      ;;       signal-info for diff-hl-change
-      ;;       signal-error for diff-hl-delete
+      ;; Signals
       (signal-ok "#6c7b2e")
       (signal-warn "#ffab70")
       (signal-error "#d14d41")
-      (signal-info "#79b8ff"))
+      (signal-info "#6fa8d8")
+      )
+
+  
   (custom-theme-set-faces
    'cisco-dark
    ;; UI elements
    `(default ((t (:background ,bg :foreground ,fg))))
    `(vertical-border ((t (:foreground ,border))))
    `(internal-border ((t (:foreground ,border, :background ,bg))))
-   `(mode-line ((t (:background ,border foreground ,fg))))
-   `(mode-line-inactive ((t (:background ,bg :foreground ,accent-comments))))
-   `(region ((t (:background ,border))))
+   `(mode-line ((t (:background ,border foreground ,fg :box ,(cisco-themes-set-large-mode-line)))))
+   `(mode-line-inactive ((t (:background ,bg :foreground ,fg-dim))))
    `(hl-line ((t (:background ,accent-hl-line))))
    `(cursor ((t (:background ,accent-cursor))))
+   `(region ((t (:background ,fg-dim+1))))
 
    `(line-number ((t (:foreground ,fg-dim+1))))
    `(line-number-current-line ((t (:foreground ,accent-num))))
@@ -69,17 +75,20 @@
    `(font-lock-number-face ((t (:foreground ,accent-num))))
    `(font-lock-punctuation-face ((t (:inherit 'default))))
    `(font-lock-operator-face ((t (:inherit 'default))))
+   `(font-lock-delimiter-face ((t (:inherit 'font-lock-comment-face))))
+   `(font-lock-bracket-face ((t (:inherit 'font-lock-comment-face))))
 
-   
    `(font-lock-constant-face ((t (:foreground ,accent-num))))
    `(font-lock-variable-name-face ((t (:inherit 'default))))
    `(font-lock-variable-use-face ((t (:inherit 'default))))
+   `(font-lock-property-use-face ((t (:inherit 'default))))
    `(font-lock-function-name-face ((t (:foreground ,accent-def))))
    `(font-lock-function-call-face ((t (:inherit 'default))))
-   `(font-lock-type-face ((t (:inherit 'default))))
+   `(font-lock-type-face ((t (:foreground ,accent-types))))
    
-   `(font-lock-builtin-face ((t (:inherit 'default :weight bold))))
-   `(font-lock-keyword-face ((t (:inherit 'default :weight bold))))
+   `(font-lock-builtin-face ((t (:inherit 'default))))
+   ;; `(font-lock-keyword-face ((t (:inherit 'default))))
+   `(font-lock-keyword-face ((t (:foreground ,(cisco-themes-set-keywords-pop accent-keys signal-info) :slant ,(cisco-themes-set-italic-keywords)))))
 
    ;; Flymake
    `(flymake-note-echo ((t (:foreground ,signal-info))))
@@ -94,23 +103,23 @@
    `(eglot-inlay-hint-face ((t (:inherit nil :foreground ,fg :height 0.8))))
 
    ;; Eldoc box
-   `(eldoc-box-body ((t :background ,bg+2)))
-   `(eldoc-box-border ((t :background ,bg+2)))
+   `(eldoc-box-body ((t :background ,border)))
+   `(eldoc-box-border ((t :background ,border)))
 
    ;; Rainbow delim
-   `(rainbow-delimiters-depth-1-face ((t (:foreground ,accent-parens))))
-   `(rainbow-delimiters-depth-2-face ((t (:foreground ,accent-parens))))
-   `(rainbow-delimiters-depth-3-face ((t (:foreground ,accent-parens))))
-   `(rainbow-delimiters-depth-4-face ((t (:foreground ,accent-parens))))
-   `(rainbow-delimiters-depth-5-face ((t (:foreground ,accent-parens))))
-   `(rainbow-delimiters-depth-6-face ((t (:foreground ,accent-parens))))
-   `(rainbow-delimiters-depth-7-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-1-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-2-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-3-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-4-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-5-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-6-face ((t (:foreground ,accent-parens))))
+   ;; `(rainbow-delimiters-depth-7-face ((t (:foreground ,accent-parens))))
 
    ;; Org
    `(org-document-info-keyword ((t (:foreground ,fg))))
-   `(outline-1 ((t (:foreground ,accent-def))))
-   `(outline-2 ((t (:foreground ,accent-def))))
-   `(outline-3 ((t (:foreground ,accent-def))))
+   `(outline-1 ((t (:foreground ,accent-def :weight bold))))
+   `(outline-2 ((t (:foreground ,accent-def :weight bold))))
+   `(outline-3 ((t (:foreground ,accent-def :weight bold))))
    `(outline-4 ((t (:foreground ,accent-def))))
    `(outline-5 ((t (:foreground ,accent-def))))
    `(outline-6 ((t (:foreground ,accent-def))))
