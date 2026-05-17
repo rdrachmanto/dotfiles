@@ -1,26 +1,43 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-(("/home/rdrachmanto/.dotfiles/.config/emacs/themes/cisco-themes/cisco-dark-theme.el"
-  . 24)
- ("/home/rdrachmanto/.dotfiles/.config/emacs/init.el" . 7175)
- ("/home/rdrachmanto/Research/LLM/p1-llm-benchmarker/main.py" . 2625)
- ("/home/rdrachmanto/.dotfiles/"
-  (dired-filename . "/home/rdrachmanto/.dotfiles/.config"))
- ("/home/rdrachmanto/.dotfiles/.config/emacs/lisp/meow-keybinds.el"
-  . 2737)
- ("/home/rdrachmanto/.dotfiles/.config/emacs/"
-  (dired-filename
-   . "/home/rdrachmanto/.dotfiles/.config/emacs/init.el"))
+(("/home/rdrachmanto/Research/LLM/p1-llm-benchmarker/test.py" . 800)
  ("/home/rdrachmanto/.dotfiles/.config/emacs/themes/cisco-themes/cisco-themes.el"
-  . 764)
+  . 2861)
+ ("/home/rdrachmanto/.dotfiles/.config/niri/config.kdl" . 16606)
+ ("/home/rdrachmanto/Nix/base.nix" . 347)
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/themes/cisco-themes/cisco-dark-theme.el"
+  . 1520)
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/init.el" . 229)
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/lisp/"
+  (dired-filename
+   . "/home/rdrachmanto/.dotfiles/.config/emacs/lisp/setup-tab-bar.el"))
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/lisp/setup-tab-bar.el"
+  . 166)
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/lisp/window-rules.el"
+  . 949)
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/"
+  (dired-filename . "/home/rdrachmanto/.dotfiles/.config/emacs/lisp"))
  ("/home/rdrachmanto/.dotfiles/.config/emacs/themes/"
   (dired-filename . "/home/rdrachmanto/.dotfiles/.config/emacs"))
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/themes/cisco-themes/"
+  (dired-filename . "/home/rdrachmanto/.dotfiles/.config/emacs/themes"))
+ ("/home/rdrachmanto/Research/LLM/p1-llm-benchmarker/main.py" . 1123)
+ ("/home/rdrachmanto/Research/Dissertation/buying-list.org" . 610)
+ ("/home/rdrachmanto/Nix/hosts/thinkpad/thinkpad.nix" . 3700)
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/lisp/meow-keybinds.el"
+  . 807)
+ ("/home/rdrachmanto/Documents/TA/OS_TA_S26/03_PA3/Priyanka Shrestha/fs.c"
+  . 4021)
+ ("/home/rdrachmanto/Research/LLM/p1-llm-benchmarker/utils.py" . 102)
+ ("/home/rdrachmanto/"
+  (dired-filename . "/home/rdrachmanto/.dotfiles"))
+ ("/home/rdrachmanto/.dotfiles/"
+  (dired-filename . "/home/rdrachmanto/.dotfiles/.gitignore"))
+ ("/home/rdrachmanto/.dotfiles/.bashrc" . 1498)
  ("/nix/store/5jvna3v125xamiqj31wr0wvx1cpkpxa1-basedpyright-1.38.0/lib/node_modules/pyright-root/dist/typeshed-fallback/stdlib/pathlib/__init__.pyi"
   . 12731)
- ("/home/rdrachmanto/Nix/hosts/thinkpad/thinkpad.nix" . 871)
  ("/home/rdrachmanto/Research/LLM/p1-llm-benchmarker/"
   (dired-filename
    . "/home/rdrachmanto/Research/LLM/p1-llm-benchmarker/main.py"))
- ("/home/rdrachmanto/Research/LLM/p1-llm-benchmarker/test.py" . 146)
  ("/home/rdrachmanto/Downloads/csp_11_.bib" . 2260)
  ("/home/rdrachmanto/Documents/TA/OS_TA_S26/03_PA3_SKIP/run_all.log"
   . 2378)
@@ -32,8 +49,6 @@
   . 39)
  ("/home/rdrachmanto/Research/LLM/p1-llm-benchmarker/benchmarker/components/measure_ram.py"
   . 522)
- ("/home/rdrachmanto/Nix/base.nix" . 1982)
- ("/home/rdrachmanto/.dotfiles/.config/niri/config.kdl" . 1163)
  ("/home/rdrachmanto/Devel/spotQAT/checkpoint_service/checkpoint_client_async.py"
   . 738)
  ("/home/rdrachmanto/Downloads/External_Checkpointing/QAT_project/test.py"
@@ -56,14 +71,10 @@
   . 2295)
  ("/home/rdrachmanto/Devel/me/content/index.org" . 2057)
  ("/home/rdrachmanto/.dotfiles/.config/home-manager/home.nix" . 1141)
- ("/home/rdrachmanto/Devel/llm-quant-characterization/benchmarker/tegrastats.py"
-  . 387)
  ("/home/rdrachmanto/.dotfiles/.config/"
   (dired-filename . "/home/rdrachmanto/.dotfiles/.config/emacs"))
  ("/home/rdrachmanto/.dotfiles/.config/alacritty/"
   (dired-filename . "/home/rdrachmanto/.dotfiles/.config"))
- ("/home/rdrachmanto/"
-  (dired-filename . "/home/rdrachmanto/.dotfiles"))
  ("/ssh:compgrp@172.22.85.251:/data2/llm-benchmarker/some_path/"
   (dired-filename
    . "/ssh:compgrp@172.22.85.251:/data2/llm-benchmarker/some_path/main.stdout.log"))
@@ -96,8 +107,6 @@
  ("/nix/store/3lll9y925zz9393sa59h653xik66srjb-python3-3.13.9/lib/python3.13/subprocess.py"
   . 17482)
  ("/home/rdrachmanto/Devel/R-for-SitS/newscript.R" . 742)
- ("/home/rdrachmanto/Devel/llm-quant-characterization/benchmarker/desktop.py"
-  . 652)
  ("/home/rdrachmanto/.dotfiles/.config/waybar/style.css" . 232)
  ("/home/rdrachmanto/Documents/llm-2-notes.org" . 177)
  ("/home/rdrachmanto/Documents/llm-on-edge.org" . 544)
@@ -110,5 +119,4 @@
  ("/home/rdrachmanto/Documents/data-science-finals.org" . 660)
  ("/home/rdrachmanto/.config/rofi/config.rasi" . 191)
  ("/home/rdrachmanto/Documents/term-project-README.md" . 741)
- ("/home/rdrachmanto/.dotfiles/.bashrc" . 546)
  ("/home/rdrachmanto/Run/theme-switcher" . 1036))

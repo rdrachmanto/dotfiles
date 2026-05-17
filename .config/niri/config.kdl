@@ -301,6 +301,7 @@ layout {
 spawn-at-startup "udiskie"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "vicinae" "server"
+spawn-at-startup "emacs --daemon"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -446,7 +447,7 @@ binds {
     Mod+Return hotkey-overlay-title="Run an Application: vicinae" { spawn-sh "vicinae toggle"; }
     // Mod+Return hotkey-overlay-title="Run an Application: rofi" { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
-    Mod+E hotkey-overlay-title="Open Emacs" { spawn "emacs"; }
+    Mod+P hotkey-overlay-title="Open Emacs" { spawn-sh "emacsclient -c"; }
     // Mod+D hotkey-overlay-title="Open File Manager" { spawn "nautilus"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.

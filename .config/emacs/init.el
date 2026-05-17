@@ -2,25 +2,10 @@
 ;; Theming
 ;; -------------------------------------------------
 
-(defun rd/set-invisible-dividers-for-themes(&rest _)
-  "Make window dividers invisible, great for padded setups."
-  (let ((bg (face-background 'default))
-	(fg (face-foreground 'default)))
-
-    (setq window-divider-default-bottom-width 2
-	  window-divider-default-right-width 8
-	  window-divider-default-places t)
-    (custom-set-faces
-     `(fringe ((t (:background ,bg :foreground ,bg))))
-     `(window-divider ((t (:background ,bg :foreground ,bg))))
-     `(window-divider-first-pixel ((t (:background ,bg :foreground ,bg))))
-     `(window-divider-last-pixel ((t (:background ,bg :foreground ,bg)))))))
-
 (setq cisco-themes-large-mode-line t
-      cisco-themes-pop-keywords nil)
+      cisco-themes-pop-keywords nil
+      cisco-themes-italic-keywords t)
 (load-theme 'cisco-dark t)
-;; (add-hook 'enable-theme-functions #'rd/set-invisible-dividers-for-themes)
-
 
 ;; -------------------------------------------------
 ;; Builtin
@@ -84,6 +69,7 @@
 	tab-bar-new-button nil
 	tab-bar-new-tab-choice "*scratch*")
 
+  (require 'setup-tab-bar)
 
   (setq org-hide-leading-stars t
 	org-startup-indented t)
@@ -127,36 +113,26 @@
 ;; Eldoc
 (use-package eldoc
   :ensure nil
-  :preface
-  (add-to-list 'display-buffer-alist
-	       '("^\\*eldoc\\*$"
-		 (display-buffer-in-side-window)
-		 (side . right)
-		 (window-width . 0.18)))
+  :config
   (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly
 	eldoc-echo-area-use-multiline-p nil))
 
 ;; Display rules
-(add-to-list 'display-buffer-alist
-	     '("^\\*compilation\\*$"
-	       (display-buffer-in-side-window)
-	       (side . right)
-	       (window-width . 0.18)))
+(require 'window-rules)
 
-(setq my-bottom-panel-buffers
-      '("Flymake diagnostics for .*"
-        "Completions"
-	"terminal"
-	"eat"
-	"xref"))
+(defvar blist-for-bottom-panel
+      '(("^\\*[Ff]lymake.*\\*$" 0)
+        ("^\\*eat\\*$" 0)
+        ("^\\*xref\\*$" 0)
+        ("^\\*[Cc]ompletions\\*$" 0)))
 
-(add-to-list
- 'display-buffer-alist
- `(,(concat "\\*\\(" (string-join my-bottom-panel-buffers "\\|") "\\)\\*")
-   (display-buffer-in-side-window)
-   (side . bottom)
-   (slot . 0)
-   (window-height . 0.18)))
+(defvar blist-for-right-panel
+  '(("^\\*[Hh]elp\\*$" 1)
+    ("^\\*[Ee]ldoc\\*$" -1)))
+
+(setq window-rules-bottom-panel-list blist-for-bottom-panel
+      window-rules-right-panel-list blist-for-right-panel)
+(window-rules-apply)
 
 ;; -------------------------------------------------
 ;; Packages
@@ -192,11 +168,17 @@
 (use-package clojure-ts-mode
   :ensure t)
 
+(use-package nix-mode
+  :ensure t)
+(use-package nix-ts-mode
+  :ensure t)
+
 ;; Major mode remap
 (add-to-list 'major-mode-remap-alist '(sh-mode . bash-ts-mode))
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 (add-to-list 'major-mode-remap-alist '(rust-mode . rust-ts-mode))
 (add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode))
+(add-to-list 'major-mode-remap-alist '(nix-mode . nix-ts-mode))
 
 ;; Magit
 (use-package magit
@@ -229,7 +211,35 @@
   :config
   (require 'meow-keybinds)  ;; Keybinds for movement and others defined here
   (meow-setup)
+  (meow-setup-indicator)
   (meow-global-mode 1))
+
+;; Easy way to interact with parens
+;; Kind of like paredit
+(use-package puni
+  :ensure t
+  :defer t
+  :init (puni-global-mode)
+  :hook
+  (term-mode . puni-disable-puni-mode))
+
+(use-package expreg
+  :ensure t)
+
+(use-package move-text
+  :ensure t
+  :init (move-text-default-bindings))
+
+(defun indent-region-advice (&rest ignored)
+  (let ((deactivate deactivate-mark))
+    (if (region-active-p)
+        (indent-region (region-beginning) (region-end))
+      (indent-region (line-beginning-position) (line-end-position)))
+    (setq deactivate-mark deactivate)))
+
+(advice-add 'move-text-up :after 'indent-region-advice)
+(advice-add 'move-text-down :after 'indent-region-advice)
+
 
 ;; Niceties
 (use-package diff-hl
@@ -265,11 +275,11 @@
 (use-package eat
   :ensure t)
 
-
 ;; -------------------------------------------------
 ;; Functions
 ;; Will be moved later
 ;; -------------------------------------------------
+
 (defun rd/split-right ()
   (interactive)
   (split-window-right)
@@ -319,38 +329,81 @@
     (flymake-show-buffer-diagnostics))
   (other-window 1))
 
+(defun rd/go-to-beginning-of-line ()
+  (interactive)
+  (let ((orig-point (point)))
+    (back-to-indentation)
+    (when (= orig-point (point))
+      (move-beginning-of-line 1))))
+
+(defun rd/switch-to-buffer (&optional all-buffers)
+  (interactive "P")
+  (if (or (not (project-current)) all-buffers)
+      (call-interactively #'switch-to-buffer)
+    (call-interactively #'project-switch-to-buffer)))
+
+(defun rd/find-file (&optional all-buffers)
+  (interactive "P")
+  (if (or (not (project-current)) all-buffers)
+      (call-interactively #'find-file)
+    (call-interactively #'project-find-file)))
+
+(defun rd/meow-insert-start-of-line ()
+  (interactive)
+  (back-to-indentation)
+  (meow-insert))
+
+(defun rd/meow-insert-end-of-line ()
+  (interactive)
+  (end-of-line)
+  (meow-insert))
+
 ;; -------------------------------------------------
 ;; Global Keybinds
 ;; Keybinds interacting with buffer content will stay with meow
 ;; -------------------------------------------------
 
-;; Init
-(keymap-global-set "C-c I" 'rd/open-user-init)
-(keymap-global-set "C-c R" 'rd/reload-user-init)
+(defun rd/bind-keys (&rest bindings)
+  "Helper function for binding keys"
+  (dolist (binding bindings)
+    (pcase-let ((`(,key ,command) binding))
+      (keymap-global-set key command))))
 
-;; Window
-(keymap-global-set "C-c w" 'ace-window)
-(keymap-global-set "C-x 2" 'rd/split-below)
-(keymap-global-set "C-x 3" 'rd/split-right)
-(keymap-global-set "C-c s d" 'rd/split-right-dired)
-(keymap-global-set "C-c s p" 'rd/split-right-project-dired)
+(rd/bind-keys
+ ;; Init
+ '("C-c i i" rd/open-user-init)
+ '("C-c i r" rd/reload-user-init)
+ ;;
+ '("C-c w" ace-window)
+ '("C-x 2" rd/split-below)
+ '("C-x 3" rd/split-right)
+ '("C-c s d" rd/split-right-dired)
+ '("C-c s D" rd/split-right-project-dired)
+ ;;
+ '("C-c t t" tab-list)
+ '("C-c t n" tab-new)
+ '("C-c t r" tab-rename)
+ '("C-c t d" tab-close)
+ '("C-c [" tab-previous)
+ '("C-c ]" tab-next)
+ ;;
+ '("C-=" expreg-expand)
+ '("C--" expreg-contract)
+ ;;
+ '("C-c f r" recentf-open)
+ ;;
+ '("C-c `" eat)
+ '("C-c d d" rd/open-project-or-buffer-diagnostics)
+ '("C-c d b" rd/open-buffer-diagnostics)
+ ;;
+ '("C-a" rd/go-to-beginning-of-line)
+ '("C-x b" rd/switch-to-buffer)
+ '("C-x C-f" rd/find-file)
+ ;;
+ '("C-)" puni-slurp-forward)
+ '("C-(" puni-slurp-backward)
+ '("C-}" puni-barf-forward)
+ '("C-{" puni-barf-backward)
+ '("C-c l s" puni-splice)
+ '("C-c l r" puni-raise))
 
-;; Tabs
-(keymap-global-set "C-c t t" 'tab-list)
-(keymap-global-set "C-c t n" 'tab-new)
-(keymap-global-set "C-c t r" 'tab-rename)
-(keymap-global-set "C-c t d" 'tab-close)
-(keymap-global-set "C-c [" 'tab-previous)
-(keymap-global-set "C-c ]" 'tab-next)
-
-;; Buffer
-(keymap-global-set "C-c -" 'previous-buffer)
-(keymap-global-set "C-c =" 'next-buffer)
-
-;; Recents
-(keymap-global-set "C-c f" 'recentf)
-
-;; Toggles
-(keymap-global-set "C-c `" 'eat)
-(keymap-global-set "C-c d d" 'rd/open-project-or-buffer-diagnostics)
-(keymap-global-set "C-c d b" 'rd/open-buffer-diagnostics)
