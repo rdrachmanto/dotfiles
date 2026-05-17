@@ -214,6 +214,15 @@
   (meow-setup-indicator)
   (meow-global-mode 1))
 
+(use-package meow-tree-sitter
+  :ensure t
+  :config
+  (meow-tree-sitter-register-defaults))
+
+;; need to think of binds
+(use-package multiple-cursors
+  :ensure t)
+
 ;; Easy way to interact with parens
 ;; Kind of like paredit
 (use-package puni
@@ -357,6 +366,26 @@
   (interactive)
   (end-of-line)
   (meow-insert))
+
+(defun rd/insert-elisp-metadata ()
+  "Insert elisp comments at the beginning and end of file
+
+Check if:
+1. Buffer is visiting a file
+2. Major-mode is `emacs-lisp-mode'
+3. Buffer is empty
+"
+  (interactive)
+  (cond ((or (not buffer-file-name) (not (eq major-mode 'emacs-lisp-mode)))
+         (message "Buffer is not visiting a file, aborted"))
+        ((not (= (buffer-size) 0))
+         (message "Buffer is not empty, aborted"))
+        (t (progn
+             (goto-char (point-min))
+             (insert (concat ";;; " (file-name-nondirectory buffer-file-name) " -*- lexical-binding: t; -*-"))
+             (insert "\n\n")
+             (insert (concat ";;; " (file-name-nondirectory buffer-file-name) " ends here"))
+             (forward-line -1)))))
 
 ;; -------------------------------------------------
 ;; Global Keybinds

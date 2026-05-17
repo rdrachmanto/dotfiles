@@ -8,7 +8,8 @@
    '(ace-window arduino-mode clojure-mode clojure-ts-mode corfu diff-hl
                 direnv doom-modeline eat eldoc-box emmet-mode expreg
                 gruber-darker-theme kdl-mode magit markdown-mode meow
-                move-text nerd-icons-completion nerd-icons-dired
+                meow-tree-sitter move-text multiple-cursors
+                nerd-icons-completion nerd-icons-dired
                 nerd-icons-ibuffer nix-mode nix-ts-mode parseedn
                 pulsar puni queue rust-mode sesman sr-speedbar
                 tabspaces typst-ts-mode web-mode)))

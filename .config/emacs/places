@@ -1,12 +1,16 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-(("/home/rdrachmanto/Research/LLM/p1-llm-benchmarker/test.py" . 800)
+(("/home/rdrachmanto/Devel/test.el" . 63)
+ ("/home/rdrachmanto/Research/LLM/p1-llm-benchmarker/main.py" . 396)
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/init.el" . 8380)
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/themes/cisco-themes/cisco-dark-sparse.el"
+  . 981)
+ ("/home/rdrachmanto/.dotfiles/.config/emacs/themes/cisco-themes/cisco-dark-theme.el"
+  . 967)
  ("/home/rdrachmanto/.dotfiles/.config/emacs/themes/cisco-themes/cisco-themes.el"
-  . 2861)
+  . 2760)
+ ("/home/rdrachmanto/Research/LLM/p1-llm-benchmarker/test.py" . 800)
  ("/home/rdrachmanto/.dotfiles/.config/niri/config.kdl" . 16606)
  ("/home/rdrachmanto/Nix/base.nix" . 347)
- ("/home/rdrachmanto/.dotfiles/.config/emacs/themes/cisco-themes/cisco-dark-theme.el"
-  . 1520)
- ("/home/rdrachmanto/.dotfiles/.config/emacs/init.el" . 229)
  ("/home/rdrachmanto/.dotfiles/.config/emacs/lisp/"
   (dired-filename
    . "/home/rdrachmanto/.dotfiles/.config/emacs/lisp/setup-tab-bar.el"))
@@ -20,7 +24,6 @@
   (dired-filename . "/home/rdrachmanto/.dotfiles/.config/emacs"))
  ("/home/rdrachmanto/.dotfiles/.config/emacs/themes/cisco-themes/"
   (dired-filename . "/home/rdrachmanto/.dotfiles/.config/emacs/themes"))
- ("/home/rdrachmanto/Research/LLM/p1-llm-benchmarker/main.py" . 1123)
  ("/home/rdrachmanto/Research/Dissertation/buying-list.org" . 610)
  ("/home/rdrachmanto/Nix/hosts/thinkpad/thinkpad.nix" . 3700)
  ("/home/rdrachmanto/.dotfiles/.config/emacs/lisp/meow-keybinds.el"

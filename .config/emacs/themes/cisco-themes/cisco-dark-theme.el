@@ -7,17 +7,6 @@
 
 (custom-theme-set-faces
  'cisco-dark
- `(font-lock-doc-face ((t :foreground ,(plist-get cisco-theme-dark-palette :accent-doc))))
- `(font-lock-comment-face ((t :foreground ,(plist-get cisco-theme-dark-palette :accent-comments))))
- `(font-lock-comment-delimiter-face ((t :inherit 'font-lock-comment-face)))
- `(font-lock-delimiter-face ((t :inherit 'font-lock-comment-face)))
- `(font-lock-bracket-face ((t :inherit 'font-lock-comment-face)))
- 
- `(font-lock-string-face ((t :foreground ,(plist-get cisco-theme-dark-palette :accent-str))))
- `(font-lock-number-face ((t :foreground ,(plist-get cisco-theme-dark-palette :accent-num))))
- `(font-lock-punctuation-face ((t :foreground ,(plist-get cisco-theme-dark-palette :accent-punctuation))))
- `(font-lock-operator-face ((t :inherit 'font-lock-punctuation-face)))
-
  `(font-lock-function-name-face ((t :foreground ,(plist-get cisco-theme-dark-palette :accent-def))))
  `(font-lock-type-face ((t :inherit 'default)))
  `(font-lock-property-name-face ((t :inherit 'default)))

@@ -67,8 +67,15 @@
         (fg-dim (cisco-theme-color palette :fg-dim))
         (fg-dim+1 (cisco-theme-color palette :fg-dim+1))
         (accent-cursor (cisco-theme-color palette :accent-cursor))
+        
+        (accent-doc (cisco-theme-color palette :accent-doc))
+        (accent-comments (cisco-theme-color palette :accent-comments))
+	(accent-punctuation (cisco-theme-color palette :accent-punctuation))
+	(accent-str (cisco-theme-color palette :accent-str))
 	(accent-num (cisco-theme-color palette :accent-num))
+        
 	(accent-def (cisco-theme-color palette :accent-def))
+        
         (accent-hl-line (cisco-theme-color palette :accent-hl-line))
         (signal-ok (cisco-theme-color palette :signal-ok))
         (signal-warn (cisco-theme-color palette :signal-warn))
@@ -101,6 +108,18 @@
 
      `(show-paren-match ((t :foreground ,signal-info :background ,bg)))
      `(show-paren-mismatch ((t :foreground ,signal-error :background ,bg)))
+
+     ;; Common highlighting
+     `(font-lock-doc-face ((t :foreground ,accent-doc)))
+     `(font-lock-comment-face ((t :foreground ,accent-comments)))
+     `(font-lock-comment-delimiter-face ((t :inherit 'font-lock-comment-face)))
+     `(font-lock-delimiter-face ((t :inherit 'font-lock-comment-face)))
+     `(font-lock-bracket-face ((t :inherit 'font-lock-comment-face)))
+     
+     `(font-lock-string-face ((t :foreground ,accent-str)))
+     `(font-lock-number-face ((t :foreground ,accent-num)))
+     `(font-lock-punctuation-face ((t :foreground ,accent-punctuation)))
+     `(font-lock-operator-face ((t :inherit 'font-lock-punctuation-face)))
 
      ;; Flymake
      `(flymake-note-echo ((t (:foreground ,signal-info))))
