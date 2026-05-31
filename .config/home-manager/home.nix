@@ -22,7 +22,7 @@
   home.pointerCursor = {
     name = "Adwaita";
     package = pkgs.adwaita-icon-theme;
-    size = 24;
+    size = 28;
     gtk.enable = true;
     x11.enable = true;
   };
@@ -30,8 +30,8 @@
   gtk = {
     enable = true;
     iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
     };
     gtk3 = {
       extraConfig.gtk-application-prefer-dark-theme=true;
@@ -47,8 +47,6 @@
     createDirectories = true;
     desktop = null;
   };
-
-  
 
   # xdg.desktopEntries."org.gnome.Nautilus" = {
   #   name = "Files";
@@ -98,6 +96,7 @@
     # EDITOR = "emacs";
     QT_QPA_PLATFORMTHEME="gtk3";
   };
+
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

@@ -1,8 +1,9 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: "FontAwesome", "Zed Mono Nerd Font", sans-serif;
-    font-size: 0.9rem;
-    font-weight: 900;
+    /* font-size: 0.82rem; */
+    font-size: 1rem;
+    font-weight: 400;
 }
 
 window#waybar {
@@ -119,7 +120,7 @@ button:hover {
 }
 
 #battery.charging, #battery.plugged {
-    color: #ffffff;
+    color: #8cb369;
     /* background-color: #26A65B; */
 }
 
@@ -167,11 +168,13 @@ label:focus {
 #cpu {
     /* background-color: #2ecc71; */
     background-color: transparent;
+    color: red;
     /* color: #000000; */
 }
 
 #memory {
     /* background-color: #9b59b6; */
+    color: red;
     background-color: transparent;
 }
 
@@ -185,11 +188,11 @@ label:focus {
 }
 
 #network {
-    background-color: #2980b9;
+    background-color: transparent;
 }
 
 #network.disconnected {
-    background-color: #f53c3c;
+    background-color: transparent;
 }
 
 /* #pulseaudio { */

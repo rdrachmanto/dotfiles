@@ -1,27 +1,33 @@
 // -*- mode: jsonc -*-
 {
-    "margin-top": 0,
-    "margin-left": 0,
-    "margin-right": 0,
+    "position": "bottom",
+    // "margin-top": 0,
+    // "margin-left": 0,
+    // "margin-right": 0,
     "height": 28, // Waybar height (to be removed for auto height)
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
+      "niri/workspaces",
       "niri/window"
     ],
     "modules-center": [
-      "clock"
     ],
     "modules-right": [
       "tray",
       // "custom/separator",
-      // "group/controls",
+      // "network",
+      "custom/separator",
       "cpu",
+      "custom/separator",
       "memory",
       // "custom/separator",
+      // "disk",
+      "custom/separator",
       "pulseaudio",
-      // "custom/bluetui",
-      // "custom/nmtui",
+      "custom/separator",
+      "clock",
+      "custom/separator",
       "battery"
     ],
     "niri/window": {
@@ -112,11 +118,14 @@
         "spacing": 10
     },
     "cpu": {
-        "format": "{usage}%   ",
+        "format": "CPU: {usage}%",
         "tooltip": false
     },
     "memory": {
-        "format": "{}%   "
+        "format": "MEM: {}%"
+    },
+    "disk": {
+        "format": "STO: {percentage_used}%"
     },
     "temperature": {
         // "thermal-zone": 2,
@@ -133,14 +142,14 @@
     },
     "battery": {
         "states": {
-            // "good": 95,
-            "warning": 30,
-            "critical": 15
+            "good": 95,
+            "warning": 50,
+            "critical": 30
         },
-        "format": "{capacity}% {icon}",
-        "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% {icon}󱐋",
-        "format-plugged": "{capacity}% {icon}󱐋",
+        "format": "BAT: {capacity}%",
+        "format-full": "BAT: {capacity}%",
+        "format-charging": "BAT: {capacity}%󱐋",
+        "format-plugged": "BAT: {capacity}%󱐋",
         "format-icons": ["󰁻", "󰁽", "󰁿", "󰂁", "󰁹"]
     },
     "battery#bat2": {
@@ -159,7 +168,7 @@
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-wifi": "NET: {essid} ({signalStrength}%)",
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "{ifname} via {gwaddr} ",
         "format-linked": "{ifname} (No IP) ",
@@ -168,12 +177,12 @@
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format": "VOL: {volume}% - {format_source}",
+        "format-bluetooth": "VOL: {volume}% {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
+        "format-source": "MIC: {volume}%",
+        "format-source-muted": "MIC: MUTED",
         "format-icons": {
             "headphone": " ",
             "hands-free": " ",
