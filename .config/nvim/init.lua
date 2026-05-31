@@ -10,8 +10,19 @@
 -- Require Autocommands
 -- --------------------------------------------------------------
 
-local utils = require("scripts.utils")
-require("scripts.autocmd")
+require('vim._core.ui2').enable({
+  enable = true,
+  cmd = {
+    height = 0.5,
+  },
+  dialog = {
+    height = 0.5,
+  },
+  msg = {
+    height = 0.5,
+    timeout = 4000,
+  },
+})
 
 -- --------------------------------------------------------------
 -- Defaults 
@@ -44,7 +55,7 @@ o.cursorline=true
 o.number=true
 o.numberwidth=3
 o.relativenumber=true
--- o.showtabline=2
+o.showtabline=0
 
 o.autoindent=true
 o.expandtab=true
@@ -68,31 +79,6 @@ vim.cmd[[ set completeopt+=menuone,noselect,popup ]]
 vim.lsp.enable({ 
   "basedpyright", 
   "bashls",
-  "janet_lsp",
-  "metals"
-})
-vim.lsp.config("*", {
-  root_markers = { ".git" },
-  on_attach = function(client, bufnr)
-    -- Trigger autocompletion, always
-    -- Might be slow
-    -- local chars = {}
-    -- for i = 32, 126 do
-    --   table.insert(chars, string.char(i))
-    -- end
-    -- More conservative autocompletion
-    -- local chars = {
-    --   ".", "("
-    -- }
-    -- client.server_capabilities.completionProvider.triggerCharacters = chars
-    -- vim.lsp.completion.enable(true, client.id, bufnr, {
-    --   autotrigger = true,
-    --   convert = function(item)
-    --     return { abbr = item.label:gsub('%b()', '') }
-    --   end,
-    -- })
-    vim.o.winbar = "%t %{%v:lua.require'nvim-navic'.get_location()%}"
-  end,
 })
 
 -- Diagnostic signs
@@ -124,177 +110,33 @@ vim.diagnostic.config({
 -- Plugins
 -- --------------------------------------------------------------
 -- Plugins declared via lazy.nvim
--- Total: 12 plugins. I work, I don't live in a basement.
+-- Very minimal, not using vim too much rn
 -- --------------------------------------------------------------
 
-require("scripts.lazy-setup")
-
-local ui_pkgs = {
-  { "nvim-tree/nvim-web-devicons", lazy=true },
-  {
-    "SmiteshP/nvim-navic",
-    config = {
-      lsp = { auto_attach = true }
-    }
-  }
-}
-
-local devel_pkgs = {
-  {
-    "nvim-treesitter/nvim-treesitter",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        highlight = {
-          enable = true,
-          additional_vim_regex_highlighting = false,
-        },
-        indent = { enable = true },
-        incremental_selection = { enable = true },
-      })
-    end
+vim.pack.add({"https://github.com/rdrachmanto/cisco-theme.nvim"})
+require("cisco").setup({
+  contrast = {
+    floating_windows = true
   },
-  {
-    "stevearc/conform.nvim",
-    config = function()
-      require("conform").setup({
-        formatters_by_ft = {
-          python = { "ruff_format" }
-        }
-      })
-    end
-  },
-  {
-    'saghen/blink.cmp',
-    version = "1.*",
-    opts = {
-      keymap = { preset = "enter" },
-      appearance = {
-        nerd_font_variant = "normal",
-      },
-      completion = {
-        documentation = { auto_show = false },
-        menu = {
-          scrollbar = false,
-          draw = {
-            columns = {
-              { "kind_icon" },
-              { "label", "label_description", gap=1 }
-            },
-            treesitter = { "lsp" }
-          }
-        },
-        list = {
-          selection = {
-            preselect = true,
-            auto_insert = false
-          }
-        },
-      },
-      sources = {
-        default = { "lsp", "path", "snippets", "buffer" }
-      },
-      fuzzy = { implementation = "prefer_rust_with_warning" }
-    },
-    opts_extend = { "sources.default" }
-  },
-  { "HiPhish/rainbow-delimiters.nvim", },
-  { "windwp/nvim-autopairs", event = "InsertEnter", config = true, },
-  { "lewis6991/gitsigns.nvim", config = true },
-}
-
-local util_pkgs = {
-  {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    opts = {
-      preset = "classic",  -- Options "classic", "modern", "helix"
-      icons = { rules = false },
-      win = {
-        no_overlap = true,
-        padding = { 1, 2 },
-        border = "none",
-      },
-    },
-  },
-  {
-    "ibhagwan/fzf-lua",
-    config = function ()
-      require("fzf-lua").setup({
-        "fzf-native",
-        fzf_colors = true,
-        winopts = {
-          backdrop = 60,
-          border = vim.o.winborder,
-          preview = {
-            default = "cat",
-            border = vim.o.winborder,
-            delay = 250,
-          }
-        },
-        previewers = {
-          cat = {}
-          -- bat = {
-          --   cmd = "bat",
-          --   theme = "Material-Dark"
-          -- }
-        }
-      })
-    end
-  }
-}
-
-local colorschemes = {
-  {
-    "rdrachmanto/cisco-theme.nvim",
-    config = function()
-      require("cisco").setup({
-        contrast = {
-          floating_windows = true 
-        },
-      })
-      vim.cmd.colorscheme("cisco-dark")
-    end
-  },
-  -- {
-  --   dir = "~/Devel/cisco-dark-dark-theme.nvim",
-  --   name = "cisco-dark-dark-theme.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     require("cisco-dark-dark").setup({
-  --       contrast = {
-  --         floating_windows = true 
-  --       },
-  --     })
-  --     vim.cmd.colorscheme("cisco-dark-dark")
-  --   end,
-  -- }
-}
-
-local enabled_pkgs = utils.package_loader(
-  ui_pkgs, devel_pkgs, util_pkgs, colorschemes
-)
-require("lazy").setup({
-  enabled_pkgs
 })
-
+vim.cmd("colorscheme cisco-dark")
 
 -- --------------------------------------------------------------
 -- Keybinding 
 -- --------------------------------------------------------------
 
-vim.g.mapleader=";"
-vim.g.maplocalleader=";"
-
-utils.set_keymaps(
-  "n",
-  {"<leader>;", "Programming"},
-  {
-    {"<leader>;;", vim.lsp.buf.hover, "Documentation on cursor"},
-    {"<leader>;a", vim.lsp.buf.code_action, "Code actions"},
-    {"<leader>;i", ":lua require('scripts.custom_functions').toggle_inlay_hints()<CR>", "Toggle inlay hints"},
-    {"<leader>;d", ":lua require('scripts.custom_functions').toggle_diagnostics_float()<CR>", "Toggle diagnostics"},
-    {"<leader>;r", vim.lsp.buf.rename, "Rename symbol"},
-    {"<leader>;f", ":lua require('conform').format()<CR>", "Format buffer"},
-  }
-)
+-- vim.g.mapleader=";"
+-- vim.g.maplocalleader=";"
+--
+-- utils.set_keymaps(
+--   "n",
+--   {"<leader>;", "Programming"},
+--   {
+--     {"<leader>;;", vim.lsp.buf.hover, "Documentation on cursor"},
+--     {"<leader>;a", vim.lsp.buf.code_action, "Code actions"},
+--     {"<leader>;i", ":lua require('scripts.custom_functions').toggle_inlay_hints()<CR>", "Toggle inlay hints"},
+--     {"<leader>;d", ":lua require('scripts.custom_functions').toggle_diagnostics_float()<CR>", "Toggle diagnostics"},
+--     {"<leader>;r", vim.lsp.buf.rename, "Rename symbol"},
+--     {"<leader>;f", ":lua require('conform').format()<CR>", "Format buffer"},
+--   }
+-- )

@@ -1,0 +1,8 @@
+{
+  "plugins": {
+    "cisco-theme.nvim": {
+      "rev": "ceb4b3442000549de4d124b7d15746554eb213af",
+      "src": "https://github.com/rdrachmanto/cisco-theme.nvim"
+    }
+  }
+}
