@@ -29,6 +29,31 @@
 (defun cisco-themes-set-keywords-pop (subtle bright)
   (if cisco-themes-pop-keywords bright subtle))
 
+(defconst cisco-theme-light-palette
+  (list :bg "#f8f8f8"
+        :bg+1 "#cecdc3"
+        :bg+2 "#e0e0e0"
+        :border "gray75"
+        :fg "#0e100f"
+        :fg-dim "#cecdc3"
+        :fg-dim+1 "#cecdc3"
+        :accent-punctuation "#3076b2"
+        :accent-parens "#2b5375"
+        :accent-todos "#f0f8ff"
+        :accent-str "#608242"
+        :accent-num "#db6f0e"
+        :accent-comments "#76726e"
+        :accent-doc "#a78b00"
+        :accent-constants "#db6f0e"
+        :accent-keywords "#f72e45"
+        :accent-def "#834de8"
+        :accent-cursor "#fe9900"
+        :accent-hl-line "#efefec"
+        :signal-ok "#6c7b2e"
+        :signal-warn "#ffab70"
+        :signal-error "#d14d41"
+        :signal-info "#3076b2"))
+
 (defconst cisco-theme-dark-palette
   (list :bg "#181818"
         :bg+1 "#1e201f"
@@ -70,7 +95,7 @@
         
         (accent-doc (cisco-theme-color palette :accent-doc))
         (accent-comments (cisco-theme-color palette :accent-comments))
-	(accent-punctuation (cisco-theme-color palette :accent-punctuation))
+  	(accent-punctuation (cisco-theme-color palette :accent-punctuation))
 	(accent-str (cisco-theme-color palette :accent-str))
 	(accent-num (cisco-theme-color palette :accent-num))
         
@@ -102,7 +127,7 @@
      `(minibuffer-prompt ((t (:foreground ,signal-info))))
      `(icomplete-selected-match ((t (:background ,border))))
 
-     `(tab-bar ((t (:background ,border :foreground ,fg :box (:line-width 1 :color ,border)))))
+     `(tab-bar ((t (:background ,border :foreground ,fg :box (:line-width 4 :color ,border)))))
      `(tab-bar-tab ((t (:inherit 'tab-bar-tab :foreground ,signal-info :bold t))))
      `(tab-bar-tab-inactive ((t (:inherit 'tab-bar-tab :foreground ,fg-dim :bold t))))
 
@@ -118,8 +143,6 @@
      
      `(font-lock-string-face ((t :foreground ,accent-str)))
      `(font-lock-number-face ((t :foreground ,accent-num)))
-     `(font-lock-punctuation-face ((t :foreground ,accent-punctuation)))
-     `(font-lock-operator-face ((t :inherit 'font-lock-punctuation-face)))
 
      ;; Flymake
      `(flymake-note-echo ((t (:foreground ,signal-info))))

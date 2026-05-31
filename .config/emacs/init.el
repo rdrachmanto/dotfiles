@@ -1,18 +1,13 @@
-;; -------------------------------------------------
-;; Theming
-;; -------------------------------------------------
+;;; Theming:
 
 (setq cisco-themes-large-mode-line t
       cisco-themes-pop-keywords nil
       cisco-themes-italic-keywords t)
 (load-theme 'cisco-dark t)
 
-;; -------------------------------------------------
-;; Builtin
-;; -------------------------------------------------
 
+;;; Emacs:
 (setq-default indent-tabs-mode nil)
-;; Emacs
 (use-package emacs
   :ensure nil
   :init
@@ -29,13 +24,15 @@
   (global-hl-line-mode)
   (global-visual-line-mode)
   (delete-selection-mode)
+  (outline-minor-mode)
 
   (setq history-length 25)
   (savehist-mode)
   (recentf-mode)
 
-  (setq use-dialog-box nil)
+  (setq delete-by-moving-to-trash t)
 
+  (setq use-dialog-box nil)
   ;; Completion settings
   (setq tab-always-indent 'complete)
   (global-completion-preview-mode)
@@ -71,6 +68,15 @@
 
   (require 'setup-tab-bar)
 
+  (keymap-global-set "C-c t t" 'tab-list)
+  (keymap-global-set "C-c t n" 'tab-new)
+  (keymap-global-set "C-c t r" 'tab-rename)
+  (keymap-global-set "C-c t d" 'tab-close)
+  (keymap-global-set "C-c [" 'tab-previous)
+  (keymap-global-set "C-c ]" 'tab-next)
+
+  ;; Org-mode
+
   (setq org-hide-leading-stars t
 	org-startup-indented t)
 
@@ -81,6 +87,7 @@
 ;; Hooks
 (add-hook 'prog-mode-hook
 	  (lambda ()
+            (outline-minor-mode)
 	    (setq display-line-numbers-width 3)
 	    (display-line-numbers-mode)
 	    (column-number-mode)))
@@ -90,7 +97,12 @@
             (set-window-fringes
              (minibuffer-window frame) 6 6 nil t)))
 
-;; Dired
+(add-hook 'emacs-lisp-mode
+          (lambda ()
+            (outline-minor-mode)))
+
+;;; Dired:
+
 (use-package dired
   :ensure nil
   :config
@@ -102,7 +114,9 @@
   :hook
   (dired-mode . dired-hide-details-mode)) ; Remove details, can be toggled with '('
 
-;; Eglot Settings
+
+;;; Programming:
+
 (use-package eglot
   :ensure nil
   :config
@@ -110,35 +124,11 @@
   :hook
   (prog-mode . eglot-ensure))
 
-;; Eldoc
 (use-package eldoc
   :ensure nil
   :config
   (setq eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly
 	eldoc-echo-area-use-multiline-p nil))
-
-;; Display rules
-(require 'window-rules)
-
-(defvar blist-for-bottom-panel
-      '(("^\\*[Ff]lymake.*\\*$" 0)
-        ("^\\*eat\\*$" 0)
-        ("^\\*xref\\*$" 0)
-        ("^\\*[Cc]ompletions\\*$" 0)))
-
-(defvar blist-for-right-panel
-  '(("^\\*[Hh]elp\\*$" 1)
-    ("^\\*[Ee]ldoc\\*$" -1)))
-
-(setq window-rules-bottom-panel-list blist-for-bottom-panel
-      window-rules-right-panel-list blist-for-right-panel)
-(window-rules-apply)
-
-;; -------------------------------------------------
-;; Packages
-;; -------------------------------------------------
-
-;; direnv
 (use-package direnv
   :ensure t
   :config (direnv-mode))
@@ -158,10 +148,6 @@
   :hook
   (sgml-mode . emmet-mode)
   (css-mode . emmet-mode))
-(use-package nix-mode
-  :ensure t)
-(use-package typst-ts-mode
-  :ensure t)
 
 (use-package clojure-mode
   :ensure t)
@@ -173,12 +159,23 @@
 (use-package nix-ts-mode
   :ensure t)
 
+(use-package janet-mode
+  :ensure t)
+(use-package janet-ts-mode
+  :vc (:url "https://github.com/sogaiu/janet-ts-mode"
+       :rev :newest))
+
+(use-package go-mode
+  :ensure t)
+
 ;; Major mode remap
 (add-to-list 'major-mode-remap-alist '(sh-mode . bash-ts-mode))
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 (add-to-list 'major-mode-remap-alist '(rust-mode . rust-ts-mode))
 (add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode))
 (add-to-list 'major-mode-remap-alist '(nix-mode . nix-ts-mode))
+(add-to-list 'major-mode-remap-alist '(janet-mode . janet-ts-mode))
+(add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode))
 
 ;; Magit
 (use-package magit
@@ -197,13 +194,38 @@
 
 ;; Popup documentation
 (use-package eldoc-box
-  :ensure t)
+  :ensure t
+  :bind (("C-c k" . eldoc-box-help-at-point)))
 
-;; Movement
+
+;;; Display rules:
+
+(require 'window-rules)
+
+(defvar blist-for-bottom-panel
+      '(("^\\*[Ff]lymake.*\\*$" 0)
+        ("^\\*eat\\*$" 0)
+        ("^\\*xref\\*$" 0)
+        ("^\\*[Cc]ompletions\\*$" 0)))
+
+(defvar blist-for-right-panel
+  '(("^\\*[Hh]elp\\*$" 1)
+    ("^\\*[Ee]ldoc\\*$" -1)))
+
+(setq window-rules-bottom-panel-list blist-for-bottom-panel
+      window-rules-right-panel-list blist-for-right-panel
+      window-rules-bottom-panel-size 0.15
+      window-rules-right-panel-size 0.12)
+(window-rules-apply)
+
+
+;;; Movement:
+
 (use-package ace-window
   :ensure t
   :config
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  :bind (("C-c w" . ace-window)))
 
 ;; Modal editing
 (use-package meow
@@ -230,10 +252,18 @@
   :defer t
   :init (puni-global-mode)
   :hook
-  (term-mode . puni-disable-puni-mode))
+  (term-mode . puni-disable-puni-mode)
+  :bind (("C-)" . puni-slurp-forward)
+         ("C-(" . puni-slurp-backward)
+         ("C-}" . puni-barf-forward)
+         ("C-{" . puni-barf-backward)
+         ("C-c l s" . puni-splice)
+         ("C-c l r" . puni-raise)))
 
 (use-package expreg
-  :ensure t)
+  :ensure t
+  :bind (("C-=" . expreg-expand)
+         ("C--" . expreg-contract)))
 
 (use-package move-text
   :ensure t
@@ -250,7 +280,8 @@
 (advice-add 'move-text-down :after 'indent-region-advice)
 
 
-;; Niceties
+;;; Niceties:
+
 (use-package diff-hl
   :ensure t
   :after magit
@@ -282,157 +313,23 @@
   (pulsar-global-mode 1))
 
 (use-package eat
-  :ensure t)
+  :ensure t
+  :bind (("C-c `" . eat)))
 
-;; -------------------------------------------------
-;; Functions
-;; Will be moved later
-;; -------------------------------------------------
 
-(defun rd/split-right ()
-  (interactive)
-  (split-window-right)
-  (other-window 1))
+;;; Functions:
 
-(defun rd/split-right-dired ()
-  (interactive)
-  (split-window-right)
-  (other-window 1)
-  (dired "."))
+(require 'rd-functions)
 
-(defun rd/split-right-project-dired ()
-  (interactive)
-  (split-window-right)
-  (other-window 1)
-  (project-dired))
+(keymap-global-set "C-c i i" 'rd/open-user-init)
+(keymap-global-set "C-c i r" 'rd/reload-user-init)
 
-(defun rd/split-below ()
-  (interactive)
-  (split-window-below)
-  (other-window 1))
+(keymap-global-set "C-x 2" 'rd/split-below)
+(keymap-global-set "C-x 3" 'rd/split-right)
 
-(defun rd/open-user-init ()
-  (interactive)
-  (find-file-other-window user-init-file))
+(keymap-global-set "C-c d d" 'rd/open-project-or-buffer-diagnostics)
 
-(defun rd/reload-user-init ()
-  (interactive)
-  (load-file user-init-file)
-  (message "Reloaded with newest init"))
+(keymap-global-set "C-a" 'rd/go-to-beginning-of-line)
 
-(defun rd/comment-or-uncomment-line-or-region ()
-  (interactive)
-  (if (use-region-p)
-      (comment-or-uncomment-region)
-    (comment-line)))
-
-(defun rd/open-buffer-diagnostics ()
-  (interactive)
-  (flymake-show-buffer-diagnostics)
-  (other-window 1))
-
-(defun rd/open-project-or-buffer-diagnostics ()
-  (interactive)
-  (if (project-current)
-      (flymake-show-project-diagnostics)
-    (flymake-show-buffer-diagnostics))
-  (other-window 1))
-
-(defun rd/go-to-beginning-of-line ()
-  (interactive)
-  (let ((orig-point (point)))
-    (back-to-indentation)
-    (when (= orig-point (point))
-      (move-beginning-of-line 1))))
-
-(defun rd/switch-to-buffer (&optional all-buffers)
-  (interactive "P")
-  (if (or (not (project-current)) all-buffers)
-      (call-interactively #'switch-to-buffer)
-    (call-interactively #'project-switch-to-buffer)))
-
-(defun rd/find-file (&optional all-buffers)
-  (interactive "P")
-  (if (or (not (project-current)) all-buffers)
-      (call-interactively #'find-file)
-    (call-interactively #'project-find-file)))
-
-(defun rd/meow-insert-start-of-line ()
-  (interactive)
-  (back-to-indentation)
-  (meow-insert))
-
-(defun rd/meow-insert-end-of-line ()
-  (interactive)
-  (end-of-line)
-  (meow-insert))
-
-(defun rd/insert-elisp-metadata ()
-  "Insert elisp comments at the beginning and end of file
-
-Check if:
-1. Buffer is visiting a file
-2. Major-mode is `emacs-lisp-mode'
-3. Buffer is empty
-"
-  (interactive)
-  (cond ((or (not buffer-file-name) (not (eq major-mode 'emacs-lisp-mode)))
-         (message "Buffer is not visiting a file, aborted"))
-        ((not (= (buffer-size) 0))
-         (message "Buffer is not empty, aborted"))
-        (t (progn
-             (goto-char (point-min))
-             (insert (concat ";;; " (file-name-nondirectory buffer-file-name) " -*- lexical-binding: t; -*-"))
-             (insert "\n\n")
-             (insert (concat ";;; " (file-name-nondirectory buffer-file-name) " ends here"))
-             (forward-line -1)))))
-
-;; -------------------------------------------------
-;; Global Keybinds
-;; Keybinds interacting with buffer content will stay with meow
-;; -------------------------------------------------
-
-(defun rd/bind-keys (&rest bindings)
-  "Helper function for binding keys"
-  (dolist (binding bindings)
-    (pcase-let ((`(,key ,command) binding))
-      (keymap-global-set key command))))
-
-(rd/bind-keys
- ;; Init
- '("C-c i i" rd/open-user-init)
- '("C-c i r" rd/reload-user-init)
- ;;
- '("C-c w" ace-window)
- '("C-x 2" rd/split-below)
- '("C-x 3" rd/split-right)
- '("C-c s d" rd/split-right-dired)
- '("C-c s D" rd/split-right-project-dired)
- ;;
- '("C-c t t" tab-list)
- '("C-c t n" tab-new)
- '("C-c t r" tab-rename)
- '("C-c t d" tab-close)
- '("C-c [" tab-previous)
- '("C-c ]" tab-next)
- ;;
- '("C-=" expreg-expand)
- '("C--" expreg-contract)
- ;;
- '("C-c f r" recentf-open)
- ;;
- '("C-c `" eat)
- '("C-c d d" rd/open-project-or-buffer-diagnostics)
- '("C-c d b" rd/open-buffer-diagnostics)
- ;;
- '("C-a" rd/go-to-beginning-of-line)
- '("C-x b" rd/switch-to-buffer)
- '("C-x C-f" rd/find-file)
- ;;
- '("C-)" puni-slurp-forward)
- '("C-(" puni-slurp-backward)
- '("C-}" puni-barf-forward)
- '("C-{" puni-barf-backward)
- '("C-c l s" puni-splice)
- '("C-c l r" puni-raise))
-
+(keymap-global-set "C-x b" 'rd/switch-to-buffer)
+(keymap-global-set "C-x C-f" 'rd/find-file)

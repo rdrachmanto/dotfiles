@@ -1,3 +1,13 @@
+(defun rd/meow-insert-start-of-line ()
+  (interactive)
+  (back-to-indentation)
+  (meow-insert))
+
+(defun rd/meow-insert-end-of-line ()
+  (interactive)
+  (end-of-line)
+  (meow-insert))
+
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
   (meow-motion-overwrite-define-key
@@ -42,7 +52,7 @@
    '("[" . meow-beginning-of-thing)
    '("]" . meow-end-of-thing)
    '("a" . meow-append)
-   ;; '("A" . meow-open-below)
+   '("A" . rd/meow-insert-end-of-line)
    '("b" . meow-back-word)
    '("B" . meow-back-symbol)
    '("c" . meow-change)
@@ -57,7 +67,7 @@
    '("h" . meow-left)
    '("H" . meow-left-expand)
    '("i" . meow-insert)
-   ;; '("I" . meow-open-above)
+   '("I" . rd/meow-insert-start-of-line)
    '("j" . meow-next)
    '("J" . meow-next-expand)
    '("k" . meow-prev)

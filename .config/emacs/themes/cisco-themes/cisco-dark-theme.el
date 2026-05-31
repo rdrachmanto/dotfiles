@@ -7,6 +7,10 @@
 
 (custom-theme-set-faces
  'cisco-dark
+
+ `(font-lock-punctuation-face ((t :foreground ,(plist-get cisco-theme-dark-palette :accent-punctuation))))
+ `(font-lock-operator-face ((t :inherit 'font-lock-punctuation-face)))
+
  `(font-lock-function-name-face ((t :foreground ,(plist-get cisco-theme-dark-palette :accent-def))))
  `(font-lock-type-face ((t :inherit 'default)))
  `(font-lock-property-name-face ((t :inherit 'default)))
