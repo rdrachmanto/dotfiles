@@ -1,0 +1,5 @@
+;;; -*- lisp-data -*-
+(("/home/raka/.dotfiles/") ("/home/raka/Bin/")
+ ("/home/raka/Documents/Courses/CSCI8965/stack5/")
+ ("/home/raka/Documents/Courses/CSCI8965/stack5/")
+ ("/home/raka/.config/emacs/elpa/janet-ts-mode/"))

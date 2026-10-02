@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+echo "Bootstrapping for $(hostname)"
+
+stow common
+
+stow "$(hostname)"
+
+echo "Bootstrap successful"
