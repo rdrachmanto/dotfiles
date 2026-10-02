@@ -11,12 +11,8 @@ PROMPT='[%F{green}%n@%m%f::%F{blue}%~%f] %# '
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 
-# Exports
-export TERM=xterm-256color
-export GSK_RENDERER=ngl
-
 # History
-HISTFILE=~/.zsh/zsh_history
+HISTFILE=~/.zsh_history
 HISTSIZE=5000
 SAVEHIST=5000
 
@@ -24,21 +20,21 @@ setopt SHARE_HISTORY
 setopt APPEND_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 
-# >>> mamba initialize >>>
-# !! Contents within this block are managed by 'micromamba shell init' !!
-export MAMBA_EXE='/home/raka/.local/bin/micromamba';
-export MAMBA_ROOT_PREFIX='/home/raka/.local/share/mamba';
-__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__mamba_setup"
-else
-    alias micromamba="$MAMBA_EXE"  # Fallback on help from micromamba activate
-fi
-unset __mamba_setup
-# <<< mamba initialize <<<
-
-# Aliases and Exports
+# Common Aliases 
 alias ls='ls --group-directories-first --color=auto'
 
 
+# Exports
+export TERM=xterm-256color
+export GSK_RENDERER=ngl
+
+
+# Sourcing
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+if [[ -d ~/.zshrc.d ]]; then
+  for rc in ~/.zshrc.d/*(N.); do
+    source "$rc"
+  done
+fi
+unset rc

@@ -1,0 +1,65 @@
+[user]
+    email = rakandhiya.daanii@gmail.com
+    name = Rakandhiya Rachmanto
+
+[init]
+    # Standardize the initial branch name across all new repositories
+    defaultBranch = main
+
+[core]
+    # Prevents frustrating line ending issues across Windows/Mac/Linux
+    # Use "true" for Windows, "input" for Mac/Linux
+    autocrlf = input
+    
+    # Use modern, clean terminal pagers (like 'delta' or 'less')
+    pager = less -F -X
+
+[alias]
+    # Short commands for high-frequency operations
+    st = status --short
+    co = checkout
+    br = branch
+    ci = commit
+    cp = cherry-pick
+    
+    # A beautiful, readable, graph-based commit history log
+    lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+    
+    # Quickly fix your last commit without opening the editor
+    oops = commit --amend --no-edit
+    
+    # Safely push without overwriting someone else's un-fetched commits
+    pleasantly = push --force-with-lease
+
+[pull]
+    # Keeps your commit history coherent by rebasing your changes 
+    # on top of incoming work instead of generating messy merge commits
+    rebase = true
+
+[push]
+    # Automatically track remote branches on your first push so you can just run "git push" next time
+    autoSetupRemote = true
+
+[fetch]
+    # Automatically clean up broken tracking references to deleted remote branches
+    prune = true
+
+[merge]
+    # Displays original context alongside conflicting changes to make merges way easier to read
+    conflictstyle = zdiff3
+
+[diff]
+    # Uses a smarter algorithm to yield more logical diffs for structured/nested code
+    algorithm = histogram
+
+[rebase]
+    # Seamlessly moves temporary changes out of the way and applies them back when rebasing
+    autostash = true
+    # Simplifies squash pipelines if you use 'fixup!' commit patterns
+    autosquash = true
+
+[rerere]
+    # "Reuse Recorded Resolution" - Remembers how you solved a merge conflict 
+    # and resolves it for you automatically if the same conflict shows up again
+    enabled = true
+
