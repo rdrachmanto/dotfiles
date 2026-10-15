@@ -11,6 +11,10 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
 fi
 export PATH
 
+# change bash prompt
+# export PS1="[\[\e[0;32m\]\u@\h[\e[0m\]::\[\e[0;34m\]\w\[\e[0m\]] \$ "
+export PS1="[\[\e[0;32m\]\u@\h\[\e[0m\]::\[\e[0;34m\]\w\[\e[0m\]] \$ "
+
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 

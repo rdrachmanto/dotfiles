@@ -1,8 +1,39 @@
 #!/usr/bin/env bash
 
+TYPE=""
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --type)
+            TYPE="$2"
+            shift 2 # Move past key and value
+            ;;
+        *)
+            echo "Error: Unknown argument '$1'"
+            echo "Usage: $0 --type [de|server]"
+            exit 1
+            ;;
+    esac
+done
+
+if [ -z "$TYPE" ]; then
+    echo "Error: The --type parameter is required."
+    echo "Usage: $0 --type [de|server]"
+    exit 1
+fi
+
+if [[ "$TYPE" != "de" && "$TYPE" != "server" ]]; then
+    echo "Error: Invalid type '$TYPE'. Allowed values are 'de' or 'server'."
+    exit 1
+fi
+
 echo "Bootstrapping for $(hostname)"
 
 stow common
+
+if [ "$TYPE" == "de" ]; then
+  stow de
+  echo "Bootstrapping for de"
+fi 
 
 stow "$(hostname)"
 
